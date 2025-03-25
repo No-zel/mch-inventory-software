@@ -1,0 +1,23 @@
+{
+  "name": "inventory-software",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/No-zel/mch-inventory-software.git"
+  },
+  "author": "No-zel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/No-zel/mch-inventory-software/issues"
+  },
+  "homepage": "https://github.com/No-zel/mch-inventory-software#readme",
+  "devDependencies": {
+    "electron": "^35.0.3"
+  }
+}
