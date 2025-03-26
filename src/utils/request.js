@@ -1,81 +1,168 @@
 const options = {
-    baseUrl: "https://192.168.100.13:5001/mch/v1",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
+  baseUrl: "http://192.168.100.10:5001/mch/v1",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+};
 
-  class APIRequest {
-    async getAuthHeaders(headersOption = {}) {
-      const token = await window.auth.checkToken(); 
+class APIRequest {
+  async get({ url }) {
+    try {
+      const response = await fetch(`${options.baseUrl}${url}`, {
+        method: "GET",
+        headers: options.headers,
+      });
+
+      return await this.handleResponse(response);
+    } catch (err) {
+      return this.handleError(err);
+    }
+  }
+
+  async post({ url, bodyObj = {} }) {
+    try {
+      const response = await fetch(`${options.baseUrl}${url}`, {
+        method: "POST",
+        headers: options.headers,
+        body: JSON.stringify(bodyObj),
+      });
+
+      return await this.handleResponse(response);
+    } catch (err) {
+      return this.handleError(err);
+    }
+  }
+
+  async patch({ url, bodyObj = {} }) {
+    try {
+      const response = await fetch(`${options.baseUrl}${url}`, {
+        method: "PATCH",
+        headers: options.headers,
+        body: JSON.stringify(bodyObj),
+      });
+
+      return await this.handleResponse(response);
+    } catch (err) {
+      return this.handleError(err);
+    }
+  }
+
+  async delete({ url }) {
+    try {
+      const response = await fetch(`${options.baseUrl}${url}`, {
+        method: "DELETE",
+        headers: options.headers,
+      });
+
+      return await this.handleResponse(response);
+    } catch (err) {
+      return this.handleError(err);
+    }
+  }
+
+  async handleResponse(response) {
+    console.log("Raw Response:", response);
+  
+    if (!response.ok) {
       return {
-        ...options.headers,
-        ...headersOption,
-        ...(token ? { "auth-token": token } : {}),
+        response,
+        data: null,
+        error: `HTTP Error: ${response.status} ${response.statusText}`,
       };
     }
   
-    async get({ url, headersOption = {} }) {
-      try {
-        const response = await fetch(`${options.baseUrl}${url}`, {
-          method: "GET",
-          headers: await this.getAuthHeaders(headersOption),
-        });
-        const json = await response.json();
-        return { response, data: json };
-      } catch (err) {
-        console.error(err);
-        return { response: err, data: null };
-      }
-    }
-  
-    async post({ url, bodyObj, headersOption = {} }) {
-      try {
-        const response = await fetch(`${options.baseUrl}${url}`, {
-          method: "POST",
-          headers: await this.getAuthHeaders(headersOption),
-          body: JSON.stringify(bodyObj),
-        });
-        const json = await response.json();
-        return { response, data: json };
-      } catch (err) {
-        console.error("Request Error: ", err);
-        return { response: err, data: null };
-      }
-    }
-  
-    async patch({ url, bodyObj, headersOption = {} }) {
-      try {
-        const response = await fetch(`${options.baseUrl}${url}`, {
-          method: "PATCH",
-          headers: await this.getAuthHeaders(headersOption),
-          body: JSON.stringify(bodyObj),
-        });
-        const json = await response.json();
-        return { response, data: json };
-      } catch (err) {
-        console.error("Request Error: ", err);
-        return { response: err, data: null };
-      }
-    }
-  
-    async delete({ url, headersOption = {} }) {
-      try {
-        const response = await fetch(`${options.baseUrl}${url}`, {
-          method: "DELETE",
-          headers: await this.getAuthHeaders(headersOption),
-        });
-        const json = await response.json();
-        return { response, data: json };
-      } catch (err) {
-        console.error("Request Error: ", err);
-        return { response: err, data: null };
-      }
+    try {
+      const json = await response.json();  // Ensure body is parsed only once
+      console.log("Parsed JSON:", json);  // Debugging log
+      return { response, data: json };
+    } catch (err) {
+      console.error("JSON Parsing Error:", err);
+      return {
+        response,
+        data: null,
+        error: "Failed to parse JSON response",
+      };
     }
   }
+
+  handleError(err) {
+    console.error("Request Error:", err);
+    return { response: null, data: null, error: err.message };
+  }
+}
+
+module.exports = { APIRequest };
+
+
+
+// --------------------
+// const options = {
+//     baseUrl: "http://192.168.100.10:5001/mch/v1",
+//     headers: {
+//       Accept: "application/json",
+//       "Content-Type": "application/json",
+//     },
+//   };
+
+//   class APIRequest {
+//     async get({ url = {} }) {
+//       try {
+//         const response = await fetch(`${options.baseUrl}${url}`, {
+//           method: "GET",
+//         });
+//         const json = await response.json();
+//         return { response, data: json };
+//       } catch (err) {
+//         console.error(err);
+//         return { response: err, data: null };
+//       }
+//     }
   
-  export { APIRequest };
+//     async post({ url, bodyObj = {} }) {
+//       try {
+//         const response = await fetch(`${options.baseUrl}${url}`, {
+//           method: "POST",
+//           body: JSON.stringify(bodyObj),
+//         });
+//         const json = await response.json();
+//         return { response, data: json };
+//       } catch (err) {
+//         console.error("Request Error: ", err);
+//         return { response: err, data: null };
+//       }
+//     }
+  
+//     async patch({ url, bodyObj = {} }) {
+//       try {
+//         const response = await fetch(`${options.baseUrl}${url}`, {
+//           method: "PATCH",
+//           body: JSON.stringify(bodyObj),
+//         });
+//         const json = await response.json();
+//         return { response, data: json };
+//       } catch (err) {
+//         console.error("Request Error: ", err);
+//         return { response: err, data: null };
+//       }
+//     }
+  
+//     async delete({ url = {} }) {
+//       try {
+//         const response = await fetch(`${options.baseUrl}${url}`, {
+//           method: "DELETE",
+//         });
+//         const json = await response.json();
+//         return { response, data: json };
+//       } catch (err) {
+//         console.error("Request Error: ", err);
+//         return { response: err, data: null };
+//       }
+//     }
+//   }
+  
+//   module.exports = { APIRequest };
+
   // class APIRequest {
   //   async get({ url, headersOption }) {
   //     try {
@@ -157,5 +244,5 @@ const options = {
   //   }
   // }
   
-  // export { options, APIRequest };
+  //  module.exports = { APIRequest };
   
