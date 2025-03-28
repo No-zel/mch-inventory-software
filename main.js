@@ -1,8 +1,10 @@
 const { app, BrowserWindow, ipcMain, session } = require("electron");
 const QRCode = require("qrcode");
 const path = require("path");
-const auth = require("./src/auth/auth"); 
-const { APIRequest } = require("./src/utils/request")
+const auth = require("./src/auth/auth");
+const { APIRequest } = require("./src/utils/request");
+const { setupPrintHandler } = require("./src/utils/print");
+
 const apiRequest = new APIRequest();
 
 const createWindow = () => {
@@ -13,7 +15,7 @@ const createWindow = () => {
       preload: path.join(__dirname, "src/auth/preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
-      devTools: true, 
+      devTools: true,
     },
   });
 
@@ -22,6 +24,7 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   createWindow();
+  setupPrintHandler();
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {

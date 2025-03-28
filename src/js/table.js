@@ -4,6 +4,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  window.qr.generate("Hello World")
+  .then((url) => {
+    console.log("Generated QR Code:", url);
+  })
+  .catch((err) => {
+    console.error("QR Code Error:", err);
+  });
+
   async function getProducts() {
     try {
       const {response, data, error} = await window.api.request({
@@ -116,7 +124,15 @@ async function createItem(event) {
   }
 }
 
-async function generateAndPrintQR() {
+const printQRButton = document.getElementById("printQR");
+
+if (printQRButton) {
+  printQRButton.addEventListener("click", generateAndPrintQR);
+} else {
+  console.error("Print QR button not found!");
+}
+
+async function generateAndPrintQR() { 
   const selectedItems = [...document.querySelectorAll(".select-item:checked")].map(checkbox => checkbox.dataset.id);
   let itemsToPrint = selectedItems.length > 0 ? selectedItems : [...document.querySelectorAll(".select-item")].map(checkbox => checkbox.dataset.id);
 
@@ -125,52 +141,12 @@ async function generateAndPrintQR() {
     return;
   }
 
-  // Open a blank print window
-  let printWindow = window.open("", "_blank");
-  let doc = printWindow.document;
+  let paperSize = document.getElementById("paperSize").value; 
 
-  // Create and append the <html> structure dynamically
-  let html = doc.createElement("html");
-  let head = doc.createElement("head");
-  let body = doc.createElement("body");
+  let qrCodes = await Promise.all(itemsToPrint.map(async (id) => {
+    let qrImage = await window.qr.generate(id);
+    return { id, qrImage };
+  }));
 
-  // Set up head with styles
-  let style = doc.createElement("style");
-  style.textContent = `
-    body { font-family: Arial, sans-serif; text-align: center; }
-    .qr-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-    .qr-item { text-align: center; border: 1px solid black; padding: 10px; }
-  `;
-  head.appendChild(style);
-
-  // Add heading
-  let title = doc.createElement("h1");
-  title.textContent = "QR Codes";
-  body.appendChild(title);
-
-  // QR container
-  let qrContainer = doc.createElement("div");
-  qrContainer.classList.add("qr-container");
-
-  // Append everything
-  doc.head.appendChild(head);
-  doc.body.appendChild(title);
-  doc.body.appendChild(qrContainer);
-  html.appendChild(head);
-  html.appendChild(body);
-  doc.appendChild(html);
-
-  // Wait for the new window to fully load
-  setTimeout(async () => {
-    for (let id of itemsToPrint) {
-      let qrImage = await window.qr.generate(id); // Calls the exposed QR function
-      let div = document.createElement("div");
-      div.classList.add("qr-item");
-      div.innerHTML = `<p>ID: ${id}</p><img src="${qrImage}">`;
-      qrContainer.appendChild(div);
-    }
-
-    printWindow.focus();
-    setTimeout(() => printWindow.print(), 500);
-  }, 500);
+  window.electron.send("open-print-window", { qrCodes, paperSize });
 }

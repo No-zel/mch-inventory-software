@@ -9,6 +9,13 @@
   <body>
     <h1>MCH Inventory</h1>
 
+    <label for="paperSize">Select Paper Size:</label>
+    <select id="paperSize">
+      <option value="A4">A4</option>
+      <option value="Letter">Letter</option>
+      <option value="A5">A5</option>
+    </select>
+
     <button id="openRegisterModal">Add Item</button>
     <button id="printQR">Print QR</button>
     <table>
@@ -53,33 +60,6 @@
         <button id="closeNotification">Confirm</button>
       </div>
     </div>
-
-    <!-- <div id="myModal" class="modal">
-
-      <div class="modal-small" id="notificationModal">
-        <p>This is a notification message.</p>
-        <button id="closeModalBtnS">Confirm</button>
-     
-
-      <div class="modal-content">
-        <span id="closeModalBtn" class="close">&times;</span>
-        <h2>Add Item</h2>
-        <form onsubmit="createItem(event)" method="post">
-          <label for="productName">Product Name:</label><br>
-          <input type="text" id="productName" name="productName" value=""><br>
-          <label for="department">Department:</label><br>
-          <input type="text" id="department" name="department" value=""><br>
-          <label for="category">Category:</label><br>
-          <input type="text" id="category" name="category" value=""><br>
-          <label for="quantity">Quantity:</label><br>
-          <input type="text" id="quantity" name="quantity" value="1"><br>
-          <label for="assigned_to">Assigned To:</label><br>
-          <input type="text" id="assigned_to" name="assigned_to" value=""><br><br>
-          <input type="submit" value="Submit">
-        </form> 
-      </div>
-    </div>
-    </div> -->
-    <script src="../js/table.js"></script>
+    <script type="module" src="../js/table.js"></script>
   </body>
 </html>
