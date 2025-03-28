@@ -60,19 +60,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 const registerModal = document.getElementById("registerModal");
 const notificationModal = document.getElementById("notificationModal");
+const confirmationModal = document.getElementById("confirmationModal")
 
 const openRegisterModal = document.getElementById("openRegisterModal");
 const closeRegisterModal = document.getElementById("closeRegisterModal");
 const closeNotification = document.getElementById("closeNotification");
 
+const confirmModal = document.getElementById("confirmChoice");
+const cancelChoice = document.getElementById("cancelChoice");
+
 openRegisterModal.onclick = () => registerModal.style.display = "block";
+confirmationModal.onclick = () => confirmationModal.style.display = "block";
 
 closeRegisterModal.onclick = () => registerModal.style.display = "none";
 closeNotification.onclick = () => notificationModal.style.display = "none";
+cancelChoice.onclick = () => confirmationModal.style.display = "none";
 
 window.onclick = (event) => {
   if (event.target === registerModal) registerModal.style.display = "none";
   if (event.target === notificationModal) notificationModal.style.display = "none";
+  if (event.target === confirmationModal) confirmationModal.style.display = "none";
 };
 
 function showNotification(message) {
@@ -154,7 +161,7 @@ async function generateAndPrintQR() {
 const deleteModal = document.getElementById("deleteModal");
 
 if (deleteModal) {
-  deleteModal.addEventListener("click", deleteItem);
+  
 } else {
   console.error("Delete button not found!");
 }
