@@ -76,7 +76,7 @@ async function createItem() {
   try {
     const {response, data, error} = await window.api.request({
       method: "post",
-      url: "/item/create/",
+      url: "/item/create/", 
     });
 
     if (error) {
@@ -85,7 +85,7 @@ async function createItem() {
     }
 
     if (data.message === "Success") {
-      populateTable(data.data);
+      populateTable(data.data)
     } else {
       console.error("Unexpected response:", response?.status);
     }
