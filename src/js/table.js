@@ -150,3 +150,35 @@ async function generateAndPrintQR() {
 
   window.electron.send("open-print-window", { qrCodes, paperSize });
 }
+
+const deleteModal = document.getElementById("deleteModal");
+
+if (deleteModal) {
+  deleteModal.addEventListener("click", deleteItem);
+} else {
+  console.error("Delete button not found!");
+}
+
+async function deleteItem() {
+  const selectedItems = [...document.querySelectorAll(".select-item:checked")].map(checkbox => checkbox.dataset.id);
+  let itemsToDelete = selectedItems.length > 0 ? selectedItems : [...document.querySelectorAll(".select-item")].map(checkbox => checkbox.dataset.id);
+
+  try {
+    const {response, error} = await window.api.request({
+      method: "delete",
+      url: "/item/delete/", 
+      bodyObj: itemsToDelete
+    });
+
+    if (error) {
+      console.log("Error", error)
+    }
+    
+    if (response) {
+      showNotification("Item Deleted Successfully!");
+    }
+  } catch (err) {
+    console.error("Fetch error:", err);
+  }
+  console.log(itemsToDelete)
+}
