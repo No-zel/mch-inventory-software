@@ -3,25 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style/styles.css">
     <title>MCH Inventory</title>
-    <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-      th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-      }
-      th {
-        background-color: #f4f4f4;
-      }
-    </style>
   </head>
   <body>
     <h1>MCH Inventory</h1>
+
+    <button id="openModalBtn">Open Modal</button>
+
     <table>
       <thead>
         <tr>
@@ -35,9 +24,28 @@
         </tr>
       </thead>
       <tbody id="table-body">
-        <!-- Data will be injected here dynamically -->
       </tbody>
     </table>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span id="closeModalBtn" class="close">&times;</span>
+        <h2>Add Item</h2>
+        <form onsubmit="return createItem()" method="post">
+          <label for="productName">Product Name:</label><br>
+          <input type="text" id="productName" name="productName" value=""><br>
+          <label for="department">Department:</label><br>
+          <input type="text" id="department" name="department" value=""><br>
+          <label for="category">Category:</label><br>
+          <input type="text" id="category" name="category" value=""><br>
+          <label for="quantity">Quantity:</label><br>
+          <input type="text" id="quantity" name="quantity" value="1"><br>
+          <label for="assigned_to">Assigned To:</label><br>
+          <input type="text" id="assigned_to" name="assigned_to" value=""><br><br>
+          <input type="submit" value="Submit">
+        </form> 
+      </div>
+    </div>
     <script src="../js/table.js"></script>
   </body>
 </html>

@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (data.message === "Success") {
-        console.log("Data received:", data);
         populateTable(data.data);
       } else {
         console.error("Unexpected response:", response?.status);
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       row.innerHTML = `
         <td><input type="checkbox" class="select-item" data-id="${item.id}"></td>
         <td>${item.id}</td>
-        <td>${item.name}</td>
+        <td>${item.productname}</td>
         <td>${item.department}</td>
         <td>${item.category}</td>
         <td>${item.status}</td>
@@ -50,9 +49,50 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   getProducts();
+  
 });
 
+var modal = document.getElementById("myModal");
 
+var openModalBtn = document.getElementById("openModalBtn");
+
+var closeModalBtn = document.getElementById("closeModalBtn");
+
+openModalBtn.onclick = function() {
+  modal.style.display = "block";
+}
+
+closeModalBtn.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+async function createItem() {
+  try {
+    const {response, data, error} = await window.api.request({
+      method: "post",
+      url: "/item/create/",
+    });
+
+    if (error) {
+      console.error("API Error:", error);
+      return;
+    }
+
+    if (data.message === "Success") {
+      populateTable(data.data);
+    } else {
+      console.error("Unexpected response:", response?.status);
+    }
+  } catch (err) {
+    console.error("Fetch error:", err);
+  }
+}
 // // const { APIRequest } = require("../utils/request"); 
 // const api = window.api.request;
 
