@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (data.message === "Success") {
-        console.log("Data received:", data);
         populateTable(data.data);
       } else {
         console.error("Unexpected response:", response?.status);
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       row.innerHTML = `
         <td><input type="checkbox" class="select-item" data-id="${item.id}"></td>
         <td>${item.id}</td>
-        <td>${item.name}</td>
+        <td>${item.productname}</td>
         <td>${item.department}</td>
         <td>${item.category}</td>
         <td>${item.status}</td>
@@ -48,50 +47,130 @@ document.addEventListener("DOMContentLoaded", async () => {
       tableBody.appendChild(row);
     });
   }
-
   getProducts();
 });
 
+const registerModal = document.getElementById("registerModal");
+const notificationModal = document.getElementById("notificationModal");
 
-// // const { APIRequest } = require("../utils/request"); 
-// const api = window.api.request;
+const openRegisterModal = document.getElementById("openRegisterModal");
+const closeRegisterModal = document.getElementById("closeRegisterModal");
+const closeNotification = document.getElementById("closeNotification");
 
-// async function getProducts() {
-//   try {
-//     const { response, data } = await api.get({
-//       url: `/item/find/`,
-//     });
+openRegisterModal.onclick = () => registerModal.style.display = "block";
 
-//     if (response?.status === 200) {
-//       populateTable(data.data);
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+closeRegisterModal.onclick = () => registerModal.style.display = "none";
+closeNotification.onclick = () => notificationModal.style.display = "none";
 
-// function populateTable(items) {
-//   const tableBody = document.getElementById("table-body");
+window.onclick = (event) => {
+  if (event.target === registerModal) registerModal.style.display = "none";
+  if (event.target === notificationModal) notificationModal.style.display = "none";
+};
 
-//   tableBody.innerHTML = "";
+function showNotification(message) {
+  document.getElementById("notificationMessage").textContent = message;
+  notificationModal.style.display = "block";
+}
 
-//   items.forEach((item) => {
-//     const row = document.createElement("tr");
+async function createItem(event) {
 
-//     row.innerHTML = `
-//       <td><input type="checkbox" class="select-item" data-id="${item.id}"></td>
-//       <td>${item.id}</td>
-//       <td>${item.name}</td>
-//       <td>${item.department}</td>
-//       <td>${item.category}</td>
-//       <td>${item.status}</td>
-//       <td>${item.assigned_to}</td>
-//     `;
+  event.preventDefault();
+  
+  let productNameValue = document.getElementById("productName").value;
+  let DepartmentValue = document.getElementById("department").value;
+  let CategoryValue = document.getElementById("category").value;
+  let QuantityValue = parseInt(document.getElementById("quantity").value, 10);
+  let assignedToValue = document.getElementById("assigned_to").value;
 
-//     tableBody.appendChild(row);
-//   });
-// }
+  try {
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   getProducts();
-// });
+    let requestBody =  {
+      productname: productNameValue,
+      department: DepartmentValue,
+      category: CategoryValue,
+      quantity: QuantityValue,
+      assigned_to: assignedToValue
+    };
+
+    console.log("req body:", requestBody)
+
+    const {response, error} = await window.api.request({
+      method: "post",
+      url: "/item/create/", 
+      bodyObj: requestBody
+    });
+
+    console.log(response)
+
+    if (error) {
+      console.error("API Error:", error);
+      return;
+    }
+    if (response) {
+      showNotification("Item added successfully!");
+    } else {
+      console.error("Unexpected response:", response?.status);
+    }
+  } catch (err) {
+    console.error("Fetch error:", err);
+  }
+}
+
+async function generateAndPrintQR() {
+  const selectedItems = [...document.querySelectorAll(".select-item:checked")].map(checkbox => checkbox.dataset.id);
+  let itemsToPrint = selectedItems.length > 0 ? selectedItems : [...document.querySelectorAll(".select-item")].map(checkbox => checkbox.dataset.id);
+
+  if (itemsToPrint.length === 0) {
+    alert("No items available to print QR codes.");
+    return;
+  }
+
+  // Open a blank print window
+  let printWindow = window.open("", "_blank");
+  let doc = printWindow.document;
+
+  // Create and append the <html> structure dynamically
+  let html = doc.createElement("html");
+  let head = doc.createElement("head");
+  let body = doc.createElement("body");
+
+  // Set up head with styles
+  let style = doc.createElement("style");
+  style.textContent = `
+    body { font-family: Arial, sans-serif; text-align: center; }
+    .qr-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .qr-item { text-align: center; border: 1px solid black; padding: 10px; }
+  `;
+  head.appendChild(style);
+
+  // Add heading
+  let title = doc.createElement("h1");
+  title.textContent = "QR Codes";
+  body.appendChild(title);
+
+  // QR container
+  let qrContainer = doc.createElement("div");
+  qrContainer.classList.add("qr-container");
+
+  // Append everything
+  doc.head.appendChild(head);
+  doc.body.appendChild(title);
+  doc.body.appendChild(qrContainer);
+  html.appendChild(head);
+  html.appendChild(body);
+  doc.appendChild(html);
+
+  // Wait for the new window to fully load
+  setTimeout(async () => {
+    for (let id of itemsToPrint) {
+      let qrImage = await window.qr.generate(id); // Calls the exposed QR function
+      let div = document.createElement("div");
+      div.classList.add("qr-item");
+      div.innerHTML = `<p>ID: ${id}</p><img src="${qrImage}">`;
+      qrContainer.appendChild(div);
+    }
+
+    printWindow.focus();
+    setTimeout(() => printWindow.print(), 500);
+  }, 500);
+}

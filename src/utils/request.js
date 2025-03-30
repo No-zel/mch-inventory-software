@@ -1,5 +1,5 @@
 const options = {
-  baseUrl: "http://192.168.100.10:5001/mch/v1",
+  baseUrl: "http://192.168.100.9:5001/mch/v1",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -27,7 +27,7 @@ class APIRequest {
         headers: options.headers,
         body: JSON.stringify(bodyObj),
       });
-
+  
       return await this.handleResponse(response);
     } catch (err) {
       return this.handleError(err);
@@ -62,8 +62,6 @@ class APIRequest {
   }
 
   async handleResponse(response) {
-    console.log("Raw Response:", response);
-  
     if (!response.ok) {
       return {
         response,
@@ -73,8 +71,7 @@ class APIRequest {
     }
   
     try {
-      const json = await response.json();  // Ensure body is parsed only once
-      console.log("Parsed JSON:", json);  // Debugging log
+      const json = await response.json(); 
       return { response, data: json };
     } catch (err) {
       console.error("JSON Parsing Error:", err);
@@ -93,9 +90,6 @@ class APIRequest {
 }
 
 module.exports = { APIRequest };
-
-
-
 // --------------------
 // const options = {
 //     baseUrl: "http://192.168.100.10:5001/mch/v1",

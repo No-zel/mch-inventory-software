@@ -19,5 +19,8 @@
   "homepage": "https://github.com/No-zel/mch-inventory-software#readme",
   "devDependencies": {
     "electron": "^35.0.3"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
   }
 }
