@@ -18,7 +18,7 @@
 
     <button id="openRegisterModal">Add Item</button>
     <button id="printQR">Print QR</button>
-    <button id="deleteModal">Delete</button>
+    <button id="openDeleteModal">Delete</button>
     <table>
       <thead>
         <tr>
@@ -39,7 +39,7 @@
       <div class="modal-content">
         <span id="closeRegisterModal" class="close">&times;</span>
         <h2>Add Item</h2>
-        <form onsubmit="createItem(event)" method="post">
+        <form id="registerForm" method="post">
           <label for="productName">Product Name:</label><br>
           <input type="text" id="productName" name="productName" required><br>
           <label for="department">Department:</label><br>
@@ -64,7 +64,7 @@
 
     <div id="confirmationModal" class="modal">
       <div class="modal-small">
-        <p id="notificationMessage">This is a notification message.</p>
+        <p id="notificationMessage">Confirm Delete.</p>
         <button id="confirmChoice">Confirm</button>
         <button id="cancelChoice">Cancel</button>
       </div>

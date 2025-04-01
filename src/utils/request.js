@@ -1,5 +1,5 @@
 const options = {
-  baseUrl: "http://192.168.2.22:5001/mch/v1",
+  baseUrl: "http://192.168.100.9:5001/mch/v1",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -50,39 +50,44 @@ class APIRequest {
 
   async delete({ url, bodyObj }) {
     try {
-      const response = await fetch(`${options.baseUrl}${url}`, {
-        method: "DELETE",
-        headers: options.headers,
-        body: JSON.stringify(bodyObj) 
-      });
-
+        const response = await fetch(`${options.baseUrl}${url}`, {
+            method: "DELETE",
+            headers: options.headers,
+            body: JSON.stringify(bodyObj),
+        });
+      
       return await this.handleResponse(response);
     } catch (err) {
-      return this.handleError(err);
+        console.error("Request Error:", err);
+      return { response: null, data: null, error: err.message }; 
     }
+}
+
+async handleResponse(response) {
+  if (!response.ok) {
+      return {
+          response,
+          data: null,
+          error: `HTTP Error: ${response.status} ${response.statusText}`,
+      };
   }
 
-  async handleResponse(response) {
-    if (!response.ok) {
-      return {
-        response,
-        data: null,
-        error: `HTTP Error: ${response.status} ${response.statusText}`,
-      };
-    }
-  
-    try {
-      const json = await response.json(); 
+  try {
+      // Check if response has a body
+      const text = await response.text();
+      const json = text ? JSON.parse(text) : null;  // Avoid JSON parsing error on empty response
+
       return { response, data: json };
-    } catch (err) {
+  } catch (err) {
       console.error("JSON Parsing Error:", err);
       return {
-        response,
-        data: null,
-        error: "Failed to parse JSON response",
+          response,
+          data: null,
+          error: "Failed to parse JSON response",
       };
-    }
   }
+}
+
 
   handleError(err) {
     console.error("Request Error:", err);
