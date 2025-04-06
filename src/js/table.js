@@ -192,14 +192,14 @@ async function generateAndPrintQR() {
     return;
   }
 
-  let paperSize = document.getElementById("paperSize").value; 
+  // let paperSize = document.getElementById("paperSize").value; 
 
   let qrCodes = await Promise.all(itemsToPrint.map(async (id) => {
     let qrImage = await window.qr.generate(id);
     return { id, qrImage };
   }));
 
-  window.electron.send("open-print-window", { qrCodes, paperSize });
+  window.electron.send("open-print-window", { qrCodes });
 }
 
 const printQRButton = document.getElementById("printQR");
