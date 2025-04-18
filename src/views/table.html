@@ -9,26 +9,24 @@
   <body>
     <h1>MCH Inventory</h1>
 
-    <!-- <label for="paperSize">Select Paper Size:</label>
-    <select id="paperSize">
-      <option value="A4">A4</option>
-      <option value="Letter">Letter</option>
-      <option value="A5">A5</option>
-    </select> -->
-
     <button id="openRegisterModal">Add Item</button>
-    <button id="printQR">Print QR</button>
-    <button id="openDeleteModal">Delete</button>
+    <button id="openPrintQRWindow">Print QR</button>
+    <button id="openReportModal">Create Report</button>
+    <!-- <button id="openDeleteModal">Delete</button> -->
+
     <table>
       <thead>
         <tr>
           <th>Select</th>
           <th>ID</th>
+          <th>Serial Number</th>
           <th>Name</th>
-          <th>Department</th>
           <th>Category</th>
+          <th>Sub-Category</th>
           <th>Status</th>
+          <th>Department</th>
           <th>Assigned To</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody id="table-body">
@@ -44,10 +42,28 @@
           <input type="text" id="productName" name="productName" required><br>
           <label for="department">Department:</label><br>
           <input type="text" id="department" name="department" required><br>
+          <label for="serialNumber"> Serial Number (optional):</label><br>
+          <input type="text" id="serialNumber" value="N/A" name="serialNumber"><br>
           <label for="category">Category:</label><br>
           <input type="text" id="category" name="category" required><br>
-          <label for="quantity">Quantity:</label><br>
-          <input type="number" id="quantity" name="quantity" value="1" required><br>
+          <label for="subcategory">Sub-Category:</label><br>
+          <input type="text" id="subcategory" value="" name="subcategory"><br>
+
+          <div id="quantityContainer">
+            <label for="quantity">Quantity:</label><br>
+            <input type="number" id="quantity" name="quantity" value="1" required><br>
+          </div>
+
+          <div id="statusContainer" style="display: none;">
+            <label for="status">Status:</label><br>
+            <select id="status" name="status">
+              <option value="available">AVAILABLE</option>
+              <option value="in use">IN USE</option>
+              <option value="missing">MISSING</option>
+              <option value="destroyed">DESTROYED</option>
+            </select><br>
+          </div>
+          
           <label for="assigned_to">Assigned To:</label><br>
           <input type="text" id="assigned_to" name="assigned_to" required><br><br>
           <input type="submit" value="Submit">
@@ -66,9 +82,32 @@
       <div class="modal-small">
         <p id="notificationMessage">Confirm Delete.</p>
         <button id="confirmChoice">Confirm</button>
-        <button id="cancelChoice">Cancel</button>
+        <button id="closeConfirmationModal">Cancel</button>
       </div>
     </div>
+
+    <div id="reportSelectionModal" class="modal">
+      <div class="modal-big">
+        <p id="reportMessage">Select a sections to include in report:</p>
+        <form id="reportFilterForm">
+          <label><input type="checkbox" name="department" value="ADMIN"> ADMIN</label>
+          <label><input type="checkbox" name="department" value="PHILHEALTH"> PHILHEALTH</label>
+          <label><input type="checkbox" name="department" value="ADMISSION"> ADMISSION</label>
+          <br><br>
+          <!-- <label><input type="checkbox" name="status" value="available"> AVAILABLE</label> -->
+          <label><input type="checkbox" name="status" value="in use"> IN USE</label>
+          <label><input type="checkbox" name="status" value="missing"> MISSING</label>
+          <label><input type="checkbox" name="status" value="destroyed"> DESTROYED</label>
+          <br><br>
+          <p> Include items audited in the last quarter?</p>
+          <label><input type="radio" name="last_audit" value="Yes"> Yes</label>
+          <label><input type="radio" name="last_audit" value="No"> No</label>
+        </form>
+        <button id="printReport">Print</button>
+        <button id="closeReportModal">Cancel</button>
+      </div>
+    </div>
+    
     <script type="module" src="../js/table.js"></script>
   </body>
 </html>

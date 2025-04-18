@@ -28,3 +28,9 @@ contextBridge.exposeInMainWorld("qr", {
 contextBridge.exposeInMainWorld("electron", {
   send: (channel, data) => ipcRenderer.send(channel, data), 
 });
+
+contextBridge.exposeInMainWorld("auth", {
+  setToken: async (token) => {
+    await ipcRenderer.invoke("set-auth-token", token);
+  }
+});

@@ -71,6 +71,16 @@ table {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+#reportSelectionModal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .modal-small {
   position: absolute;
   top: 50%;
@@ -82,6 +92,20 @@ table {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 300px;
+}
+
+.modal-big {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 25vw;
+  height: 20vw;
 }
 
 .modal button {

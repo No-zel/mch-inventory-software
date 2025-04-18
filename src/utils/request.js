@@ -1,5 +1,5 @@
 const options = {
-  baseUrl: "http://192.168.100.19:5001/mch/v1",
+  baseUrl: "http://192.168.100.4:5001/mch/v1",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -7,55 +7,63 @@ const options = {
 };
 
 class APIRequest {
-  async get({ url }) {
+  async get({ url, token = null }) {
     try {
       const response = await fetch(`${options.baseUrl}${url}`, {
         method: "GET",
-        headers: options.headers,
+        headers: {
+          ...options.headers,
+          ...(token ? { "auth-token": token } : {}),
+        },
       });
-
       return await this.handleResponse(response);
     } catch (err) {
       return this.handleError(err);
     }
   }
 
-  async post({ url, bodyObj = {} }) {
+  async post({ url, bodyObj = {}, token = null }) {
     try {
       const response = await fetch(`${options.baseUrl}${url}`, {
         method: "POST",
-        headers: options.headers,
+        headers: {
+          ...options.headers,
+          ...(token ? { "auth-token": token } : {}),
+        },
         body: JSON.stringify(bodyObj),
       });
-  
       return await this.handleResponse(response);
     } catch (err) {
       return this.handleError(err);
     }
   }
 
-  async patch({ url, bodyObj = {} }) {
+  async patch({ url, bodyObj = {}, token = null }) {
     try {
       const response = await fetch(`${options.baseUrl}${url}`, {
         method: "PATCH",
-        headers: options.headers,
+        headers: {
+          ...options.headers,
+          ...(token ? { "auth-token": token } : {}),
+        },
         body: JSON.stringify(bodyObj),
       });
-
       return await this.handleResponse(response);
     } catch (err) {
       return this.handleError(err);
     }
   }
 
-  async delete({ url, bodyObj }) {
+  async delete({ url, bodyObj, token = null }) {
     try {
         const response = await fetch(`${options.baseUrl}${url}`, {
             method: "DELETE",
-            headers: options.headers,
+            headers: {
+              ...options.headers,
+              ...(token ? { "auth-token": token } : {}),
+            },
             body: JSON.stringify(bodyObj),
         });
-      
       return await this.handleResponse(response);
     } catch (err) {
         console.error("Request Error:", err);

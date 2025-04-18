@@ -1,13 +1,14 @@
 const { app, BrowserWindow, ipcMain, session } = require("electron");
 const QRCode = require("qrcode");
 const path = require("path");
-const auth = require("./src/auth/auth");
+// const auth = require("./src/auth/auth");
 const { APIRequest } = require("./src/utils/request");
 const { setupPrintHandler } = require("./src/utils/print");
-
 const apiRequest = new APIRequest();
+let authToken = null;
 
 const createWindow = () => {
+  
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -19,8 +20,13 @@ const createWindow = () => {
     },
   });
 
-  win.loadFile("src/views/table.html");
+  win.loadFile("src/views/login.html");
+
+  win.once("ready-to-show", () => {
+    win.maximize(); 
+  });
 };
+
 
 app.whenReady().then(() => {
   createWindow();
@@ -44,7 +50,7 @@ ipcMain.handle("APIRequest", async (_, { method, url, bodyObj }) => {
     if (!["get", "post", "patch", "delete"].includes(method)) {
       throw new Error("Invalid HTTP method");
     }
-    return await apiRequest[method]({ url, bodyObj });
+    return await apiRequest[method]({ url, bodyObj, token: authToken });
   } catch (error) {
     return { error: error.message };
   }
@@ -59,6 +65,6 @@ ipcMain.handle("generateQRCode", async (_, data) => {
   }
 });
 
-// ipcMain.handle("auth-check", (event) => {
-//   return auth.getToken();
-// });
+ipcMain.handle("set-auth-token", (_, token) => {
+  authToken = token;
+});

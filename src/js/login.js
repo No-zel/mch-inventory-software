@@ -1,7 +1,3 @@
-import { APIRequest } from "../utils/request";
-
-const api = new APIRequest();
-
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
 
@@ -12,16 +8,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value;
 
     try {
-      const { data } = await api.post({
-        url: "/login",
-        bodyObj: { username, password },
+      const { data } = await window.api.request({
+        method: "post",
+        url: "/account/login/",
+        bodyObj: { 
+          username: username, 
+          password: password 
+        },
       });
-
       if (data.token) {
-        await window.auth.saveToken(data.token); // Securely save token
-        window.location.href = "index.html";
+        await auth.setToken(data.token);
+        window.location.href = "table.html";
       } else {
         alert("Login failed");
+        return
       }
     } catch (error) {
       console.error("Login error:", error);
