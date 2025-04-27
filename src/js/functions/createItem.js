@@ -1,13 +1,15 @@
-import { getProducts, showNotification } from '../functions/index.js';
+import { getProducts, showNotification, toSentenceCase } from '../functions/index.js';
 
 export async function createItem(event) {
-  let productNameValue = document.getElementById("productName").value;
+  
+  let productNameValue = toSentenceCase(document.getElementById("productName").value);
   let serialNumberValue = document.getElementById("serialNumber").value;
-  let DepartmentValue = document.getElementById("department").value.toUpperCase();
-  let CategoryValue = document.getElementById("category").value;
-  let SubCategoryValue = document.getElementById("subcategory").value;
+  let DepartmentValue = document.getElementById("department").value;
+  let CategoryValue = toSentenceCase(document.getElementById("category").value);
+  let SubCategoryValue = toSentenceCase(document.getElementById("subcategory").value);
   let QuantityValue = parseInt(document.getElementById("quantity").value, 10);
-  let assignedToValue = document.getElementById("assigned_to").value;
+  let assignedToValue = toSentenceCase(document.getElementById("assigned_to").value);
+  
 
   const requestBody = {
     serialNumber: serialNumberValue,

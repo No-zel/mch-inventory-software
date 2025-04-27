@@ -5,6 +5,15 @@ export function populateTable(items) {
   
     items.forEach((item) => {
       const row = document.createElement("tr");
+      const date = new Date(item.scanned_at);
+      const formattedDate = date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+      });
   
       row.innerHTML = `
         <td><input type="checkbox" class="select-item" data-id="${item.id}"></td>
@@ -16,6 +25,7 @@ export function populateTable(items) {
         <td>${item.status}</td>
         <td>${item.department}</td>
         <td>${item.assignedTo}</td>
+        <td>${formattedDate}</td>
         <td>
           <button class="edit-item" data-id="${item.id}">Edit</button> 
           <button class="delete-item" data-id="${item.id}">Delete</button>

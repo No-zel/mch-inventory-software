@@ -1,19 +1,20 @@
-import { getProducts, showNotification } from '../functions/index.js';
+import { getProducts, showNotification, toSentenceCase } from '../functions/index.js';
 
 export async function editItem(event, itemId) {
 
 const formData = new FormData(event.target);
 
 const updatedItem = {
-    id: itemId,
-    productName: formData.get("productName"),
-    department: formData.get("department"),
-    serialNumber: formData.get("serialNumber"),
-    category: formData.get("category"),
-    subCategory: formData.get("subcategory"),
-    status: formData.get("status"),
-    assignedTo: formData.get("assigned_to"),
-  };
+  id: itemId,
+  productName: toSentenceCase(formData.get("productName")),
+  department: formData.get("department"),
+  serialNumber: formData.get("serialNumber"), 
+  category: toSentenceCase(formData.get("category")),
+  subCategory: toSentenceCase(formData.get("subcategory")),
+  status: formData.get("status"), 
+  assignedTo: toSentenceCase(formData.get("assigned_to")),
+};
+
 
   console.log("req body:", updatedItem);
 

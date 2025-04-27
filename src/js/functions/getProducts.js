@@ -1,4 +1,4 @@
-import { populateTable } from '../functions/index.js';
+import { populateTable } from './index.js';
 
 export async function getProducts() {
     try {
@@ -13,7 +13,8 @@ export async function getProducts() {
       }
   
       if (data.status === 200) {
-        populateTable(data.data);
+        window.allItems = data.data; 
+        populateTable(window.allItems);
       } else {
         console.error("Unexpected response:", response?.status);
       }

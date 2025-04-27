@@ -12,36 +12,81 @@
     <button id="openRegisterModal">Add Item</button>
     <button id="openPrintQRWindow">Print QR</button>
     <button id="openReportModal">Create Report</button>
+    <button id="openFilterModal">Filter</button>
     <!-- <button id="openDeleteModal">Delete</button> -->
-
-    <table>
-      <thead>
-        <tr>
-          <th>Select</th>
-          <th>ID</th>
-          <th>Serial Number</th>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Sub-Category</th>
-          <th>Status</th>
-          <th>Department</th>
-          <th>Assigned To</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="table-body">
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>ID</th>
+            <th>Serial Number</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Sub-Category</th>
+            <th>Status</th>
+            <th>Department</th>
+            <th>Assigned To</th>
+            <th>Last Scanned</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+      </table>
+    </div>
 
     <div id="registerModal" class="modal">
       <div class="modal-content">
         <span id="closeRegisterModal" class="close">&times;</span>
-        <h2>Add Item</h2>
+
+        <div id="addContainer"> 
+          <h2>Add Item</h2>
+        </div>
+        
+        <div id="updateContainer"> 
+          <h2>Update Item</h2>
+        </div>
+
         <form id="registerForm" method="post">
           <label for="productName">Product Name:</label><br>
           <input type="text" id="productName" name="productName" required><br>
-          <label for="department">Department:</label><br>
-          <input type="text" id="department" name="department" required><br>
+
+            <label for="department">Department:</label><br>
+            <select name="department" id="department" required>
+              <option value="ABTC">ABTC</option>
+              <option value="Accounting">Accounting</option>
+              <option value="Admin">Admin</option>
+              <option value="Admission">Admission</option>
+              <option value="Ambulance">Ambulance</option>
+              <option value="Billing">Billing</option>
+              <option value="Cashier">Cashier</option>
+              <option value="CSF">CSF</option>
+              <option value="CSR">CSR</option>
+              <option value="Dental">Dental</option>
+              <option value="Dialysis">Dialysis</option>
+              <option value="Dietary">Dietary</option>
+              <option value="Doctors">Doctors</option>
+              <option value="DR">DR</option>
+              <option value="ER">ER</option>
+              <option value="LAB">LAB</option>
+              <option value="Laundry">Laundry</option>
+              <option value="Linen">Linen</option>
+              <option value="Maintenance">Maintenance</option>
+              <option value="Maternity">Maternity</option>
+              <option value="Medical Records">Medical Records</option>
+              <option value="New Born">New Born</option>
+              <option value="OPD">OPD</option>
+              <option value="OR">OR</option>
+              <option value="Pharmacy">Pharmacy</option>
+              <option value="PHILHEALTH">PHILHEALTH</option>
+              <option value="Radio">Radio</option>
+              <option value="Sanitary">Sanitary</option>
+              <option value="Social Service">Social Service</option>
+              <option value="Utility">Utility</option>
+              <option value="WARD">WARD</option>
+            </select> <br>
+
           <label for="serialNumber"> Serial Number (optional):</label><br>
           <input type="text" id="serialNumber" value="N/A" name="serialNumber"><br>
           <label for="category">Category:</label><br>
@@ -90,9 +135,37 @@
       <div class="modal-big">
         <p id="reportMessage">Select a sections to include in report:</p>
         <form id="reportFilterForm">
-          <label><input type="checkbox" name="department" value="ADMIN"> ADMIN</label>
+          <label><input type="checkbox" name="department" value="ABTC"> ABTC</label>
+          <label><input type="checkbox" name="department" value="Accounting"> Accounting</label>
+          <label><input type="checkbox" name="department" value="Admin"> Admin</label>
+          <label><input type="checkbox" name="department" value="Admission"> Admission</label>
+          <label><input type="checkbox" name="department" value="Ambulance"> Ambulance</label>
+          <label><input type="checkbox" name="department" value="Billing"> Billing</label>
+          <label><input type="checkbox" name="department" value="Cashier"> Cashier</label>
+          <label><input type="checkbox" name="department" value="CSF"> CSF</label>
+          <label><input type="checkbox" name="department" value="CSR"> CSR</label>
+          <label><input type="checkbox" name="department" value="Dental"> Dental</label>
+          <label><input type="checkbox" name="department" value="Dialysis"> Dialysis</label>
+          <label><input type="checkbox" name="department" value="Dietary"> Dietary</label>
+          <label><input type="checkbox" name="department" value="Doctors"> Doctors</label>
+          <label><input type="checkbox" name="department" value="DR"> DR</label>
+          <label><input type="checkbox" name="department" value="ER"> ER</label>
+          <label><input type="checkbox" name="department" value="LAB"> LAB</label>
+          <label><input type="checkbox" name="department" value="Laundry"> Laundry</label>
+          <label><input type="checkbox" name="department" value="Linen"> Linen</label>
+          <label><input type="checkbox" name="department" value="Maintenance"> Maintenance</label>
+          <label><input type="checkbox" name="department" value="Maternity"> Maternity</label>
+          <label><input type="checkbox" name="department" value="Medical Records"> Medical Records</label>
+          <label><input type="checkbox" name="department" value="New Born"> New Born</label>
+          <label><input type="checkbox" name="department" value="OPD"> OPD</label>
+          <label><input type="checkbox" name="department" value="OR"> OR</label>
+          <label><input type="checkbox" name="department" value="Pharmacy"> Pharmacy</label>
           <label><input type="checkbox" name="department" value="PHILHEALTH"> PHILHEALTH</label>
-          <label><input type="checkbox" name="department" value="ADMISSION"> ADMISSION</label>
+          <label><input type="checkbox" name="department" value="Radio"> Radio</label>
+          <label><input type="checkbox" name="department" value="Sanitary"> Sanitary</label>
+          <label><input type="checkbox" name="department" value="Social Service"> Social Service</label>
+          <label><input type="checkbox" name="department" value="Utility"> Utility</label>
+          <label><input type="checkbox" name="department" value="WARD"> WARD</label>
           <br><br>
           <!-- <label><input type="checkbox" name="status" value="available"> AVAILABLE</label> -->
           <label><input type="checkbox" name="status" value="in use"> IN USE</label>
@@ -105,6 +178,47 @@
         </form>
         <button id="printReport">Print</button>
         <button id="closeReportModal">Cancel</button>
+      </div>
+    </div>
+
+    <div id="filterModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <h3>Select Departments</h3>
+        <form id="FilterForm">
+          <label><input type="checkbox" name="department" value="ABTC"> ABTC</label>
+          <label><input type="checkbox" name="department" value="Accounting"> Accounting</label>
+          <label><input type="checkbox" name="department" value="Admin"> Admin</label>
+          <label><input type="checkbox" name="department" value="Admission"> Admission</label>
+          <label><input type="checkbox" name="department" value="Ambulance"> Ambulance</label>
+          <label><input type="checkbox" name="department" value="Billing"> Billing</label>
+          <label><input type="checkbox" name="department" value="Cashier"> Cashier</label>
+          <label><input type="checkbox" name="department" value="CSF"> CSF</label>
+          <label><input type="checkbox" name="department" value="CSR"> CSR</label>
+          <label><input type="checkbox" name="department" value="Dental"> Dental</label>
+          <label><input type="checkbox" name="department" value="Dialysis"> Dialysis</label>
+          <label><input type="checkbox" name="department" value="Dietary"> Dietary</label>
+          <label><input type="checkbox" name="department" value="Doctors"> Doctors</label>
+          <label><input type="checkbox" name="department" value="DR"> DR</label>
+          <label><input type="checkbox" name="department" value="ER"> ER</label>
+          <label><input type="checkbox" name="department" value="LAB"> LAB</label>
+          <label><input type="checkbox" name="department" value="Laundry"> Laundry</label>
+          <label><input type="checkbox" name="department" value="Linen"> Linen</label>
+          <label><input type="checkbox" name="department" value="Maintenance"> Maintenance</label>
+          <label><input type="checkbox" name="department" value="Maternity"> Maternity</label>
+          <label><input type="checkbox" name="department" value="Medical Records"> Medical Records</label>
+          <label><input type="checkbox" name="department" value="New Born"> New Born</label>
+          <label><input type="checkbox" name="department" value="OPD"> OPD</label>
+          <label><input type="checkbox" name="department" value="OR"> OR</label>
+          <label><input type="checkbox" name="department" value="Pharmacy"> Pharmacy</label>
+          <label><input type="checkbox" name="department" value="PHILHEALTH"> PHILHEALTH</label>
+          <label><input type="checkbox" name="department" value="Radio"> Radio</label>
+          <label><input type="checkbox" name="department" value="Sanitary"> Sanitary</label>
+          <label><input type="checkbox" name="department" value="Social Service"> Social Service</label>
+          <label><input type="checkbox" name="department" value="Utility"> Utility</label>
+          <label><input type="checkbox" name="department" value="WARD"> WARD</label>
+          <button type="submit">Apply Filter</button>
+          <button type="button" id="closeFilterModal">Cancel</button>
+        </form> 
       </div>
     </div>
     

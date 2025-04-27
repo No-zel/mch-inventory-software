@@ -2,7 +2,8 @@ export { createItem } from './createItem.js';
 export { deleteItem } from './deleteItem.js';
 export { editItem } from './editItem.js'
 export { showNotification } from '../Components/notification.js';
-export { generateAndPrintQR } from './genPrintQR.js';
-export { generateAndPrintReport } from './genPrintReport.js';
-export { getProducts } from './getItem.js'
+export { generateAndPrintQR } from './generateAndPrintQR.js';
+export { generateAndPrintReport } from './generateAndPrintReport.js';
+export { getProducts } from './getProducts.js'
 export { populateTable } from './populateTable.js'
+export { toSentenceCase } from '../Components/toSentenceCase.js'

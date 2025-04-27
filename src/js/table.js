@@ -66,6 +66,9 @@ document.addEventListener("edit-item", (e) => {
 
     document.getElementById("statusContainer").style.display = "block";
     document.getElementById("quantityContainer").style.display = "none";
+
+    document.getElementById("addContainer").style.display = "none";
+    document.getElementById("updateContainer").style.display = "block";
   }
   registerModal.style.display = "block";
 });
@@ -73,15 +76,18 @@ document.addEventListener("edit-item", (e) => {
 const registerModal = document.getElementById("registerModal");
 const notificationModal = document.getElementById("notificationModal");
 const confirmationModal = document.getElementById("confirmationModal");
+const filterModal = document.getElementById("filterModal");
 const reportSelectionModal = document.getElementById("reportSelectionModal")
 
 const openRegisterModal = document.getElementById("openRegisterModal");
 const openReportModal = document.getElementById("openReportModal");
+const openFilterModal = document.getElementById("openFilterModal");
 
 const closeRegisterModal = document.getElementById("closeRegisterModal");
 const closeNotification = document.getElementById("closeNotification");
 const closeReportModal = document.getElementById("closeReportModal");
 const closeConfirmationModal = document.getElementById("closeConfirmationModal");
+const closeFilterModal = document.getElementById("closeFilterModal");
 
 openRegisterModal.onclick = () => {
   window.itemToEdit = null;
@@ -92,14 +98,19 @@ openRegisterModal.onclick = () => {
   // Show quantity, hide status
   document.getElementById("quantityContainer").style.display = "block";
   document.getElementById("statusContainer").style.display = "none";
+
+  document.getElementById("addContainer").style.display = "block";
+  document.getElementById("updateContainer").style.display = "none";
 };
 
 openReportModal.onclick = () => reportSelectionModal.style.display = "block";
+openFilterModal.onclick = () => filterModal.style.display = "block";
 
 closeRegisterModal.onclick = () => registerModal.style.display = "none";
 closeNotification.onclick = () => notificationModal.style.display = "none";
 closeReportModal.onclick = () => reportSelectionModal.style.display = "none";
 closeConfirmationModal.onclick = () => confirmationModal.style.display = "none";
+closeFilterModal.onclick = () => filterModal.style.display = "none";
 
 window.onclick = (event) => {
   if (event.target === registerModal) registerModal.style.display = "none";
@@ -124,3 +135,17 @@ if (printReportBtn) {
 } else {
   console.error("Print Report button not found!");
 }
+
+document.getElementById("FilterForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const selected = Array.from(document.querySelectorAll('input[name="department"]:checked'))
+    .map(input => input.value);
+
+  const filteredItems = selected.length === 0
+    ? window.allItems 
+    : window.allItems.filter(item => selected.includes(item.department));
+
+  populateTable(filteredItems);
+  filterModal.style.display = "none";
+});
