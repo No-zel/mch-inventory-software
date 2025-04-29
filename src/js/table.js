@@ -1,4 +1,4 @@
-import { createItem, deleteItem, editItem, generateAndPrintQR, generateAndPrintReport, getProducts, populateTable, showNotification } from '../js/functions/index.js';
+import { createItem, deleteItem, editItem, generateAndPrintQR, generateAndPrintReport, getProducts, populateTable, clearReportModal, populateReportModal, populateFilterModal, clearFilterModal } from './index.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!window.api || !window.api.request) {
@@ -76,12 +76,10 @@ document.addEventListener("edit-item", (e) => {
 const registerModal = document.getElementById("registerModal");
 const notificationModal = document.getElementById("notificationModal");
 const confirmationModal = document.getElementById("confirmationModal");
-const filterModal = document.getElementById("filterModal");
+const filterModal = document.getElementById("filterModal")
 const reportSelectionModal = document.getElementById("reportSelectionModal")
 
 const openRegisterModal = document.getElementById("openRegisterModal");
-const openReportModal = document.getElementById("openReportModal");
-const openFilterModal = document.getElementById("openFilterModal");
 
 const closeRegisterModal = document.getElementById("closeRegisterModal");
 const closeNotification = document.getElementById("closeNotification");
@@ -94,17 +92,11 @@ openRegisterModal.onclick = () => {
   registerModal.style.display = "block";
 
   document.getElementById("registerForm").reset();
-
-  // Show quantity, hide status
   document.getElementById("quantityContainer").style.display = "block";
   document.getElementById("statusContainer").style.display = "none";
-
   document.getElementById("addContainer").style.display = "block";
   document.getElementById("updateContainer").style.display = "none";
 };
-
-openReportModal.onclick = () => reportSelectionModal.style.display = "block";
-openFilterModal.onclick = () => filterModal.style.display = "block";
 
 closeRegisterModal.onclick = () => registerModal.style.display = "none";
 closeNotification.onclick = () => notificationModal.style.display = "none";
@@ -149,3 +141,15 @@ document.getElementById("FilterForm").addEventListener("submit", (e) => {
   populateTable(filteredItems);
   filterModal.style.display = "none";
 });
+
+document.getElementById("openReportModal").addEventListener("click", function() {
+  clearReportModal()
+  populateReportModal();
+  reportSelectionModal.style.display = "block"
+})
+
+document.getElementById("openFilterModal").addEventListener("click", function() {
+  clearFilterModal()
+  populateFilterModal();
+  filterModal.style.display = "block"
+})

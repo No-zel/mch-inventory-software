@@ -1,4 +1,4 @@
-import { getProducts, showNotification, toSentenceCase } from '../functions/index.js';
+import { getProducts, showNotification, toSentenceCase } from '../index.js';
 
 export async function editItem(event, itemId) {
 

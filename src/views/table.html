@@ -7,13 +7,34 @@
     <title>MCH Inventory</title>
   </head>
   <body>
-    <h1>MCH Inventory</h1>
+  <div class="container"> 
+    <div class="button-container">
+      <button class="control-button" id="openRegisterModal">
+        <svg class="default-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+        </svg>
+        Add Item
+      </button>
+      <button class="control-button"  id="openPrintQRWindow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+          <path fill-rule="evenodd" d="M3 4.875C3 3.839 3.84 3 4.875 3h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 0 1 3 9.375v-4.5ZM4.875 4.5a.375.375 0 0 0-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 0 0 .375-.375v-4.5a.375.375 0 0 0-.375-.375h-4.5Zm7.875.375c0-1.036.84-1.875 1.875-1.875h4.5C20.16 3 21 3.84 21 4.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 0 1-1.875-1.875v-4.5Zm1.875-.375a.375.375 0 0 0-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 0 0 .375-.375v-4.5a.375.375 0 0 0-.375-.375h-4.5ZM6 6.75A.75.75 0 0 1 6.75 6h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75A.75.75 0 0 1 6 7.5v-.75Zm9.75 0A.75.75 0 0 1 16.5 6h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75ZM3 14.625c0-1.036.84-1.875 1.875-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.035-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 0 1 3 19.125v-4.5Zm1.875-.375a.375.375 0 0 0-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 0 0 .375-.375v-4.5a.375.375 0 0 0-.375-.375h-4.5Zm7.875-.75a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Zm6 0a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75ZM6 16.5a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Zm9.75 0a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Zm-3 3a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Zm6 0a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Z" clip-rule="evenodd" />
+        </svg>
+        Print QR
+      </button>
+      <button class="control-button"  id="openReportModal">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />
+        </svg>
+        Create Report
+      </button>
+      <button class="control-button" id="openFilterModal">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+        </svg>
+        Filter
+      </button>
+    </div>
 
-    <button id="openRegisterModal">Add Item</button>
-    <button id="openPrintQRWindow">Print QR</button>
-    <button id="openReportModal">Create Report</button>
-    <button id="openFilterModal">Filter</button>
-    <!-- <button id="openDeleteModal">Delete</button> -->
     <div class="table-container">
       <table>
         <thead>
@@ -35,6 +56,7 @@
         </tbody>
       </table>
     </div>
+  </div>
 
     <div id="registerModal" class="modal">
       <div class="modal-content">
@@ -133,9 +155,10 @@
 
     <div id="reportSelectionModal" class="modal">
       <div class="modal-big">
-        <p id="reportMessage">Select a sections to include in report:</p>
+        <span id="closeReportModal" class="close">&times;</span>
+        <!-- <p id="reportMessage">Select a sections to include in report:</p> -->
         <form id="reportFilterForm">
-          <label><input type="checkbox" name="department" value="ABTC"> ABTC</label>
+          <!-- <label><input type="checkbox" name="department" value="ABTC"> ABTC</label>
           <label><input type="checkbox" name="department" value="Accounting"> Accounting</label>
           <label><input type="checkbox" name="department" value="Admin"> Admin</label>
           <label><input type="checkbox" name="department" value="Admission"> Admission</label>
@@ -165,27 +188,29 @@
           <label><input type="checkbox" name="department" value="Sanitary"> Sanitary</label>
           <label><input type="checkbox" name="department" value="Social Service"> Social Service</label>
           <label><input type="checkbox" name="department" value="Utility"> Utility</label>
-          <label><input type="checkbox" name="department" value="WARD"> WARD</label>
+          <label><input type="checkbox" name="department" value="WARD"> WARD</label> -->
           <br><br>
+
           <!-- <label><input type="checkbox" name="status" value="available"> AVAILABLE</label> -->
           <label><input type="checkbox" name="status" value="in use"> IN USE</label>
           <label><input type="checkbox" name="status" value="missing"> MISSING</label>
           <label><input type="checkbox" name="status" value="destroyed"> DESTROYED</label>
           <br><br>
+
           <p> Include items audited in the last quarter?</p>
           <label><input type="radio" name="last_audit" value="Yes"> Yes</label>
           <label><input type="radio" name="last_audit" value="No"> No</label>
         </form>
         <button id="printReport">Print</button>
-        <button id="closeReportModal">Cancel</button>
       </div>
     </div>
 
     <div id="filterModal" class="modal" style="display: none;">
       <div class="modal-content">
-        <h3>Select Departments</h3>
+        <span id="closeFilterModal" class="close">&times;</span>
+        <!-- <h3>Select Departments</h3> -->
         <form id="FilterForm">
-          <label><input type="checkbox" name="department" value="ABTC"> ABTC</label>
+          <!-- <label><input type="checkbox" name="department" value="ABTC"> ABTC</label>
           <label><input type="checkbox" name="department" value="Accounting"> Accounting</label>
           <label><input type="checkbox" name="department" value="Admin"> Admin</label>
           <label><input type="checkbox" name="department" value="Admission"> Admission</label>
@@ -215,9 +240,9 @@
           <label><input type="checkbox" name="department" value="Sanitary"> Sanitary</label>
           <label><input type="checkbox" name="department" value="Social Service"> Social Service</label>
           <label><input type="checkbox" name="department" value="Utility"> Utility</label>
-          <label><input type="checkbox" name="department" value="WARD"> WARD</label>
+          <label><input type="checkbox" name="department" value="WARD"> WARD</label> -->
+
           <button type="submit">Apply Filter</button>
-          <button type="button" id="closeFilterModal">Cancel</button>
         </form> 
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { populateTable } from './index.js';
+import { populateTable } from '../index.js';
 
 export async function getProducts() {
     try {

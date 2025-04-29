@@ -136,3 +136,133 @@ table {
 .modal button:hover {
   background-color: #0056b3;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#loginTitle {
+  margin-bottom: 5px;
+  font-family: 'Tahoma', sans-serif; 
+  font-weight: bold;
+}
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.input-field, .login-button {
+  width: 300px; 
+  border: 1px solid #000000;
+  margin: 8px 0;
+  border-radius: 6px;
+  padding: 10px;          
+  font-size: 15px;    
+  box-sizing: border-box; 
+  font-family: 'Tahoma', sans-serif; 
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.login-button {
+  background-color: #f0f0f0; 
+  color: rgb(44, 44, 44);
+  border: 1px solid #000000; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, color 0.3s; 
+}
+
+.login-button:hover,
+.login-button:focus {
+    background-color: rgb(44, 44, 44); 
+    color: white; 
+    border: 1px solid rgb(44, 44, 44);
+    text-decoration: none; 
+}
+
+.button-container {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: row; /* Arrange buttons horizontally */
+  justify-content: center; /* Center buttons horizontally in the container */
+  align-items: center; /* Center buttons horizontally */
+}
+
+.control-button {
+  background-color: #f0f0f0; 
+  color: rgb(44, 44, 44);
+  border: 1px solid #000000; 
+  padding: 10px; /* Adjust padding for uniformity */
+  border-radius: 5px; 
+  margin: 10px; /* Space between buttons */
+  font-family: 'Tahoma', sans-serif; 
+  font-weight: bold;
+  font-size: 12px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, color 0.3s; 
+  display: flex; /* Use flexbox for button content */
+  flex-direction: column; /* Stack icon and text vertically */
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
+  width: 100px; /* Set a fixed width for all buttons */
+  height: 100px; /* Set a fixed height for all buttons */
+}
+
+.control-button svg {
+  width: 24px; /* Set a fixed width for the SVG icon */
+  height: 24px; /* Set a fixed height for the SVG icon */
+  margin-bottom: 5px; /* Space between icon and text */
+}
+
+.control-button:hover,
+.control-button:focus {
+  background-color: rgb(44, 44, 44); 
+  color: white; 
+  border: 1px solid rgb(44, 44, 44);
+  text-decoration: none; 
+}
+
+.action-button {
+  background-color: #f0f0f0; 
+  color: rgb(44, 44, 44);
+  border: 1px solid #000000; 
+  border-radius: 5px; 
+  padding: 1px;
+  font-family: 'Tahoma', sans-serif; 
+  font-weight: bold;
+  font-size: 12px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, color 0.3s; 
+  align-items: center;
+  justify-content: center;
+  width: 80px; /* Set a fixed width for all buttons */
+  height: 30px;
+}
+
+.action-button:hover,
+.action-button:focus {
+  background-color: rgb(44, 44, 44); 
+  color: white; 
+  border: 1px solid rgb(44, 44, 44);
+  text-decoration: none; 
+}
+
+
+.action-button svg {
+  width: 15px; /* Set a fixed width for the SVG icon */
+  height: 15px; /* Set a fixed height for the SVG icon */
+}

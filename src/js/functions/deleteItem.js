@@ -1,4 +1,4 @@
-import { getProducts, showNotification } from '../functions/index.js';
+import { getProducts, showNotification } from '../index.js';
 
 export async function deleteItem(id) {
 
