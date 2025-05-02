@@ -36,44 +36,52 @@
     </div>
 
     <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Select</th>
-            <th>ID</th>
-            <th>Serial Number</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Sub-Category</th>
-            <th>Status</th>
-            <th>Department</th>
-            <th>Assigned To</th>
-            <th>Last Scanned</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-        </tbody>
-      </table>
+      
+      <div class="table-header">
+        <input type="text" placeholder="Search..." id="search-input" />
+        <div id="total-items">Total items: 0</div>
+      </div>
+
+      <div class="table-scroll"> 
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-header middle-content"></th>
+              <th class="middle-content">ID</th>
+              <th class="middle-content">Serial Number</th>
+              <th class="left-content">Name</th>
+              <th class="left-content">Sub-Category</th>
+              <th class="left-content">Category</th>
+              <th class="left-content">Status</th>
+              <th class="left-content">Department</th>
+              <th class="left-content">Assigned</th>
+              <th class="date-header middle-content">Last Scanned</th>
+              <th class="actions-header middle-content">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-    <div id="registerModal" class="modal">
+    <div id="registerModal" class="modal input-container">
       <div class="modal-content">
-        <span id="closeRegisterModal" class="close">&times;</span>
+          <div class="register-header"> 
+            <span id="closeRegisterModal" class="close">&times;</span>
 
-        <div id="addContainer"> 
-          <h2>Add Item</h2>
-        </div>
-        
-        <div id="updateContainer"> 
-          <h2>Update Item</h2>
-        </div>
+            <div id="addContainer"> 
+              <h2>Add Item</h2>
+            </div>
+            
+            <div id="updateContainer"> 
+              <h2>Update Item</h2>
+            </div>
+          </div>
 
         <form id="registerForm" method="post">
-          <label for="productName">Product Name:</label><br>
-          <input type="text" id="productName" name="productName" required><br>
-
+          <div class="department-container"> 
             <label for="department">Department:</label><br>
             <select name="department" id="department" required>
               <option value="ABTC">ABTC</option>
@@ -108,141 +116,76 @@
               <option value="Utility">Utility</option>
               <option value="WARD">WARD</option>
             </select> <br>
-
-          <label for="serialNumber"> Serial Number (optional):</label><br>
-          <input type="text" id="serialNumber" value="N/A" name="serialNumber"><br>
-          <label for="category">Category:</label><br>
-          <input type="text" id="category" name="category" required><br>
-          <label for="subcategory">Sub-Category:</label><br>
-          <input type="text" id="subcategory" value="" name="subcategory"><br>
-
-          <div id="quantityContainer">
-            <label for="quantity">Quantity:</label><br>
-            <input type="number" id="quantity" name="quantity" value="1" required><br>
           </div>
 
-          <div id="statusContainer" style="display: none;">
-            <label for="status">Status:</label><br>
-            <select id="status" name="status">
-              <option value="available">AVAILABLE</option>
-              <option value="in use">IN USE</option>
-              <option value="missing">MISSING</option>
-              <option value="destroyed">DESTROYED</option>
-            </select><br>
-          </div>
-          
-          <label for="assigned_to">Assigned To:</label><br>
-          <input type="text" id="assigned_to" name="assigned_to" required><br><br>
-          <input type="submit" value="Submit">
-        </form> 
+            <label for="serialNumber"> Serial Number (optional):</label><br>
+            <input type="text" class="input-text-box" id="serialNumber" value="N/A" name="serialNumber"><br>
+            <label for="productName">Product Name:</label><br>
+            <input type="text" class="input-text-box" id="productName" name="productName" placeholder="Brown Acacia" required><br>
+            <label for="subcategory">Sub-Category:</label><br>
+            <input type="text" class="input-text-box" id="subcategory" value="" name="subcategory" placeholder="Table" ><br>
+            <label for="category">Category:</label><br>
+            <input type="text" class="input-text-box" id="category" name="category" required placeholder="Furnature" ><br>
+            <div id="quantityContainer">
+              <label for="quantity">Quantity:</label><br>
+              <input type="number" class="input-text-box" id="quantity" name="quantity" value="1" required><br>
+            </div>
+
+            <div id="statusContainer" style="display: none;">
+              <label for="status">Status:</label><br>
+              <select id="status" class="input-text-box" name="status">
+                <option value="Available">Available</option>
+                <option value="In Use">In Use</option>
+                <option value="Missing">Missing</option>
+                <option value="Destroyed">Destroyed</option>
+              </select><br>
+            </div>
+            
+            <label for="assigned_to">Assigned To:</label><br>
+            <input type="text" class="input-text-box" id="assigned_to" name="assigned_to" required placeholder="Juan Dela Cruz " ><br><br>
+            <input class="submit-button" type="submit" value="Submit">
+          </form> 
       </div>
     </div>
 
     <div id="notificationModal" class="modal">
       <div class="modal-small">
         <p id="notificationMessage">This is a notification message.</p>
-        <button id="closeNotification">Confirm</button>
+        <div class="confirmation-button-container">
+          <button class="confirmation-button" id="closeNotification">Confirm</button>
+        </div>
       </div>
     </div>
 
     <div id="confirmationModal" class="modal">
       <div class="modal-small">
         <p id="notificationMessage">Confirm Delete.</p>
-        <button id="confirmChoice">Confirm</button>
-        <button id="closeConfirmationModal">Cancel</button>
+        <div class="confirmation-button-container">
+          <button class="confirmation-button" id="confirmChoice">Confirm</button>
+          <button class="confirmation-button" id="closeConfirmationModal">Cancel</button>
+        </div>
       </div>
     </div>
 
     <div id="reportSelectionModal" class="modal">
-      <div class="modal-big">
-        <span id="closeReportModal" class="close">&times;</span>
-        <!-- <p id="reportMessage">Select a sections to include in report:</p> -->
+      <div class="modal-report-content">
+        <div class="register-header"> 
+          <span id="closeReportModal" class="close">&times;</span>
+          <h2> Create Report </h2>
+        </div>
         <form id="reportFilterForm">
-          <!-- <label><input type="checkbox" name="department" value="ABTC"> ABTC</label>
-          <label><input type="checkbox" name="department" value="Accounting"> Accounting</label>
-          <label><input type="checkbox" name="department" value="Admin"> Admin</label>
-          <label><input type="checkbox" name="department" value="Admission"> Admission</label>
-          <label><input type="checkbox" name="department" value="Ambulance"> Ambulance</label>
-          <label><input type="checkbox" name="department" value="Billing"> Billing</label>
-          <label><input type="checkbox" name="department" value="Cashier"> Cashier</label>
-          <label><input type="checkbox" name="department" value="CSF"> CSF</label>
-          <label><input type="checkbox" name="department" value="CSR"> CSR</label>
-          <label><input type="checkbox" name="department" value="Dental"> Dental</label>
-          <label><input type="checkbox" name="department" value="Dialysis"> Dialysis</label>
-          <label><input type="checkbox" name="department" value="Dietary"> Dietary</label>
-          <label><input type="checkbox" name="department" value="Doctors"> Doctors</label>
-          <label><input type="checkbox" name="department" value="DR"> DR</label>
-          <label><input type="checkbox" name="department" value="ER"> ER</label>
-          <label><input type="checkbox" name="department" value="LAB"> LAB</label>
-          <label><input type="checkbox" name="department" value="Laundry"> Laundry</label>
-          <label><input type="checkbox" name="department" value="Linen"> Linen</label>
-          <label><input type="checkbox" name="department" value="Maintenance"> Maintenance</label>
-          <label><input type="checkbox" name="department" value="Maternity"> Maternity</label>
-          <label><input type="checkbox" name="department" value="Medical Records"> Medical Records</label>
-          <label><input type="checkbox" name="department" value="New Born"> New Born</label>
-          <label><input type="checkbox" name="department" value="OPD"> OPD</label>
-          <label><input type="checkbox" name="department" value="OR"> OR</label>
-          <label><input type="checkbox" name="department" value="Pharmacy"> Pharmacy</label>
-          <label><input type="checkbox" name="department" value="PHILHEALTH"> PHILHEALTH</label>
-          <label><input type="checkbox" name="department" value="Radio"> Radio</label>
-          <label><input type="checkbox" name="department" value="Sanitary"> Sanitary</label>
-          <label><input type="checkbox" name="department" value="Social Service"> Social Service</label>
-          <label><input type="checkbox" name="department" value="Utility"> Utility</label>
-          <label><input type="checkbox" name="department" value="WARD"> WARD</label> -->
-          <br><br>
-
-          <!-- <label><input type="checkbox" name="status" value="available"> AVAILABLE</label> -->
-          <label><input type="checkbox" name="status" value="in use"> IN USE</label>
-          <label><input type="checkbox" name="status" value="missing"> MISSING</label>
-          <label><input type="checkbox" name="status" value="destroyed"> DESTROYED</label>
-          <br><br>
-
-          <p> Include items audited in the last quarter?</p>
-          <label><input type="radio" name="last_audit" value="Yes"> Yes</label>
-          <label><input type="radio" name="last_audit" value="No"> No</label>
         </form>
-        <button id="printReport">Print</button>
+        <button class="submit-button" id="printReport">Print</button>
       </div>
     </div>
 
     <div id="filterModal" class="modal" style="display: none;">
-      <div class="modal-content">
-        <span id="closeFilterModal" class="close">&times;</span>
-        <!-- <h3>Select Departments</h3> -->
+      <div class="modal-report-content"> 
+        <div class="register-header">
+          <span id="closeFilterModal" class="close">&times;</span>
+          <h2> Filter </h2>
+        </div>
         <form id="FilterForm">
-          <!-- <label><input type="checkbox" name="department" value="ABTC"> ABTC</label>
-          <label><input type="checkbox" name="department" value="Accounting"> Accounting</label>
-          <label><input type="checkbox" name="department" value="Admin"> Admin</label>
-          <label><input type="checkbox" name="department" value="Admission"> Admission</label>
-          <label><input type="checkbox" name="department" value="Ambulance"> Ambulance</label>
-          <label><input type="checkbox" name="department" value="Billing"> Billing</label>
-          <label><input type="checkbox" name="department" value="Cashier"> Cashier</label>
-          <label><input type="checkbox" name="department" value="CSF"> CSF</label>
-          <label><input type="checkbox" name="department" value="CSR"> CSR</label>
-          <label><input type="checkbox" name="department" value="Dental"> Dental</label>
-          <label><input type="checkbox" name="department" value="Dialysis"> Dialysis</label>
-          <label><input type="checkbox" name="department" value="Dietary"> Dietary</label>
-          <label><input type="checkbox" name="department" value="Doctors"> Doctors</label>
-          <label><input type="checkbox" name="department" value="DR"> DR</label>
-          <label><input type="checkbox" name="department" value="ER"> ER</label>
-          <label><input type="checkbox" name="department" value="LAB"> LAB</label>
-          <label><input type="checkbox" name="department" value="Laundry"> Laundry</label>
-          <label><input type="checkbox" name="department" value="Linen"> Linen</label>
-          <label><input type="checkbox" name="department" value="Maintenance"> Maintenance</label>
-          <label><input type="checkbox" name="department" value="Maternity"> Maternity</label>
-          <label><input type="checkbox" name="department" value="Medical Records"> Medical Records</label>
-          <label><input type="checkbox" name="department" value="New Born"> New Born</label>
-          <label><input type="checkbox" name="department" value="OPD"> OPD</label>
-          <label><input type="checkbox" name="department" value="OR"> OR</label>
-          <label><input type="checkbox" name="department" value="Pharmacy"> Pharmacy</label>
-          <label><input type="checkbox" name="department" value="PHILHEALTH"> PHILHEALTH</label>
-          <label><input type="checkbox" name="department" value="Radio"> Radio</label>
-          <label><input type="checkbox" name="department" value="Sanitary"> Sanitary</label>
-          <label><input type="checkbox" name="department" value="Social Service"> Social Service</label>
-          <label><input type="checkbox" name="department" value="Utility"> Utility</label>
-          <label><input type="checkbox" name="department" value="WARD"> WARD</label> -->
-
-          <button type="submit">Apply Filter</button>
         </form> 
       </div>
     </div>

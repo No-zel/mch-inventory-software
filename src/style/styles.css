@@ -1,60 +1,203 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+  font-family: 'Tahoma', sans-serif; 
+  margin: 0;
+  padding: 5px;
+  line-height: 1.2;
 }
 
-th {
-    background-color: #f4f4f4;
+td {
+  font-size: 15px;
+  border-bottom: 1px solid #ddd;
+  height: 60px;
 }
+
+.checkbox-header { width: 50px; text-align: center; }
+.date-header { width: 200px; }
+.actions-header { width: 200px; }
+.middle-content{ text-align: center; }
+.left-content { text-align: left; }
 
 .table-container {
-  position: relative; 
-  width: 100%; 
-  height: 45vw; 
-  overflow: auto; 
+  display: flex;
+  /* justify-content: center; */
+  width: 100%;
+  max-width: 100%;
+  margin-top: -25px;
+  flex-direction: column;
+  align-items: center;
 }
 
-table {
-  position: absolute; 
-  width: 100%; 
+.table-header {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
-  
+
+.table-header input[type="text"] {
+  padding: 5px 10px;
+  font-size: 14px;
+  width: 200px;
+}
+
+#total-items {
+  font-family: 'Tahoma', sans-serif; 
+  font-size: 14px;
+  color: #b9b9b9;
+  padding-right: 10px;
+}
+
+.table-scroll {
+  width: 80%;
+  max-height: 78vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.table-scroll table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 7px;
+}
+
+.table-scroll tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-container thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  font-weight: bold;
+  background-color: rgb(44, 44, 44); 
+  color: white; 
+  font-size: 15px;
+  height: 60px;
+}
+
+.container {
+  display: grid; 
+}
+
+.table-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.register-header { 
+  flex-direction: row; 
+  margin-top: -15px;}
+
 .modal {
-  display: none; 
+  display: none;
   position: fixed;
-  z-index: 1; 
+  z-index: 1;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4); 
-  padding-top: 60px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.department-container { 
+  margin-bottom: 30px; 
+}
+.input-text-box { 
+  width: 100%; 
+  height: 30px; 
+  box-sizing: border-box;
+  margin-bottom: 3px;
+  padding-left: 3%;
+  margin-top: 0.5rem; 
+}
+#department { 
+  margin-top: 1rem; 
+  width: 100%; 
+  height: 40px; 
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.input-container {
+  font-family: 'Tahoma', sans-serif; 
+}
+
+.input-container label {
+  font-weight: bold;
+  font-size: .8rem;
+  color: #333;
 }
 
 .modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #fff;
-  margin: auto;
-  padding: 20px;
+  padding: 2rem;
   border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
+  width: 30%;
+  max-width: 300px;
+  height: 60vh;
+  max-height: 90vh;
+  overflow-y: auto;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
+}
+
+#printReport {
+  margin-top: 40px;
+}
+
+.submit-button {
+  background-color: #f0f0f0; 
+  color: rgb(44, 44, 44);
+  border: 1px solid #000000; 
+  border-radius: 5px; 
+  padding: 1px;
+  font-family: 'Tahoma', sans-serif; 
+  font-weight: bold;
+  font-size: 12px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, color 0.3s; 
+  /* display: flex; */
+  align-items: center;
+  /* justify-content: center; */
+  width: 100%; /* Set a fixed width for all buttons */
+  height: 40px;
+  margin: 2px;
+}
+
+.submit-button:hover,
+.submit-button:focus {
+  background-color: rgb(44, 44, 44); 
+  color: white; 
+  border: 1px solid rgb(44, 44, 44);
+  text-decoration: none; 
+}
+
+
+.action-button svg {
+  width: 15px; /* Set a fixed width for the SVG icon */
+  height: 15px; /* Set a fixed height for the SVG icon */
+  margin-right: 5px;
 }
 
 .close {
   color: #aaa;
   float: right;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -85,7 +228,7 @@ table {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-#reportSelectionModal {
+/* #reportSelectionModal {
   display: none;
   position: fixed;
   left: 0;
@@ -93,48 +236,79 @@ table {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
+} */
+
+#notificationMessage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-button-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-button {
+  margin: 5px;
+  background-color: #f0f0f0; 
+  color: rgb(44, 44, 44);
+  border: 1px solid #000000; 
+  border-radius: 5px; 
+  padding: 1px;
+  font-family: 'Tahoma', sans-serif; 
+  font-weight: bold;
+  font-size: 12px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, color 0.3s; 
+  align-items: center;
+  width: 50%; /* Set a fixed width for all buttons */
+  height: 30px;
+}
+
+.confirmation-button:hover,
+.confirmation-button:focus {
+  background-color: rgb(44, 44, 44); 
+  color: white; 
+  border: 1px solid rgb(44, 44, 44);
+  text-decoration: none; 
 }
 
 .modal-small {
   position: absolute;
+  font-family: 'Tahoma', sans-serif; 
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 300px;
+  background-color: #fff;
+  padding: 2rem;
+  border: 1px solid #888;
+  width: 30%;
+  max-width: 300px;
+  height: 10vh;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.modal-big {
+.modal-report-content {
   position: absolute;
+  font-family: 'Tahoma', sans-serif; 
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 25vw;
-  height: 20vw;
-}
-
-.modal button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
-}
-
-.modal button:hover {
-  background-color: #0056b3;
+  background-color: #fff;
+  padding: 2rem;
+  border: 1px solid #888;
+  width: 30%;
+  max-width: 300px;
+  height: 60vh;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 html, body {
@@ -236,6 +410,13 @@ html, body {
   text-decoration: none; 
 }
 
+.action-container {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: row; /* Arrange buttons horizontally */
+  justify-content: center; /* Center buttons horizontally in the container */
+  align-items: center; /* Center buttons horizontally */
+}
+
 .action-button {
   background-color: #f0f0f0; 
   color: rgb(44, 44, 44);
@@ -247,10 +428,12 @@ html, body {
   font-size: 12px; 
   cursor: pointer; 
   transition: background-color 0.3s, color 0.3s; 
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 80px; /* Set a fixed width for all buttons */
   height: 30px;
+  margin: 2px;
 }
 
 .action-button:hover,
@@ -265,4 +448,31 @@ html, body {
 .action-button svg {
   width: 15px; /* Set a fixed width for the SVG icon */
   height: 15px; /* Set a fixed height for the SVG icon */
+  margin-right: 5px;
+}
+
+.report-label {
+  font-weight: bold;
+  font-size: .8rem;
+  color: #333;
+}
+
+.status-report-container {
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+#reportFilterForm label {
+  font-size: .9rem;
+}
+
+.polulate-modal {
+  max-height: 200px; 
+  overflow-y: auto; 
+  border: 1px solid #ccc; 
+  padding: 0.5rem;
+}
+
+.filter-submit {
+  margin-top: 30px;
 }

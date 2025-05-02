@@ -7,7 +7,7 @@ export { generateAndPrintReport } from './functions/generateAndPrintReport.js';
 export { getProducts } from './functions/getProducts.js'
 export { populateTable } from './functions/populateTable.js'
 export { toSentenceCase } from './Components/toSentenceCase.js'
-export { populateReportModal } from './functions/populateReportModal.js'
+export { populateDepartmentModal } from './functions/populateDepartmentModal.js'
 export { clearReportModal } from './functions/clearReportModal.js'
 export { populateFilterModal } from './functions/populateFilterModal.js'
 export { clearFilterModal } from './functions/clearFilterModal.js'

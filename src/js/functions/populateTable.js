@@ -16,17 +16,17 @@ export function populateTable(items) {
       });
   
       row.innerHTML = `
-        <td><input type="checkbox" class="select-item" data-id="${item.id}"></td>
-        <td>${item.id}</td>
-        <td>${item.serialNumber}</td>
+        <td class="middle-content"><input type="checkbox" class="select-item" data-id="${item.id}"></td>
+        <td class="middle-content">${item.id}</td>
+        <td class="middle-content">${item.serialNumber}</td>
         <td>${item.productName}</td>
-        <td>${item.category}</td>
         <td>${item.subCategory}</td>
+        <td>${item.category}</td>
         <td>${item.status}</td>
         <td>${item.department}</td>
         <td>${item.assignedTo}</td>
-        <td>${formattedDate}</td>
-        <td>
+        <td class="middle-content">${formattedDate}</td>
+        <td class="action-container">
           <button class="action-button edit-item" data-id="${item.id}">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
@@ -48,7 +48,7 @@ export function populateTable(items) {
     const deleteButtons = tableBody.querySelectorAll(".delete-item");
     deleteButtons.forEach(button => {
       button.addEventListener("click", (event) => {
-        const itemId = event.target.dataset.id;
+        const itemId = event.currentTarget.dataset.id;
         const deleteEvent = new CustomEvent("delete-item", { detail: { id: itemId } });
         document.dispatchEvent(deleteEvent);
       });
@@ -57,8 +57,9 @@ export function populateTable(items) {
     const editButtons = tableBody.querySelectorAll(".edit-item");
     editButtons.forEach(button => {
       button.addEventListener("click", async (event) => {
-        const itemId = event.target.dataset.id;
+        const itemId = event.currentTarget.dataset.id;
             try {
+              console.log("Item ID:", itemId)
               const {data, error} = await window.api.request({
                 method: "get",
                 url: `/item/find/${itemId}`, 

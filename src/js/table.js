@@ -1,4 +1,4 @@
-import { createItem, deleteItem, editItem, generateAndPrintQR, generateAndPrintReport, getProducts, populateTable, clearReportModal, populateReportModal, populateFilterModal, clearFilterModal } from './index.js';
+import { createItem, deleteItem, editItem, generateAndPrintQR, generateAndPrintReport, getProducts, populateTable, clearReportModal, populateDepartmentModal, clearFilterModal } from './index.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!window.api || !window.api.request) {
@@ -144,12 +144,12 @@ document.getElementById("FilterForm").addEventListener("submit", (e) => {
 
 document.getElementById("openReportModal").addEventListener("click", function() {
   clearReportModal()
-  populateReportModal();
+  populateDepartmentModal("reportDepartmentContainer");
   reportSelectionModal.style.display = "block"
 })
 
 document.getElementById("openFilterModal").addEventListener("click", function() {
   clearFilterModal()
-  populateFilterModal();
+  populateDepartmentModal("filterDepartmentContainer");
   filterModal.style.display = "block"
 })
