@@ -1,8 +1,8 @@
 export function populateFilterModal() {
     const data = window.allItems;
     const departments = data.map(item => item.department);
-    const uniqueDepartments = [...new Set(departments)];
 
+    const uniqueDepartments = [...new Set(departments)];
     const filterForm = document.getElementById("FilterForm");
 
     filterForm.querySelectorAll('[name="department"]').forEach(checkbox => checkbox.remove());

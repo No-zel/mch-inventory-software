@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="../style/styles.css">
   </head>
 <body>
+
+  <div class="header-container">
+    <img src="../assets/mch-logo.jpeg" class="logo">
+  </div>
   <div class="login-container">
     <h2 id="loginTitle">Login In To Poseidon</h2>
     <form id="loginForm" method="post">
@@ -14,6 +18,16 @@
       <button class="login-button" type="submit">Login</button>
     </form>
   </div>
+
+  <div id="notificationModal" class="modal">
+    <div class="modal-small">
+      <p id="notificationMessage">This is a notification message.</p>
+      <div class="confirmation-button-container">
+        <button class="confirmation-button" id="closeNotification">Confirm</button>
+      </div>
+    </div>
+  </div>
+  
   <script type="module" src="../js/login.js"></script>
 </body>
 </html>

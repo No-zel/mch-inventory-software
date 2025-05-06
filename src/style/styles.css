@@ -32,7 +32,7 @@ td {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .table-header input[type="text"] {
@@ -46,6 +46,14 @@ td {
   font-size: 14px;
   color: #b9b9b9;
   padding-right: 10px;
+}
+
+#search-input{
+  width: 30%;
+  max-width: 300px;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  font-family: 'Tahoma', sans-serif; 
 }
 
 .table-scroll {
@@ -245,7 +253,7 @@ td {
 }
 
 .confirmation-button-container {
-  margin-top: 30px;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -475,4 +483,16 @@ html, body {
 
 .filter-submit {
   margin-top: 30px;
+}
+
+.header-container {
+  position: relative;
+  width: 100%;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  height: 60px;
 }

@@ -1,3 +1,5 @@
+import { showNotification } from './index.js'
+
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
 
@@ -8,25 +10,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value;
 
     try {
-      const { data } = await window.api.request({
+      const { data, error } = await window.api.request({
         method: "post",
-        url: "/account/login/",
+        url: "/account/login",
         bodyObj: { 
           username: username, 
           password: password 
         },
       });
-      if (data.token) {
+
+      if (error) {
+        console.log(error)
+        showNotification(error);
+        document.getElementById("password").value = "";
+        return;
+      } else {
         await auth.setToken(data.token);
         window.location.href = "table.html";
-      } else {
-        alert("Login failed");
-        return
+        console.log(data.token)
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Login failed");
-      return
+      showNotification(error);
+      document.getElementById("password").value = "";
+      return;
     }
   });
 });
+
+const closeNotification = document.getElementById("closeNotification");
+closeNotification.onclick = () => notificationModal.style.display = "none";

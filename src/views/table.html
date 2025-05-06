@@ -38,8 +38,10 @@
     <div class="table-container">
       
       <div class="table-header">
+        <div id="total-items">
+          <p> Total items: 0 </p>
+        </div>
         <input type="text" placeholder="Search..." id="search-input" />
-        <div id="total-items">Total items: 0</div>
       </div>
 
       <div class="table-scroll"> 
@@ -55,6 +57,7 @@
               <th class="left-content">Status</th>
               <th class="left-content">Department</th>
               <th class="left-content">Assigned</th>
+              <th class="date-header middle-content">Date Added</th>
               <th class="date-header middle-content">Last Scanned</th>
               <th class="actions-header middle-content">Actions</th>
             </tr>
@@ -134,10 +137,9 @@
             <div id="statusContainer" style="display: none;">
               <label for="status">Status:</label><br>
               <select id="status" class="input-text-box" name="status">
-                <option value="Available">Available</option>
-                <option value="In Use">In Use</option>
+                <option value="Active">Active</option>
+                <option value="Condemned">Condemned</option>
                 <option value="Missing">Missing</option>
-                <option value="Destroyed">Destroyed</option>
               </select><br>
             </div>
             

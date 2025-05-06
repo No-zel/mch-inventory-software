@@ -1,5 +1,5 @@
 const options = {
-  baseUrl: "http://192.168.100.2:5001/mch/v1",
+  baseUrl: "http://192.168.100.15:5001/mch/v1",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -71,29 +71,65 @@ class APIRequest {
     }
 }
 
+// async handleResponse(response) {
+//   if (!response.ok) {
+//       return {
+//           response,
+//           data: null,
+//           error: `HTTP Error: ${response.status} ${response.statusText}`,
+//       };
+//   }
+
+//   try {
+//       // Check if response has a body
+//       const text = await response.text();
+//       const json = text ? JSON.parse(text) : null;  // Avoid JSON parsing error on empty response
+
+//       return { response, data: json };
+//   } catch (err) {
+//       console.error("JSON Parsing Error:", err);
+//       return {
+//           response,
+//           data: null,
+//           error: "Failed to parse JSON response",
+//       };
+//   }
+// }
+
 async handleResponse(response) {
-  if (!response.ok) {
-      return {
-          response,
-          data: null,
-          error: `HTTP Error: ${response.status} ${response.statusText}`,
-      };
-  }
+  const text = await response.text();
+  let json = null;
 
   try {
-      // Check if response has a body
-      const text = await response.text();
-      const json = text ? JSON.parse(text) : null;  // Avoid JSON parsing error on empty response
-
-      return { response, data: json };
+    json = text ? JSON.parse(text) : null;
   } catch (err) {
-      console.error("JSON Parsing Error:", err);
-      return {
-          response,
-          data: null,
-          error: "Failed to parse JSON response",
-      };
+    console.error("JSON Parsing Error:", err);
+    return {
+      response,
+      data: null,
+      error: "Invalid JSON response",
+      message: null,
+      status: response.status
+    };
   }
+
+  if (!response.ok) {
+    return {
+      response,
+      data: null,
+      error: json?.message || `HTTP Error: ${response.status} ${response.statusText}`,
+      message: json?.message || null,
+      status: response.status
+    };
+  }
+
+  return {
+    response,
+    data: json,
+    error: null,
+    message: json?.message || null,
+    status: response.status
+  };
 }
 
 

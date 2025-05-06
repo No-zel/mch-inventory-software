@@ -1,3 +1,5 @@
+import { showNotification } from '../index.js';
+
 export async function generateAndPrintReport() {
   const checkedInputs = Array.from(document.querySelectorAll('#reportFilterForm input:checked'));
 
@@ -23,7 +25,7 @@ export async function generateAndPrintReport() {
 
     if (data.data.length === 0 || error) {
       reportSelectionModal.style.display = "none";
-      alert("No items available to print QR codes.");
+      showNotification("No items available to print QR codes.");
       return;
     }
 
@@ -45,7 +47,7 @@ export async function generateAndPrintReport() {
 
       return matchDepartment && matchStatus && matchLastAudit;
     });
-
+    console.log("report:", reportItems)
     window.electron.send("open-report-print-window", { reportItems });
 
     const checkboxes = document.querySelectorAll('#reportFilterForm input[type="checkbox"]');

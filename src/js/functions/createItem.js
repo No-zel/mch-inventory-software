@@ -3,7 +3,7 @@ import { getProducts, showNotification, toSentenceCase } from '../index.js';
 export async function createItem(event) {
   
   let productNameValue = toSentenceCase(document.getElementById("productName").value);
-  let serialNumberValue = document.getElementById("serialNumber").value;
+  let serial_numberValue = document.getElementById("serialNumber").value;
   let DepartmentValue = document.getElementById("department").value;
   let CategoryValue = toSentenceCase(document.getElementById("category").value);
   let SubCategoryValue = toSentenceCase(document.getElementById("subcategory").value);
@@ -12,7 +12,7 @@ export async function createItem(event) {
   
 
   const requestBody = {
-    serialNumber: serialNumberValue,
+    serial_number: serial_numberValue,
     productName: productNameValue,
     department: DepartmentValue,
     category: CategoryValue,
@@ -37,8 +37,8 @@ export async function createItem(event) {
       return;
     }
     if (response) {
-      showNotification("Item added successfully!");
-      getProducts(); // make sure this is defined globally or passed in
+      showNotification("Item added successfully.");
+      getProducts(); 
     } else {
       console.error("Unexpected response:", response?.status);
     }

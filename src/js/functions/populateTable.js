@@ -1,3 +1,5 @@
+import { dateFormat } from "../index.js";
+
 export function populateTable(items) {
     const tableBody = document.getElementById("table-body");
   
@@ -5,27 +7,23 @@ export function populateTable(items) {
   
     items.forEach((item) => {
       const row = document.createElement("tr");
-      const date = new Date(item.scanned_at);
-      const formattedDate = date.toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true,
-      });
+      const formattedDate_0 = dateFormat(item.scanned_at)
+      const formattedDate_1 = dateFormat(item.created_at)
+
+      
   
       row.innerHTML = `
         <td class="middle-content"><input type="checkbox" class="select-item" data-id="${item.id}"></td>
         <td class="middle-content">${item.id}</td>
-        <td class="middle-content">${item.serialNumber}</td>
+        <td class="middle-content">${item.serial_number}</td>
         <td>${item.productName}</td>
         <td>${item.subCategory}</td>
         <td>${item.category}</td>
         <td>${item.status}</td>
         <td>${item.department}</td>
         <td>${item.assignedTo}</td>
-        <td class="middle-content">${formattedDate}</td>
+        <td class="middle-content">${formattedDate_1}</td>
+        <td class="middle-content">${formattedDate_0}</td>
         <td class="action-container">
           <button class="action-button edit-item" data-id="${item.id}">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

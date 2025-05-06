@@ -21,11 +21,11 @@ export async function deleteItem(id) {
     }
   
     if (data.status === 200) {
-          showNotification("Item Deleted Successfully!");
+          showNotification("Item deleted successfully.");
           getProducts();
       } else {
           console.error("Unexpected response:", error);
-          showNotification(`Failed to delete item!`, "error");
+          showNotification(`Failed to delete item!`, error);
       }
   
     } catch (err) {

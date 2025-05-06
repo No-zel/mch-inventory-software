@@ -1,4 +1,4 @@
-import { createItem, deleteItem, editItem, generateAndPrintQR, generateAndPrintReport, getProducts, populateTable, clearReportModal, populateDepartmentModal, clearFilterModal } from './index.js';
+import { createItem, deleteItem, editItem, generateAndPrintQR, generateAndPrintReport, getProducts, populateTable, clearReportModal, populateDepartmentModal, clearFilterModal, toSentenceCase,  showNotification, populateDataCounter  } from './index.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!window.api || !window.api.request) {
@@ -58,7 +58,7 @@ document.addEventListener("edit-item", (e) => {
   if (itemIdToEdit) {
     document.getElementById("productName").value = itemIdToEdit.productName;
     document.getElementById("department").value = itemIdToEdit.department;
-    document.getElementById("serialNumber").value = itemIdToEdit.serialNumber;
+    document.getElementById("serialNumber").value = itemIdToEdit.serial_number;
     document.getElementById("category").value = itemIdToEdit.category;
     document.getElementById("subcategory").value = itemIdToEdit.subCategory;
     document.getElementById("status").value = itemIdToEdit.status || "available";
@@ -139,17 +139,48 @@ document.getElementById("FilterForm").addEventListener("submit", (e) => {
     : window.allItems.filter(item => selected.includes(item.department));
 
   populateTable(filteredItems);
+  populateDataCounter();
   filterModal.style.display = "none";
 });
 
+document.getElementById("search-input").addEventListener("input", function () {
+  const query = this.value.trim().toLowerCase();
+
+  const filtered = window.allItems.filter(item => {
+    return (
+      item.id.toString().toLowerCase().includes(query) ||
+      item.id.toString().toLowerCase().includes(query) ||
+      item.productName.toLowerCase().includes(query) ||
+      item.department.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query) ||
+      item.subCategory.toLowerCase().includes(query) ||
+      item.assignedTo.toLowerCase().includes(query) ||
+      item.status.toLowerCase().includes(query)
+    );
+  });
+
+  populateTable(filtered);
+});
+
 document.getElementById("openReportModal").addEventListener("click", function() {
-  clearReportModal()
-  populateDepartmentModal("reportDepartmentContainer");
-  reportSelectionModal.style.display = "block"
+  if (window.allItems == 0) {
+    showNotification("Add a item first.")
+    return;
+  } else {
+    clearReportModal()
+    populateDepartmentModal("reportDepartmentContainer");
+    reportSelectionModal.style.display = "block"
+  }
 })
 
 document.getElementById("openFilterModal").addEventListener("click", function() {
-  clearFilterModal()
-  populateDepartmentModal("filterDepartmentContainer");
-  filterModal.style.display = "block"
+
+  if (window.allItems == 0) {
+    showNotification("Add a item first.")
+    return;
+  } else {
+    clearFilterModal()
+    populateDepartmentModal("filterDepartmentContainer");
+    filterModal.style.display = "block"
+  }
 })

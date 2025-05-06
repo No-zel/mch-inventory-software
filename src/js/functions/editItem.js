@@ -8,7 +8,7 @@ const updatedItem = {
   id: itemId,
   productName: toSentenceCase(formData.get("productName")),
   department: formData.get("department"),
-  serialNumber: formData.get("serialNumber"), 
+  serial_number: formData.get("serialNumber"), 
   category: toSentenceCase(formData.get("category")),
   subCategory: toSentenceCase(formData.get("subcategory")),
   status: formData.get("status"), 

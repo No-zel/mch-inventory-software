@@ -1,13 +1,23 @@
+// Components
+export { toSentenceCase } from './Components/toSentenceCase.js'
+export { showNotification } from './Components/notification.js';
+export { dateFormat } from './Components/dateFormat.js'
+
+//CRUD (Database)
+export { getProducts } from './functions/getProducts.js'
 export { createItem } from './functions/createItem.js';
 export { deleteItem } from './functions/deleteItem.js';
 export { editItem } from './functions/editItem.js'
-export { showNotification } from './Components/notification.js';
+
+// Generate Print
 export { generateAndPrintQR } from './functions/generateAndPrintQR.js';
 export { generateAndPrintReport } from './functions/generateAndPrintReport.js';
-export { getProducts } from './functions/getProducts.js'
+
+//Populate
 export { populateTable } from './functions/populateTable.js'
-export { toSentenceCase } from './Components/toSentenceCase.js'
 export { populateDepartmentModal } from './functions/populateDepartmentModal.js'
+export { populateDataCounter } from './functions/populateDataCounter.js'
+
+//Clear
 export { clearReportModal } from './functions/clearReportModal.js'
-export { populateFilterModal } from './functions/populateFilterModal.js'
 export { clearFilterModal } from './functions/clearFilterModal.js'

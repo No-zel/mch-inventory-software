@@ -72,7 +72,12 @@ function setupPrintHandler() {
 function generatePrintHTML(qrCodes) {
   let qrHTML = qrCodes.map(qr => `
     <div class="qr-item">
-      <p>ID: ${qr.id}</p>
+      <p><strong>ID:</strong> ${qr.id}</p>
+      <p><strong>Item Name:</strong> ${qr.rowData[3]} ${qr.rowData[4]}</p>
+      <p><strong>Category:</strong> ${qr.rowData[5]}</p>
+      <p><strong>Department:</strong> ${qr.rowData[7]}</p>
+      <p><strong>Assigned to:</strong> ${qr.rowData[8]}</p>
+      <p><strong>Date Created:</strong> ${qr.rowData[9]}</p>
       <img src="${qr.qrImage}" />
     </div>
   `).join("");
@@ -156,7 +161,7 @@ function generateReportHTML(reportItems) {
     return `
       <tr>
         <td>${item.id}</td>
-        <td>${item.serialNumber}</td>
+        <td>${item.serial_number}</td>
         <td>${item.productName}</td>
         <td>${item.category}</td>
         <td>${item.subCategory}</td>
