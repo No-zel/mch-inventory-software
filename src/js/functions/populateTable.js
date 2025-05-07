@@ -10,8 +10,6 @@ export function populateTable(items) {
       const formattedDate_0 = dateFormat(item.scanned_at)
       const formattedDate_1 = dateFormat(item.created_at)
 
-      
-  
       row.innerHTML = `
         <td class="middle-content"><input type="checkbox" class="select-item" data-id="${item.id}"></td>
         <td class="middle-content">${item.id}</td>

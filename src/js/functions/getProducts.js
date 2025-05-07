@@ -7,18 +7,16 @@ export async function getProducts() {
         url: "/item/find/",
       });
 
-      if (error) {
-        window.allItems = 0;
-        console.error("API Error:", error);
-        return;
-      }
-  
       if (status === 200) {
         window.allItems = data.data; 
+
+        if (window.allItems.length === 0) {
+          console.info("No items found.");
+        }
         populateTable(window.allItems);
         populateDataCounter()
       } else {
-        console.error("Unexpected response:", response?.status);
+        console.error("Unexpected response:", status);
         return;
       }
     } catch (err) {

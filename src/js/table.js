@@ -1,4 +1,18 @@
-import { createItem, deleteItem, editItem, generateAndPrintQR, generateAndPrintReport, getProducts, populateTable, clearReportModal, populateDepartmentModal, clearFilterModal, toSentenceCase,  showNotification, populateDataCounter  } from './index.js';
+import { 
+  createItem, 
+  deleteItem, 
+  editItem, 
+  generateAndPrintQR, 
+  generateAndPrintReport, 
+  getProducts, populateTable, 
+  clearReportModal, 
+  populateDepartmentModal, 
+  clearFilterModal,  
+  showNotification, 
+  populateDataCounter, 
+  populateOverviewModal, 
+  clearoverviewModal 
+} from './index.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!window.api || !window.api.request) {
@@ -78,6 +92,7 @@ const notificationModal = document.getElementById("notificationModal");
 const confirmationModal = document.getElementById("confirmationModal");
 const filterModal = document.getElementById("filterModal")
 const reportSelectionModal = document.getElementById("reportSelectionModal")
+const overviewModal = document.getElementById("overviewModal")
 
 const openRegisterModal = document.getElementById("openRegisterModal");
 
@@ -86,6 +101,7 @@ const closeNotification = document.getElementById("closeNotification");
 const closeReportModal = document.getElementById("closeReportModal");
 const closeConfirmationModal = document.getElementById("closeConfirmationModal");
 const closeFilterModal = document.getElementById("closeFilterModal");
+const closeOverviewModal = document.getElementById("closeOverviewModal");
 
 openRegisterModal.onclick = () => {
   window.itemToEdit = null;
@@ -103,6 +119,7 @@ closeNotification.onclick = () => notificationModal.style.display = "none";
 closeReportModal.onclick = () => reportSelectionModal.style.display = "none";
 closeConfirmationModal.onclick = () => confirmationModal.style.display = "none";
 closeFilterModal.onclick = () => filterModal.style.display = "none";
+closeOverviewModal.onclick = () => overviewModal.style.display = "none";
 
 window.onclick = (event) => {
   if (event.target === registerModal) registerModal.style.display = "none";
@@ -160,6 +177,7 @@ document.getElementById("search-input").addEventListener("input", function () {
   });
 
   populateTable(filtered);
+  populateDataCounter();
 });
 
 document.getElementById("openReportModal").addEventListener("click", function() {
@@ -183,4 +201,16 @@ document.getElementById("openFilterModal").addEventListener("click", function() 
     populateDepartmentModal("filterDepartmentContainer");
     filterModal.style.display = "block"
   }
+})
+
+document.getElementById("openOverviewModal").addEventListener("click", function() {
+  if (window.allItems == 0) {
+    showNotification("Add a item first.")
+    return;
+  } else {
+    clearoverviewModal();
+    populateOverviewModal();
+    overviewModal.style.display = "block"
+  }
+
 })

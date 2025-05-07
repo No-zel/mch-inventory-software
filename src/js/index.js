@@ -17,7 +17,9 @@ export { generateAndPrintReport } from './functions/generateAndPrintReport.js';
 export { populateTable } from './functions/populateTable.js'
 export { populateDepartmentModal } from './functions/populateDepartmentModal.js'
 export { populateDataCounter } from './functions/populateDataCounter.js'
+export { populateOverviewModal } from './functions/populateOverviewModal.js'
 
 //Clear
 export { clearReportModal } from './functions/clearReportModal.js'
 export { clearFilterModal } from './functions/clearFilterModal.js'
+export { clearoverviewModal } from './functions/clearoverviewModal.js'

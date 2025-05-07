@@ -1,14 +1,12 @@
-import { getProducts, showNotification } from '../index.js';
+import { populateTable, showNotification, populateDataCounter } from '../index.js';
 
 export async function deleteItem(id) {
 
   if (!id) return console.error("No ID provided for deletion");
     // const selectedItems = [...document.querySelectorAll(".select-item:checked")].map(checkbox => checkbox.dataset.id);
     // let itemsToDelete = selectedItems.length > 0 ? selectedItems : [...document.querySelectorAll(".select-item")].map(checkbox => checkbox.dataset.id);
-
-    console.log(id)
     try {
-      const {data, error} = await window.api.request({
+      const {data, error, status} = await window.api.request({
         method: "delete",
         url: "/item/delete/", 
         bodyObj: id
@@ -20,9 +18,12 @@ export async function deleteItem(id) {
         return;
     }
   
-    if (data.status === 200) {
-          showNotification("Item deleted successfully.");
-          getProducts();
+    if (status === 200) {
+        showNotification("Item deleted successfully.");
+        window.allItems = window.allItems.filter(product => !id.includes(product.id));
+        populateTable(window.allItems);
+        populateDataCounter();
+        console.log(window.allItems)
       } else {
           console.error("Unexpected response:", error);
           showNotification(`Failed to delete item!`, error);
@@ -31,5 +32,4 @@ export async function deleteItem(id) {
     } catch (err) {
       console.error("Fetch error:", err);
     }
-    console.log(id)
 }

@@ -15,7 +15,6 @@ const updatedItem = {
   assignedTo: toSentenceCase(formData.get("assigned_to")),
 };
 
-
   console.log("req body:", updatedItem);
 
   try {
@@ -33,7 +32,7 @@ const updatedItem = {
     }
     if (response) {
       showNotification("Item Updated successfully!");
-      getProducts(); // make sure this is defined globally or passed in
+      getProducts(); 
     } else {
       console.error("Unexpected response:", response?.status);
     }
