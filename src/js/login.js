@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       } else {
         await auth.setToken(data.token);
+        localStorage.setItem("user", data.data.username);
         window.location.href = "table.html";
-        console.log(data.token)
       }
     } catch (error) {
       console.error("Login error:", error);

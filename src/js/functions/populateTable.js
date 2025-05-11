@@ -55,7 +55,6 @@ export function populateTable(items) {
       button.addEventListener("click", async (event) => {
         const itemId = event.currentTarget.dataset.id;
             try {
-              console.log("Item ID:", itemId)
               const {data, error} = await window.api.request({
                 method: "get",
                 url: `/item/find/${itemId}`, 

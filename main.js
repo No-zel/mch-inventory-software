@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, session } = require("electron");
+const { app, BrowserWindow, ipcMain, session, dialog  } = require("electron");
 const QRCode = require("qrcode");
 const path = require("path");
 // const auth = require("./src/auth/auth");
@@ -6,6 +6,8 @@ const { APIRequest } = require("./src/utils/request");
 const { setupPrintHandler } = require("./src/utils/print");
 const apiRequest = new APIRequest();
 let authToken = null;
+const XLSX = require("xlsx");
+const fs = require("fs");
 
 const createWindow = () => {
   
@@ -67,4 +69,29 @@ ipcMain.handle("generateQRCode", async (_, data) => {
 
 ipcMain.handle("set-auth-token", (_, token) => {
   authToken = token;
+});
+
+ipcMain.handle("export-to-excel", async (_, data) => {
+  try {
+    const defaultPath = path.join(app.getPath("documents"), "allItems.xlsx");
+
+    const { filePath, canceled } = await dialog.showSaveDialog({
+      title: "Save Excel File",
+      defaultPath,
+      filters: [{ name: "Excel Files", extensions: ["xlsx"] }],
+    });
+
+    if (canceled || !filePath) return { canceled: true };
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    XLSX.writeFile(workbook, filePath);
+
+    return { success: true, filePath };
+  } catch (error) {
+    console.error("Excel export failed:", error);
+    return { error: error.message };
+  }
 });

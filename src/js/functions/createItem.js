@@ -9,7 +9,7 @@ export async function createItem(event) {
   let SubCategoryValue = toSentenceCase(document.getElementById("subcategory").value);
   let QuantityValue = parseInt(document.getElementById("quantity").value, 10);
   let assignedToValue = toSentenceCase(document.getElementById("assigned_to").value);
-  
+  const user = localStorage.getItem("user");
 
   const requestBody = {
     serial_number: serial_numberValue,
@@ -18,19 +18,15 @@ export async function createItem(event) {
     category: CategoryValue,
     subCategory: SubCategoryValue,
     quantity: QuantityValue,
-    assignedTo: assignedToValue
+    assignedTo: assignedToValue,
+    username: user,
   };
-
-  console.log("req body:", requestBody);
-
   try {
     const { response, error } = await window.api.request({
       method: "post",
       url: "/item/create/",
       bodyObj: requestBody
     });
-
-    console.log(response);
 
     if (error) {
       console.error("API Error:", error);

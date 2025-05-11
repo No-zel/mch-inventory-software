@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
-
+  
 console.log("✅ Preload script loaded successfully!");
 
 contextBridge.exposeInMainWorld("api", {
@@ -33,4 +33,14 @@ contextBridge.exposeInMainWorld("auth", {
   setToken: async (token) => {
     await ipcRenderer.invoke("set-auth-token", token);
   }
+});
+
+contextBridge.exposeInMainWorld("excelExporter", {
+  exportData: async (data) => {
+    return await ipcRenderer.invoke("export-to-excel", data);
+  }
+});
+
+contextBridge.exposeInMainWorld("printer", {
+  printNow: (paperSize) => ipcRenderer.send("print-now", paperSize),
 });

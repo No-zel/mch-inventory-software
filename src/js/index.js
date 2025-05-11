@@ -8,6 +8,7 @@ export { getProducts } from './functions/getProducts.js'
 export { createItem } from './functions/createItem.js';
 export { deleteItem } from './functions/deleteItem.js';
 export { editItem } from './functions/editItem.js'
+export { exportData } from './functions/exportData.js'
 
 // Generate Print
 export { generateAndPrintQR } from './functions/generateAndPrintQR.js';

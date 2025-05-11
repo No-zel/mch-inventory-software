@@ -1,7 +1,7 @@
 import { getProducts, showNotification, toSentenceCase } from '../index.js';
 
 export async function editItem(event, itemId) {
-
+const user = localStorage.getItem("user");
 const formData = new FormData(event.target);
 
 const updatedItem = {
@@ -13,18 +13,14 @@ const updatedItem = {
   subCategory: toSentenceCase(formData.get("subcategory")),
   status: formData.get("status"), 
   assignedTo: toSentenceCase(formData.get("assigned_to")),
+  username: user,
 };
-
-  console.log("req body:", updatedItem);
-
   try {
     const { response, error } = await window.api.request({
       method: "patch",
       url: "/item/update/",
       bodyObj: updatedItem
     });
-
-    console.log(response);
 
     if (error) {
       console.error("API Error:", error);

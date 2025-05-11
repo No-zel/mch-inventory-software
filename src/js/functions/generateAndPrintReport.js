@@ -47,7 +47,7 @@ export async function generateAndPrintReport() {
 
       return matchDepartment && matchStatus && matchLastAudit;
     });
-    console.log("report:", reportItems)
+
     window.electron.send("open-report-print-window", { reportItems });
 
     const checkboxes = document.querySelectorAll('#reportFilterForm input[type="checkbox"]');

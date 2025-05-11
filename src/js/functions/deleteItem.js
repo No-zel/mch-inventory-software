@@ -1,6 +1,7 @@
 import { populateTable, showNotification, populateDataCounter } from '../index.js';
 
 export async function deleteItem(id) {
+  const user = localStorage.getItem("user");
 
   if (!id) return console.error("No ID provided for deletion");
     // const selectedItems = [...document.querySelectorAll(".select-item:checked")].map(checkbox => checkbox.dataset.id);
@@ -9,7 +10,10 @@ export async function deleteItem(id) {
       const {data, error, status} = await window.api.request({
         method: "delete",
         url: "/item/delete/", 
-        bodyObj: id
+        bodyObj: {
+          id: id,
+          username: user,
+        }
       });
   
       if (error) {
@@ -23,7 +27,6 @@ export async function deleteItem(id) {
         window.allItems = window.allItems.filter(product => !id.includes(product.id));
         populateTable(window.allItems);
         populateDataCounter();
-        console.log(window.allItems)
       } else {
           console.error("Unexpected response:", error);
           showNotification(`Failed to delete item!`, error);

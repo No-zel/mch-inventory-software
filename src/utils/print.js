@@ -1,4 +1,6 @@
 const { BrowserWindow, ipcMain } = require("electron");
+const fs = require('fs');
+const path = require('path');
 
 let printWindow;
 
@@ -14,8 +16,9 @@ function setupPrintHandler() {
       height: 900,
       show: false,
       webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false,
+        contextIsolation: true,
+        nodeIntegration: false,
+        preload: path.join(__dirname, "../auth/preload.js"), // ✅ use preload
       },
     });
 
@@ -36,35 +39,39 @@ function setupPrintHandler() {
       printWindow.focus();
       return;
     }
-  
+
     printWindow = new BrowserWindow({
       width: 900,
       height: 1000,
       show: false,
       webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false,
+        contextIsolation: true,
+        nodeIntegration: false,
+        preload: path.join(__dirname, "../auth/preload.js"), 
       },
     });
-  
-    const html = generateReportHTML(reportItems); 
+
+    const html = generateReportHTML(reportItems);
     printWindow.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(html)}`);
-  
+
     printWindow.once("ready-to-show", () => printWindow.show());
-  
-    printWindow.on("closed", () => printWindow = null);
+
+    printWindow.on("closed", () => (printWindow = null));
   });
 
   ipcMain.on("print-now", (event, selectedPaperSize) => {
     if (printWindow) {
-      printWindow.webContents.print({
-        silent: false,
-        printBackground: true,
-        pageSize: selectedPaperSize,
-      }, (success, error) => {
-        if (!success) console.error("Print failed:", error);
-        printWindow.close();
-      });
+      printWindow.webContents.print(
+        {
+          silent: false,
+          printBackground: true,
+          pageSize: selectedPaperSize,
+        },
+        (success, error) => {
+          if (!success) console.error("Print failed:", error);
+          printWindow.close();
+        }
+      );
     }
   });
 }
@@ -72,13 +79,19 @@ function setupPrintHandler() {
 function generatePrintHTML(qrCodes) {
   let qrHTML = qrCodes.map(qr => `
     <div class="qr-item">
-      <p><strong>ID:</strong> ${qr.id}</p>
-      <p><strong>Item Name:</strong> ${qr.rowData[3]} ${qr.rowData[4]}</p>
-      <p><strong>Category:</strong> ${qr.rowData[5]}</p>
-      <p><strong>Department:</strong> ${qr.rowData[7]}</p>
-      <p><strong>Assigned to:</strong> ${qr.rowData[8]}</p>
-      <p><strong>Date Created:</strong> ${qr.rowData[9]}</p>
-      <img src="${qr.qrImage}" />
+      <div class="info-container">
+        <p class="warning-paragraph">MCH property do not destory</p>
+        <p><strong>ID:</strong> ${qr.id}</p>
+        <p><strong>Item Name:</strong> ${qr.rowData[3]} ${qr.rowData[4]}</p>
+        <p><strong>Category:</strong> ${qr.rowData[5]}</p>
+        <p><strong>Department:</strong> ${qr.rowData[7]}</p>
+        <p><strong>Custodian:</strong> ${qr.rowData[8]}</p>
+        <p><strong>Date Created:</strong> ${qr.rowData[9]}</p>
+      </div>
+      <div "qr-image-container"> 
+        <img src="${qr.qrImage}" />
+      </div>
+
     </div>
   `).join("");
 
@@ -86,66 +99,126 @@ function generatePrintHTML(qrCodes) {
     <html>
       <head>
         <style>
+          h1 {
+            text-align: center;
+          }
+          p {
+            margin: 3px;
+          }
           body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
           }
 
           .qr-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 1px;
+          }
+          #controls {
+            text-align: center; 
+            margin-top: 20px;
+          }  
+          .section-container,
+          .print-button {
+            display: inline-block; /* allow horizontal centering */
+            margin: 0 10px;
           }
 
           .qr-item {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
             border: 1px solid black;
-            padding: 10px;
+            padding: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: left;
           }
-
-          .no-print {
-            margin-bottom: 20px;
+          .print-button{
+            width: 180px;
+            height: 50px;
+            background-color: #f0f0f0; 
+            color: rgb(44, 44, 44);
+            border: 1px solid #000000; 
+            border-radius: 5px; 
+            padding: 1px;
+            font-family: 'Tahoma', sans-serif; 
+            font-weight: bold;
+            font-size: 12px; 
+            cursor: pointer; 
+            transition: background-color 0.3s, color 0.3s; 
           }
-
+          .print-button:hover,
+          .print-button:focus {
+            background-color: rgb(44, 44, 44); 
+            color: white; 
+            border: 1px solid rgb(44, 44, 44);
+            text-decoration: none; 
+          }
           @media print {
             .no-print {
               display: none;
             }
           }
-
-          @page {
-            margin: 1in; /* Set custom margin here */
+          #paperSelect {
+            width: 100px
+          }
+          .warning-paragraph {
+          color: rgb(255, 108, 108);
+          }
+          .section-container{
+            display: flex;
+            margin-bottom: 10px;
+            justify-content: center;
+            align-items: center;
           }
         </style>
       </head>
       <body>
         <div class="no-print" id="controls">
-          <label for="paperSelect">Paper Size:</label>
-          <select id="paperSelect">
-            <option value="A4">A4</option>
-            <option value="Letter">Letter</option>
-            <option value="Legal">Legal</option>
-          </select>
-          <button onclick="triggerPrint()">Print</button>
+          <div class="section-container">
+            <label for="paperSelect">Paper Size: </label>
+            <select id="paperSelect">
+              <option value="A4">A4</option>
+              <option value="Letter">Letter</option>
+              <option value="Legal">Legal</option>
+            </select>
+          </div>
+          <button class="print-button" onclick="triggerPrint()">Print</button>
+          <h1>QR Codes</h1>
         </div>
 
-        <h1>QR Codes</h1>
+
         <div class="qr-container">${qrHTML}</div>
 
         <script>
-          const { ipcRenderer } = require("electron");
-
           function triggerPrint() {
             const selectedPaperSize = document.getElementById("paperSelect").value;
-            ipcRenderer.send("print-now", selectedPaperSize);
+            window.printer.printNow(selectedPaperSize);
           }
+          console.log("✅ Print window loaded and ready.");
         </script>
       </body>
     </html>
   `;
 }
 function generateReportHTML(reportItems) {
+  const imagePath = path.join(__dirname, '../assets/mch-logo.jpeg');
+  const imagePath2 = path.join(__dirname, '../assets/mexico-logo.jpeg');
+
+  const imageBuffer = fs.readFileSync(imagePath);
+  const imageBuffer2 = fs.readFileSync(imagePath2);
+
+  const base64Image = imageBuffer.toString('base64');
+  const base64Image2 = imageBuffer2.toString('base64');
+
+  const dataURI = `data:image/jpeg;base64,${base64Image}`;
+  const dataURI2 = `data:image/png;base64,${base64Image2}`;
+
+  if (!fs.existsSync(imagePath) || !fs.existsSync(imagePath2)) {
+  throw new Error("Image not found");
+}
 
   const departmentGroups = reportItems.reduce((groups, item) => {
     const dept = item.department;
@@ -213,7 +286,7 @@ function generateReportHTML(reportItems) {
         })
 
       return `
-        <h2>Department: ${dept} (${itemsTotalDepartment})</h2>
+        <h3>Department: ${dept} (${itemsTotalDepartment})</h3>
         ${categoryItems.join("")}
         <table>
           <thead>
@@ -231,33 +304,97 @@ function generateReportHTML(reportItems) {
     <html>
       <head>
         <style>
-          body { font-family: Arial; margin: 20px; }
-          table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-          th, td { border: 1px solid #000; padding: 8px; text-align: left; }
-          th { background-color: #f0f0f0; }
-          h1 { text-align: center; }
-          .counter-container { color: rgb(59 59 59); margin-bottom: 10px;}
-          @media print { .no-print { display: none; } }
+          body { 
+            font-family: Arial; 
+            margin: 20px; 
+          }
+          table { 
+            width: 100%; 
+            border-collapse: 
+            collapse; 
+            margin-bottom: 30px; 
+          }
+          th, td { 
+            border: 1px solid #000; 
+            padding: 8px; 
+            text-align: left; 
+          }
+          th { 
+            background-color: #f0f0f0; 
+          }
+          h2 { 
+            text-align: center; 
+          }
+          .counter-container { 
+            color: rgb(59 59 59); 
+            margin-bottom: 10px;
+          }
+          .logo { 
+            position: absolute; 
+            height: 60px; 
+          }
+          @media print { 
+            .no-print { 
+              display: none; 
+            } 
+          }
+          .print-button{
+            width: 180px;
+            height: 50px;
+            background-color: #f0f0f0; 
+            color: rgb(44, 44, 44);
+            border: 1px solid #000000; 
+            border-radius: 5px; 
+            padding: 1px;
+            font-family: 'Tahoma', sans-serif; 
+            font-weight: bold;
+            font-size: 12px; 
+            cursor: pointer; 
+            transition: background-color 0.3s, color 0.3s; 
+          }
+          .print-button:hover,
+          .print-button:focus {
+            background-color: rgb(44, 44, 44); 
+            color: white; 
+            border: 1px solid rgb(44, 44, 44);
+            text-decoration: none; 
+          }
+          #paperSelect {
+            width: 100px
+          }
+          #controls {
+            text-align: center; 
+            margin-top: 20px;
+          }
+          .section-container{
+            display: flex;
+            margin-bottom: 10px;
+            justify-content: center;
+            align-items: center;
+          }
         </style>
       </head>
       <body>
-        <div class="no-print">
-          <label for="paperSelect">Paper Size:</label>
-          <select id="paperSelect">
-            <option value="A4">A4</option>
-            <option value="Letter">Letter</option>
-            <option value="Legal">Legal</option>
-          </select>
-          <button onclick="triggerPrint()">Print</button>
+        <div class="no-print" id="controls">
+          <div class="section-container"> 
+            <label for="paperSelect">Paper Size:</label>
+            <select id="paperSelect">
+              <option value="A4">A4</option>
+              <option value="Letter">Letter</option>
+              <option value="Legal">Legal</option>
+            </select>
+          </div>
+          <button class="print-button" onclick="triggerPrint()">Print</button>
         </div>
-        <h1>Audit Report</h1>
+
+        <h2>Quarterly Asset Report - Mexico Community Hospital</h2>
         ${tables}
         <script>
-          const { ipcRenderer } = require("electron");
           function triggerPrint() {
             const selectedPaperSize = document.getElementById("paperSelect").value;
-            ipcRenderer.send("print-now", selectedPaperSize);
+            window.printer.printNow(selectedPaperSize);
           }
+          console.log("✅ Print window loaded and ready.");
         </script>
       </body>
     </html>
@@ -332,6 +469,72 @@ function generateReportHTML(reportItems) {
 //       </body>
 //     </html>
 //   `;
+// }
+// function setupPrintHandler() {
+//   ipcMain.on("open-print-window", (event, { qrCodes }) => {
+//     if (printWindow) {
+//       printWindow.focus();
+//       return;
+//     }
+
+//     printWindow = new BrowserWindow({
+//       width: 800,
+//       height: 900,
+//       show: false,
+//       webPreferences: {
+//         nodeIntegration: true,
+//         contextIsolation: false,
+//       },
+//     });
+
+//     const html = generatePrintHTML(qrCodes);
+//     printWindow.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(html)}`);
+
+//     printWindow.once("ready-to-show", () => {
+//       printWindow.show();
+//     });
+
+//     printWindow.on("closed", () => {
+//       printWindow = null;
+//     });
+//   });
+
+//   ipcMain.on("open-report-print-window", (event, { reportItems }) => {
+//     if (printWindow) {
+//       printWindow.focus();
+//       return;
+//     }
+  
+//     printWindow = new BrowserWindow({
+//       width: 900,
+//       height: 1000,
+//       show: false,
+//       webPreferences: {
+//         nodeIntegration: true,
+//         contextIsolation: false,
+//       },
+//     });
+  
+//     const html = generateReportHTML(reportItems); 
+//     printWindow.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(html)}`);
+  
+//     printWindow.once("ready-to-show", () => printWindow.show());
+  
+//     printWindow.on("closed", () => printWindow = null);
+//   });
+
+//   ipcMain.on("print-now", (event, selectedPaperSize) => {
+//     if (printWindow) {
+//       printWindow.webContents.print({
+//         silent: false,
+//         printBackground: true,
+//         pageSize: selectedPaperSize,
+//       }, (success, error) => {
+//         if (!success) console.error("Print failed:", error);
+//         printWindow.close();
+//       });
+//     }
+//   });
 // }
 
 module.exports = { setupPrintHandler };

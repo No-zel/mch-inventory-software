@@ -11,7 +11,8 @@ import {
   showNotification, 
   populateDataCounter, 
   populateOverviewModal, 
-  clearoverviewModal 
+  clearoverviewModal,
+  exportData
 } from './index.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -68,7 +69,6 @@ document.addEventListener("delete-item", (e) => {
 document.addEventListener("edit-item", (e) => {
   const itemIdToEdit = e.detail.id?.[0];
   window.itemToEdit = itemIdToEdit.id;
-  console.log(itemIdToEdit)
   if (itemIdToEdit) {
     document.getElementById("productName").value = itemIdToEdit.productName;
     document.getElementById("department").value = itemIdToEdit.department;
@@ -213,4 +213,13 @@ document.getElementById("openOverviewModal").addEventListener("click", function(
     overviewModal.style.display = "block"
   }
 
+})
+
+document.getElementById("exportData").addEventListener("click", function() {
+  if (window.allItems == 0) {
+    showNotification("Add a item first.")
+    return;
+  } else {
+    exportData();
+  }
 })
