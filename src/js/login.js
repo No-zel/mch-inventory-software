@@ -2,6 +2,7 @@ import { showNotification } from './index.js'
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
+  const loadingIndicator = document.getElementById("loading");
 
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -9,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
+    loadingIndicator.style.display = "flex";
     try {
       const { data, error } = await window.api.request({
         method: "post",
@@ -34,6 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
       showNotification(error);
       document.getElementById("password").value = "";
       return;
+    } finally {
+      loadingIndicator.style.display = "none";
     }
   });
 });

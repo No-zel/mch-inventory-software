@@ -61,6 +61,7 @@ function setupPrintHandler() {
 
   ipcMain.on("print-now", (event, selectedPaperSize) => {
     if (printWindow) {
+      printWindow.webContents.send('show-loading'); 
       printWindow.webContents.print(
         {
           silent: false,
@@ -69,6 +70,7 @@ function setupPrintHandler() {
         },
         (success, error) => {
           if (!success) console.error("Print failed:", error);
+          printWindow.webContents.send('hide-loading'); 
           printWindow.close();
         }
       );
@@ -173,10 +175,45 @@ function generatePrintHTML(qrCodes) {
             justify-content: center;
             align-items: center;
           }
+          #loading.spinner-overlay {
+            display: none; /* hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            font-size: 1rem;
+          }
+
+          .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #363636;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 10px;
+          }
+
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
         </style>
       </head>
       <body>
         <div class="no-print" id="controls">
+          <div id="loading" class="spinner-overlay" style="display: none;">
+            <div class="spinner"></div>
+            <p>Printing... Do not close</p>
+          </div>
           <div class="section-container">
             <label for="paperSelect">Paper Size: </label>
             <select id="paperSelect">
@@ -188,11 +225,17 @@ function generatePrintHTML(qrCodes) {
           <button class="print-button" onclick="triggerPrint()">Print</button>
           <h1>QR Codes</h1>
         </div>
-
-
         <div class="qr-container">${qrHTML}</div>
 
         <script>
+          window.loading.receive("show-loading", () => {
+            document.getElementById("loading").style.display = "flex"; 
+          });
+
+          window.loading.receive("hide-loading", () => {
+            document.getElementById("loading").style.display = "none"; 
+          });
+
           function triggerPrint() {
             const selectedPaperSize = document.getElementById("paperSelect").value;
             window.printer.printNow(selectedPaperSize);
@@ -291,7 +334,7 @@ function generateReportHTML(reportItems) {
         <table>
           <thead>
             <tr>
-              <th>ID</th><th>Serial</th><th>Product</th><th>Category</th><th>Sub</th><th>Status</th><th>Dept</th><th>Assigned</th><th>Last Audited</th>
+              <th>ID</th><th>Serial</th><th>Product</th><th>Category</th><th>Sub</th><th>Status</th><th>Dept</th><th>Custodian</th><th>Last Audited</th>
             </tr>
           </thead>
           <tbody>${rows}</tbody>
@@ -372,10 +415,45 @@ function generateReportHTML(reportItems) {
             justify-content: center;
             align-items: center;
           }
+          #loading.spinner-overlay {
+            display: none; /* hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            font-size: 1rem;
+          }
+
+          .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #363636;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 10px;
+          }
+
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
         </style>
       </head>
       <body>
         <div class="no-print" id="controls">
+          <div id="loading" class="spinner-overlay" style="display: none;">
+            <div class="spinner"></div>
+            <p>Printing... Do not close</p>
+          </div>
           <div class="section-container"> 
             <label for="paperSelect">Paper Size:</label>
             <select id="paperSelect">
@@ -390,6 +468,13 @@ function generateReportHTML(reportItems) {
         <h2>Quarterly Asset Report - Mexico Community Hospital</h2>
         ${tables}
         <script>
+          window.loading.receive("show-loading", () => {
+            document.getElementById("loading").style.display = "flex"; 
+          });
+
+          window.loading.receive("hide-loading", () => {
+            document.getElementById("loading").style.display = "none"; 
+          });
           function triggerPrint() {
             const selectedPaperSize = document.getElementById("paperSelect").value;
             window.printer.printNow(selectedPaperSize);

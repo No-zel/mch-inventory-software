@@ -10,6 +10,7 @@ export async function createItem(event) {
   let QuantityValue = parseInt(document.getElementById("quantity").value, 10);
   let assignedToValue = toSentenceCase(document.getElementById("assigned_to").value);
   const user = localStorage.getItem("user");
+  const loadingIndicator = document.getElementById("loading");
 
   const requestBody = {
     serial_number: serial_numberValue,
@@ -21,6 +22,7 @@ export async function createItem(event) {
     assignedTo: assignedToValue,
     username: user,
   };
+  loadingIndicator.style.display = "flex";
   try {
     const { response, error } = await window.api.request({
       method: "post",
@@ -40,5 +42,7 @@ export async function createItem(event) {
     }
   } catch (err) {
     console.error("Fetch error:", err);
+  } finally {
+    loadingIndicator.style.display = "none";
   }
 }

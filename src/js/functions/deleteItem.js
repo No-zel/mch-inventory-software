@@ -2,10 +2,11 @@ import { populateTable, showNotification, populateDataCounter } from '../index.j
 
 export async function deleteItem(id) {
   const user = localStorage.getItem("user");
-
+  const loadingIndicator = document.getElementById("loading");
   if (!id) return console.error("No ID provided for deletion");
     // const selectedItems = [...document.querySelectorAll(".select-item:checked")].map(checkbox => checkbox.dataset.id);
     // let itemsToDelete = selectedItems.length > 0 ? selectedItems : [...document.querySelectorAll(".select-item")].map(checkbox => checkbox.dataset.id);
+    loadingIndicator.style.display = "flex";
     try {
       const {data, error, status} = await window.api.request({
         method: "delete",
@@ -34,5 +35,7 @@ export async function deleteItem(id) {
   
     } catch (err) {
       console.error("Fetch error:", err);
+    } finally {
+      loadingIndicator.style.display = "none";
     }
 }

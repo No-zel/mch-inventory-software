@@ -10,8 +10,14 @@ export function clearReportModal() {
       <label><input type="checkbox" name="status" value="Condemned">Condemned</label>
       <label><input type="checkbox" name="status" value="Missing">Missing</label>
     </div>
-    <p class="report-label">Include items audited in the last quarter?</p>
-    <label><input type="radio" name="last_audit" value="Yes">Yes</label>
-    <label><input type="radio" name="last_audit" value="No">No</label>
+
+    <div class="audit-report-container"> 
+      <p class="report-label">Include items audited in the last quarter?</p>
+      <label><input type="radio" name="last_audit" value="Yes">Yes</label>
+      <label><input type="radio" name="last_audit" value="No">No</label>
+    </div>
+
+    <p class="report-label" id="reportMessage">Year:</p>
+    <div class="year-items" id="reportYearContainer"></div>
   `;
 }

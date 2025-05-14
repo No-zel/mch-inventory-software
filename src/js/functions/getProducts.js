@@ -1,6 +1,9 @@
 import { populateTable, populateDataCounter } from '../index.js';
 
 export async function getProducts() {
+  const loadingIndicator = document.getElementById("loading");
+
+    loadingIndicator.style.display = "flex";
     try {
       const {response, data, error, status} = await window.api.request({
         method: "get",
@@ -22,5 +25,7 @@ export async function getProducts() {
     } catch (err) {
       console.error("Fetch error:", err);
       return;
+    } finally {
+      loadingIndicator.style.display = "none";
     }
   }

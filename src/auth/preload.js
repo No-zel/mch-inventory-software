@@ -2,6 +2,11 @@ const { contextBridge, ipcRenderer } = require("electron");
   
 console.log("✅ Preload script loaded successfully!");
 
+contextBridge.exposeInMainWorld("loading", {
+  send: (channel, data) => ipcRenderer.send(channel, data),
+  receive: (channel, func) => ipcRenderer.on(channel, (_, ...args) => func(...args)),
+});
+
 contextBridge.exposeInMainWorld("api", {
   request: async ({ method, url, bodyObj = {} }) => {
     try {
@@ -42,5 +47,5 @@ contextBridge.exposeInMainWorld("excelExporter", {
 });
 
 contextBridge.exposeInMainWorld("printer", {
-  printNow: (paperSize) => ipcRenderer.send("print-now", paperSize),
+  printNow: (selectedPaperSize) => ipcRenderer.send("print-now", selectedPaperSize),
 });

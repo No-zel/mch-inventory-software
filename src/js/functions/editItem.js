@@ -3,7 +3,7 @@ import { getProducts, showNotification, toSentenceCase } from '../index.js';
 export async function editItem(event, itemId) {
 const user = localStorage.getItem("user");
 const formData = new FormData(event.target);
-
+const loadingIndicator = document.getElementById("loading");
 const updatedItem = {
   id: itemId,
   productName: toSentenceCase(formData.get("productName")),
@@ -15,6 +15,7 @@ const updatedItem = {
   assignedTo: toSentenceCase(formData.get("assigned_to")),
   username: user,
 };
+  loadingIndicator.style.display = "flex";
   try {
     const { response, error } = await window.api.request({
       method: "patch",
@@ -34,5 +35,7 @@ const updatedItem = {
     }
   } catch (err) {
     console.error("Fetch error:", err);
+  } finally {
+    loadingIndicator.style.display = "none";
   }
 }

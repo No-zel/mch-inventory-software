@@ -12,7 +12,8 @@ import {
   populateDataCounter, 
   populateOverviewModal, 
   clearoverviewModal,
-  exportData
+  exportData,
+  applyFilter
 } from './index.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -95,7 +96,7 @@ const reportSelectionModal = document.getElementById("reportSelectionModal")
 const overviewModal = document.getElementById("overviewModal")
 
 const openRegisterModal = document.getElementById("openRegisterModal");
-
+const loadingIndicator = document.getElementById("loading");
 const closeRegisterModal = document.getElementById("closeRegisterModal");
 const closeNotification = document.getElementById("closeNotification");
 const closeReportModal = document.getElementById("closeReportModal");
@@ -145,19 +146,23 @@ if (printReportBtn) {
   console.error("Print Report button not found!");
 }
 
-document.getElementById("FilterForm").addEventListener("submit", (e) => {
-  e.preventDefault();
+// document.getElementById("FilterForm").addEventListener("submit", (e) => {
+//   e.preventDefault();
 
-  const selected = Array.from(document.querySelectorAll('input[name="department"]:checked'))
-    .map(input => input.value);
+//   const selected = Array.from(document.querySelectorAll('input[name="department"]:checked'))
+//     .map(input => input.value);
 
-  const filteredItems = selected.length === 0
-    ? window.allItems 
-    : window.allItems.filter(item => selected.includes(item.department));
+//   const filteredItems = selected.length === 0
+//     ? window.allItems 
+//     : window.allItems.filter(item => selected.includes(item.department));
 
-  populateTable(filteredItems);
-  populateDataCounter();
-  filterModal.style.display = "none";
+//   populateTable(filteredItems);
+//   populateDataCounter();
+//   filterModal.style.display = "none";
+// });
+
+document.getElementById("FilterForm").addEventListener("submit", function (e) {
+  applyFilter(e)
 });
 
 document.getElementById("search-input").addEventListener("input", function () {
@@ -186,7 +191,7 @@ document.getElementById("openReportModal").addEventListener("click", function() 
     return;
   } else {
     clearReportModal()
-    populateDepartmentModal("reportDepartmentContainer");
+    populateDepartmentModal("reportDepartmentContainer", "reportYearContainer");
     reportSelectionModal.style.display = "block"
   }
 })
@@ -198,7 +203,7 @@ document.getElementById("openFilterModal").addEventListener("click", function() 
     return;
   } else {
     clearFilterModal()
-    populateDepartmentModal("filterDepartmentContainer");
+    populateDepartmentModal("filterDepartmentContainer", "filterYearContainer");
     filterModal.style.display = "block"
   }
 })
@@ -223,3 +228,22 @@ document.getElementById("exportData").addEventListener("click", function() {
     exportData();
   }
 })
+
+document.getElementById("logout-button").addEventListener("click", async function() {
+
+  loadingIndicator.style.display = "flex";
+  try {
+    await auth.setToken(null); 
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
+  } catch {
+    showNotification("Log Out Failed")
+    return;
+  } finally {
+    loadingIndicator.style.display = "none";
+  }
+
+})
+// document.getElementById("contact-button").addEventListener("click", function() {
+//   window.location.href = "http://m.me/SaphyreLight";
+// })

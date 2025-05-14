@@ -1,11 +1,13 @@
 import { showNotification } from '../index.js';
 
 export async function generateAndPrintReport() {
+  const loadingIndicator = document.getElementById("loading");
   const checkedInputs = Array.from(document.querySelectorAll('#reportFilterForm input:checked'));
 
   const filters = {
     department: [],
     status: [],
+    year: [],
     last_audit: null,
   };
 
@@ -17,6 +19,7 @@ export async function generateAndPrintReport() {
     }
   });
 
+  loadingIndicator.style.display = "flex";
   try {
     const { response, data, error } = await window.api.request({
       method: "get",
@@ -35,8 +38,12 @@ export async function generateAndPrintReport() {
     const startOfPrevQuarter = new Date(now.getFullYear(), (currentQuarter - 1) * 3, 1);
 
     const reportItems = data.data.filter(item => {
+      const itemDate = new Date(item.created_at);
+      const itemYear = itemDate.getFullYear().toString();
+
       const matchDepartment = filters.department.length ? filters.department.includes(item.department) : true;
       const matchStatus = filters.status.length ? filters.status.includes(item.status) : true;
+      const matchYear = filters.year.length ? filters.year.includes(itemYear) : true;
 
       let matchLastAudit = true;
       if (filters.last_audit === "Yes") {
@@ -45,7 +52,7 @@ export async function generateAndPrintReport() {
         matchLastAudit = !item.scanned_at || new Date(item.scanned_at) < startOfPrevQuarter;
       }
 
-      return matchDepartment && matchStatus && matchLastAudit;
+      return matchDepartment && matchStatus && matchYear && matchLastAudit;
     });
 
     window.electron.send("open-report-print-window", { reportItems });
@@ -59,6 +66,8 @@ export async function generateAndPrintReport() {
     reportSelectionModal.style.display = "none";
   } catch (err) {
     console.error(err);
+  } finally {
+    loadingIndicator.style.display = "none";
   }
 }
 

@@ -12,7 +12,7 @@ export function populateOverviewModal() {
 
     Object.entries(categoryGroups).forEach(([cat,items]) => {
         const wrapper = document.createElement("div");
-        wrapper.style.marginBottom = "10px";
+        wrapper.style.marginBottom = "15px";
         const toggleButton = document.createElement("button");
         toggleButton.textContent = "+";
 
@@ -26,6 +26,14 @@ export function populateOverviewModal() {
             const visible = categoryContainer.style.display === "block";
             categoryContainer.style.display = visible ? "none" : "block";
             toggleButton.textContent = visible ? "+" : "-";
+
+            if (!visible) {
+                toggleButton.style.backgroundColor = "rgb(44, 44, 44)";
+                toggleButton.style.color = "white";
+            } else {
+                toggleButton.style.backgroundColor = "#f0f0f0";
+                toggleButton.style.color = "rgb(44, 44, 44)";
+            }
         });
 
             const subCategoryGroups = items.reduce((subcat, item) => {
@@ -36,7 +44,7 @@ export function populateOverviewModal() {
 
             Object.entries(subCategoryGroups).forEach(([acc, items]) => {
                 const subCatwrapper = document.createElement("div");
-                subCatwrapper.style.marginTop = "5px";
+                subCatwrapper.style.marginTop = "10px";
                 subCatwrapper.style.marginLeft = "25px";
         
                 const subCatToggleButton = document.createElement("button");
@@ -53,6 +61,14 @@ export function populateOverviewModal() {
                     const visible = subCatitemList.style.display === "block";
                     subCatitemList.style.display = visible ? "none" : "block";
                     subCatToggleButton.textContent = visible ? "+" : "-";
+
+                    if (!visible) {
+                        subCatToggleButton.style.backgroundColor = "rgb(44, 44, 44)";
+                        subCatToggleButton.style.color = "white";
+                    } else {
+                        subCatToggleButton.style.backgroundColor = "#f0f0f0";
+                        subCatToggleButton.style.color = "rgb(44, 44, 44)";
+                    }
                 });
 
                 const departmentGroup = items.reduce((acc, item) => {
@@ -63,8 +79,8 @@ export function populateOverviewModal() {
 
                 Object.entries(departmentGroup).forEach(([dept, items]) => {
                     const departmentWrapper = document.createElement("div");
-                    departmentWrapper.style.marginTop = "5px";
-                    departmentWrapper.style.marginLeft = "20px";
+                    departmentWrapper.style.marginTop = "10px";
+                    departmentWrapper.style.marginLeft = "25px";
 
                     const departmentToggleButton = document.createElement("button");
                     departmentToggleButton.textContent = "+";
@@ -80,10 +96,18 @@ export function populateOverviewModal() {
                         const visible = departmentItemList.style.display === "block";
                         departmentItemList.style.display = visible ? "none" : "block";
                         departmentToggleButton.textContent = visible ? "+" : "-";
+
+                    if (!visible) {
+                        departmentToggleButton.style.backgroundColor = "rgb(44, 44, 44)";
+                        departmentToggleButton.style.color = "white";
+                    } else {
+                        departmentToggleButton.style.backgroundColor = "#f0f0f0";
+                        departmentToggleButton.style.color = "rgb(44, 44, 44)";
+                    }
                     });
 
                     departmentItemList.innerHTML = items.map(item => 
-                         `<div>${item.id}</div>`
+                         `<div style="margin-left: 20px;">${item.id}</div>`
                     ).join("");
 
                     departmentWrapper.appendChild(departmentToggleButton);

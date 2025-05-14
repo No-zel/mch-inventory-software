@@ -1,18 +1,20 @@
 import { showNotification } from '../index.js';
-
+  
 export async function exportData() {
+  const loadingIndicator = document.getElementById("loading");
 
+  loadingIndicator.style.display = "flex";
   try {
     const items = window.allItems.map(item => ({
       ...item,
       created_at: item.created_at ? new Date(item.created_at).toLocaleDateString("en-US", {
-        year: "numeric", month: "long", day: "numeric"
+        year: "numeric", month: "long", day: "numeric", hour: 'numeric', minute: '2-digit', hour12: true,
       }) : null,
       updated_at: item.updated_at ? new Date(item.updated_at).toLocaleDateString("en-US", {
-        year: "numeric", month: "long", day: "numeric"
+        year: "numeric", month: "long", day: "numeric", hour: 'numeric', minute: '2-digit', hour12: true,
       }) : null,
       scanned_at: item.scanned_at ? new Date(item.scanned_at).toLocaleDateString("en-US", {
-        year: "numeric", month: "long", day: "numeric"
+        year: "numeric", month: "long", day: "numeric", hour: 'numeric', minute: '2-digit', hour12: true,
       }) : null
     }));
 
@@ -41,5 +43,7 @@ export async function exportData() {
     }
   } catch (error) {
     console.error("Export failed with error:", error);
+  } finally {
+    loadingIndicator.style.display = "none";
   }
 }
