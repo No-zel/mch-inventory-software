@@ -12,21 +12,34 @@
     <p>Logging in...</p>
   </div>
   <div class="header-container">
-    <img src="../assets/mch-logo.jpeg" class="logo">
+    <!-- <img src="../assets/mch-logo.jpeg" alt="Logo here" class="logo"> -->
 
     <div class="logout-container">
       <!-- <button id="sign-up-open" class="logout-button">Sign Up</button> -->
       <p id="contact-button">github.com/no-zel</p>
     </div> 
   </div>
-  <div class="login-container">
-    <h2 id="loginTitle">Login In To Poseidon</h2>
-    <form id="loginForm" method="post">
-      <input class="input-field" type="text" id="username" placeholder="Username" value="a" required /> 
-      <input class="input-field" type="password" id="password" placeholder="Password" value="a" required />
-      <button class="login-button" type="submit">Login</button>
-    </form>
+  <div class="login-layout"> 
+    <div class="login-modal"> 
+        <div class="information-container">
+          <h2 id="loginTitle">ASSET MANAGEMENT SYSTEM FOR HOSPITAL DEPARTMENTS</h2>
+          <p> 
+            A digital asset tracking system for hospital departments that uses barcodes for monitoring and management.
+          </p>
+          <img src="../assets/mch-logo.jpeg" alt="Logo here" class="logo-information"> 
+        </div>
+
+      <div class="login-container">
+        <h2 id="loginTitle">Login In To AMS</h2>
+        <form id="loginForm" method="post">
+          <input class="input-field" type="text" id="username" placeholder="Username" value="a" required /> 
+          <input class="input-field" type="password" id="password" placeholder="Password" value="a" required />
+          <button class="login-button" type="submit">Login</button>
+        </form>
+      </div>
+    </div>
   </div>
+
 
   <div id="notificationModal" class="modal">
     <div class="modal-small">

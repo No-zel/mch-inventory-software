@@ -44,8 +44,10 @@ export function populateOverviewModal() {
 
             Object.entries(subCategoryGroups).forEach(([acc, items]) => {
                 const subCatwrapper = document.createElement("div");
+                subCatwrapper.style.borderLeft = "5px solid #f0f0f0";
                 subCatwrapper.style.marginTop = "10px";
-                subCatwrapper.style.marginLeft = "25px";
+                subCatwrapper.style.marginLeft = "7px";
+                subCatwrapper.style.paddingLeft = "20px";
         
                 const subCatToggleButton = document.createElement("button");
                 subCatToggleButton.textContent = "+";

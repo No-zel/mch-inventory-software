@@ -332,12 +332,57 @@ html, body {
   font-family: 'Tahoma', sans-serif; 
   font-weight: bold;
 }
-.login-container {
+
+.logo-information{
+    margin-top: 20px;
+    height: 100px;
+    width: 100px;
+}
+.login-layout {
+  position: fixed; /* Full screen */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.3); /* optional: dim background */
+  z-index: 1000; /* optional: make sure it's above other content */
+}
+
+.login-modal {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  width: 80%;
+  height: 80vh;
+  border-radius: 8px; /* optional: rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* optional: subtle shadow */
+}
+
+.login-container {
+  background-color: #ffffff;
+  border-left: solid 1px; 
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+
+.information-container {
+  flex-direction: column;
+  height: 100%;
+  display: flex;
+  margin: 20px; 
+  margin-left: 50px;
+  margin-top: 20%;
 }
 
 .input-field, .login-button {

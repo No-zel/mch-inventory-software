@@ -1,8 +1,8 @@
 import { populateTable, populateDataCounter } from '../index.js';
 
 export function applyFilter(e) {
+  const loadingIndicator = document.getElementById("loading");
   e.preventDefault();
-
   const selected = Array.from(document.querySelectorAll('#FilterForm input:checked'))
 
     const filters = {
@@ -30,8 +30,15 @@ export function applyFilter(e) {
 
   const filteredItems = reportItems.length ? reportItems : window.allItems;
 
-
-  populateTable(filteredItems);
-  populateDataCounter();
-  filterModal.style.display = "none";
+  loadingIndicator.style.display = "flex";
+  try {
+    populateTable(filteredItems);
+    populateDataCounter();
+    filterModal.style.display = "none";
+  } catch {
+    console.error("err")
+    filterModal.style.display = "none";
+  } finally {
+    loadingIndicator.style.display = "none";
+  }
 }
