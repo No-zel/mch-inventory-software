@@ -16,6 +16,10 @@ import {
   applyFilter
 } from './index.js';
 
+if (!localStorage.getItem("token")) {
+  window.location.href = "login.html";
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   if (!window.api || !window.api.request) {
     console.error("Error: window.api.request is undefined. Check preload.js.");
@@ -234,6 +238,7 @@ document.getElementById("logout-button").addEventListener("click", async functio
   loadingIndicator.style.display = "flex";
   try {
     await auth.setToken(null); 
+    localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.href = "login.html";
   } catch {

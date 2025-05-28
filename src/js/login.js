@@ -26,11 +26,19 @@ document.addEventListener("DOMContentLoaded", () => {
         showNotification(error);
         document.getElementById("password").value = "";
         return;
-      } else {
-        await auth.setToken(data.token);
-        localStorage.setItem("user", data.data.username);
-        window.location.href = "table.html";
+      } 
+
+      if (data.data.role === "user") {
+        showNotification("You need admin permission.");
+        document.getElementById("password").value = "";
+        return;
       }
+
+      await auth.setToken(data.token);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", data.data.username);
+      window.location.href = "table.html";
+
     } catch (error) {
       console.error("Login error:", error);
       showNotification(error);
