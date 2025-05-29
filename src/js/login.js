@@ -36,9 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       await auth.setToken(data.token);
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", data.data.username);
+      localStorage.setItem("user", JSON.stringify(data.data));
       window.location.href = "table.html";
-
     } catch (error) {
       console.error("Login error:", error);
       showNotification(error);

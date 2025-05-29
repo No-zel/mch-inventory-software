@@ -1,7 +1,7 @@
 import { getProducts, showNotification, toSentenceCase } from '../index.js';
 
 export async function editItem(event, itemId) {
-const user = localStorage.getItem("user");
+const user = JSON.parse(localStorage.getItem("user"));
 const formData = new FormData(event.target);
 const loadingIndicator = document.getElementById("loading");
 const updatedItem = {
@@ -13,7 +13,7 @@ const updatedItem = {
   subCategory: toSentenceCase(formData.get("subcategory")),
   status: formData.get("status"), 
   assignedTo: toSentenceCase(formData.get("assigned_to")),
-  username: user,
+  username: user.username,
 };
   loadingIndicator.style.display = "flex";
   try {

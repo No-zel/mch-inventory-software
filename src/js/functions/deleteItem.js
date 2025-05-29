@@ -1,7 +1,7 @@
 import { populateTable, showNotification, populateDataCounter } from '../index.js';
 
 export async function deleteItem(id) {
-  const user = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user"));
   const loadingIndicator = document.getElementById("loading");
   if (!id) return console.error("No ID provided for deletion");
     // const selectedItems = [...document.querySelectorAll(".select-item:checked")].map(checkbox => checkbox.dataset.id);
@@ -13,7 +13,7 @@ export async function deleteItem(id) {
         url: "/item/delete/", 
         bodyObj: {
           id: id,
-          username: user,
+          username: user.username,
         }
       });
   

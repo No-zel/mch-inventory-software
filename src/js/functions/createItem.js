@@ -9,7 +9,7 @@ export async function createItem(event) {
   let SubCategoryValue = toSentenceCase(document.getElementById("subcategory").value);
   let QuantityValue = parseInt(document.getElementById("quantity").value, 10);
   let assignedToValue = toSentenceCase(document.getElementById("assigned_to").value);
-  const user = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user"));
   const loadingIndicator = document.getElementById("loading");
 
   const requestBody = {
@@ -20,7 +20,7 @@ export async function createItem(event) {
     subCategory: SubCategoryValue,
     quantity: QuantityValue,
     assignedTo: assignedToValue,
-    username: user,
+    username: user.username,
   };
   loadingIndicator.style.display = "flex";
   try {

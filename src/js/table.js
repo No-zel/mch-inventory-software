@@ -2,6 +2,7 @@ import {
   createItem, 
   deleteItem, 
   editItem, 
+  createAccount,
   generateAndPrintQR, 
   generateAndPrintReport, 
   getProducts, populateTable, 
@@ -37,8 +38,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   getProducts();
 
   const confirmChoice = document.getElementById("confirmChoice");
-  const registerForm = document.getElementById("registerForm")
-  
+  const registerForm = document.getElementById("registerForm");
+  const registerUserForm = document.getElementById("registerUserForm");
+
+  if (registerUserForm) {
+    registerUserForm.addEventListener("submit", async (event) => {
+      event.preventDefault(); 
+      await createAccount(event);
+      addAccount.style.display = "none"
+      });
+    } else {
+      console.error("Create Account not found.");
+    }
+
   if (confirmChoice) {
     confirmChoice.onclick = async () => {
         await deleteItem([window.itemToDelete]); 
@@ -97,8 +109,11 @@ const notificationModal = document.getElementById("notificationModal");
 const confirmationModal = document.getElementById("confirmationModal");
 const filterModal = document.getElementById("filterModal")
 const reportSelectionModal = document.getElementById("reportSelectionModal")
+const addAccountModal = document.getElementById("addAccount")
 const overviewModal = document.getElementById("overviewModal")
+const menuButton = document.getElementById("menu");
 
+const menuBox = document.getElementById("menu-box");
 const openRegisterModal = document.getElementById("openRegisterModal");
 const loadingIndicator = document.getElementById("loading");
 const closeRegisterModal = document.getElementById("closeRegisterModal");
@@ -107,6 +122,39 @@ const closeReportModal = document.getElementById("closeReportModal");
 const closeConfirmationModal = document.getElementById("closeConfirmationModal");
 const closeFilterModal = document.getElementById("closeFilterModal");
 const closeOverviewModal = document.getElementById("closeOverviewModal");
+const closeCreateAccountModal = document.getElementById("closeAddAccountModal");
+
+const user = JSON.parse(localStorage.getItem("user"));
+if (user.role === "superadmin") {
+  menuButton.style.display = "block"
+}
+
+menuButton.addEventListener("click", function (e) {
+  e.stopPropagation();
+
+    if (menuBox.style.display === "flex") {
+    menuBox.style.display = "none";
+    menuButton.blur();
+  } else {
+    menuBox.style.display = "flex";
+    menuButton.focus();
+  }
+});
+
+document.addEventListener("click", function (e) {
+  if (!menuButton.contains(e.target) && !menuBox.contains(e.target)) {
+    menuBox.style.display = "none";
+  }
+});
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    menuBox.style.display = "none";
+    reportSelectionModal.style.display = "none";
+    filterModal.style.display = "none";
+    overviewModal.style.display = "none";
+  }
+});
 
 openRegisterModal.onclick = () => {
   window.itemToEdit = null;
@@ -125,6 +173,7 @@ closeReportModal.onclick = () => reportSelectionModal.style.display = "none";
 closeConfirmationModal.onclick = () => confirmationModal.style.display = "none";
 closeFilterModal.onclick = () => filterModal.style.display = "none";
 closeOverviewModal.onclick = () => overviewModal.style.display = "none";
+closeCreateAccountModal.onclick = () => addAccountModal.style.display = "none";
 
 window.onclick = (event) => {
   if (event.target === registerModal) registerModal.style.display = "none";
@@ -233,6 +282,10 @@ document.getElementById("exportData").addEventListener("click", function() {
   }
 })
 
+document.getElementById("create-account-button").addEventListener("click", function() {
+  addAccountModal.style.display = "block"
+})
+
 document.getElementById("logout-button").addEventListener("click", async function() {
 
   loadingIndicator.style.display = "flex";
@@ -247,8 +300,17 @@ document.getElementById("logout-button").addEventListener("click", async functio
   } finally {
     loadingIndicator.style.display = "none";
   }
-
 })
+
+const phoneInput = document.getElementById("phoneNumber");
+phoneInput.addEventListener("input", function () {
+  this.value = this.value.replace(/\D/g, "");
+
+  if (this.value.length > 11) {
+    this.value = this.value.slice(0, 11);
+  }
+});
+
 // document.getElementById("contact-button").addEventListener("click", function() {
 //   window.location.href = "http://m.me/SaphyreLight";
 // })

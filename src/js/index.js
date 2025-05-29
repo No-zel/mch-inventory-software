@@ -9,6 +9,7 @@ export { createItem } from './functions/createItem.js';
 export { deleteItem } from './functions/deleteItem.js';
 export { editItem } from './functions/editItem.js'
 export { exportData } from './functions/exportData.js'
+export { createAccount } from './functions/createAccount.js'
 
 // Generate Print
 export { generateAndPrintQR } from './functions/generateAndPrintQR.js';
