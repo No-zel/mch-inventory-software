@@ -49,3 +49,7 @@ contextBridge.exposeInMainWorld("excelExporter", {
 contextBridge.exposeInMainWorld("printer", {
   printNow: (selectedPaperSize) => ipcRenderer.send("print-now", selectedPaperSize),
 });
+
+window.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+}); 

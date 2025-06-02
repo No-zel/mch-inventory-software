@@ -20,6 +20,7 @@ export { populateTable } from './functions/populateTable.js'
 export { populateDepartmentModal } from './functions/populateDepartmentModal.js'
 export { populateDataCounter } from './functions/populateDataCounter.js'
 export { populateOverviewModal } from './functions/populateOverviewModal.js'
+export { populateTransaction } from './functions/populateTransactionModal.js'
 
 //Clear
 export { clearReportModal } from './functions/clearReportModal.js'

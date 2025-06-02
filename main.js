@@ -10,22 +10,35 @@ const XLSX = require("xlsx");
 const fs = require("fs");
 
 const createWindow = () => {
-  
+  const splash = new BrowserWindow({
+    width: 400,
+    height: 300,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: true,
+    icon: path.join(__dirname, "src/assets", "mch_logo.ico"),
+  });
+  splash.loadFile("src/views/splash.html");
+
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    show: false,
+    icon: path.join(__dirname, "src/assets", "mch_logo.ico"),
     webPreferences: {
       preload: path.join(__dirname, "src/auth/preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
-      devTools: true,
+      devTools: false,
     },
   });
-
+  //  win.setMenu(null);
   win.loadFile("src/views/login.html");
 
   win.once("ready-to-show", () => {
-    win.maximize(); 
+    splash.destroy();
+    win.maximize();
+    win.show(); 
   });
 };
 

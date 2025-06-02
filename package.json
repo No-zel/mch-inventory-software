@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron .",
     "dev": "nodemon --exec electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -19,11 +20,30 @@
   },
   "homepage": "https://github.com/No-zel/mch-inventory-software#readme",
   "devDependencies": {
-    "electron": "^35.0.3"
+    "electron": "^35.0.3",
+    "electron-builder": "^26.0.12"
   },
   "dependencies": {
     "nodemon": "^3.1.9",
     "qrcode": "^1.5.4",
     "xlsx": "^0.18.5"
+  },
+  "build": {
+    "appId": "com.nozel.MCHAMS",
+    "productName": "Inventory Management System",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*"
+    ],
+    "win": {
+      "icon": "src/assets/mch_logo.ico",
+      "target": "nsis"
+    },
+      "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+    }
   }
 }

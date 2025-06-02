@@ -83,7 +83,7 @@ function generatePrintHTML(qrCodes) {
     <div class="qr-item">
       <div class="info-container">
         <p class="warning-paragraph">MCH property do not destory</p>
-        <p><strong>ID:</strong> ${qr.id}</p>
+        <p><strong>ID:</strong> MCH - ${qr.id}</p>
         <p><strong>Item Name:</strong> ${qr.rowData[3]} ${qr.rowData[4]}</p>
         <p><strong>Category:</strong> ${qr.rowData[5]}</p>
         <p><strong>Department:</strong> ${qr.rowData[7]}</p>

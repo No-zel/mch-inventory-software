@@ -14,7 +14,8 @@ import {
   populateOverviewModal, 
   clearoverviewModal,
   exportData,
-  applyFilter
+  applyFilter,
+  populateTransaction
 } from './index.js';
 
 if (!localStorage.getItem("token")) {
@@ -22,6 +23,31 @@ if (!localStorage.getItem("token")) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isSuperAdmin = user && user.role === "superadmin";
+  const menuButton = document.getElementById("menu");
+  const menuBox = document.getElementById("menu-box");
+
+  if (isSuperAdmin) {
+    menuButton.style.display = "block";
+
+    menuButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (menuBox.style.display === "flex") {
+        menuBox.style.display = "none";
+        menuButton.blur();
+      } else {
+        menuBox.style.display = "flex";
+        menuButton.focus();
+      }
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!menuButton.contains(e.target) && !menuBox.contains(e.target)) {
+        menuBox.style.display = "none";
+      }
+    });
+  }
   if (!window.api || !window.api.request) {
     console.error("Error: window.api.request is undefined. Check preload.js.");
     return;
@@ -110,10 +136,9 @@ const confirmationModal = document.getElementById("confirmationModal");
 const filterModal = document.getElementById("filterModal")
 const reportSelectionModal = document.getElementById("reportSelectionModal")
 const addAccountModal = document.getElementById("addAccount")
+const opentransaction = document.getElementById("transaction")
 const overviewModal = document.getElementById("overviewModal")
-const menuButton = document.getElementById("menu");
 
-const menuBox = document.getElementById("menu-box");
 const openRegisterModal = document.getElementById("openRegisterModal");
 const loadingIndicator = document.getElementById("loading");
 const closeRegisterModal = document.getElementById("closeRegisterModal");
@@ -122,30 +147,8 @@ const closeReportModal = document.getElementById("closeReportModal");
 const closeConfirmationModal = document.getElementById("closeConfirmationModal");
 const closeFilterModal = document.getElementById("closeFilterModal");
 const closeOverviewModal = document.getElementById("closeOverviewModal");
-const closeCreateAccountModal = document.getElementById("closeAddAccountModal");
-
-const user = JSON.parse(localStorage.getItem("user"));
-if (user.role === "superadmin") {
-  menuButton.style.display = "block"
-}
-
-menuButton.addEventListener("click", function (e) {
-  e.stopPropagation();
-
-    if (menuBox.style.display === "flex") {
-    menuBox.style.display = "none";
-    menuButton.blur();
-  } else {
-    menuBox.style.display = "flex";
-    menuButton.focus();
-  }
-});
-
-document.addEventListener("click", function (e) {
-  if (!menuButton.contains(e.target) && !menuBox.contains(e.target)) {
-    menuBox.style.display = "none";
-  }
-});
+const closeCreateAccountModal = document.getElementById("closeAddAccountModal"); 
+const closeTransactionModal = document.getElementById("closeTransactionModal");
 
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") {
@@ -173,7 +176,8 @@ closeReportModal.onclick = () => reportSelectionModal.style.display = "none";
 closeConfirmationModal.onclick = () => confirmationModal.style.display = "none";
 closeFilterModal.onclick = () => filterModal.style.display = "none";
 closeOverviewModal.onclick = () => overviewModal.style.display = "none";
-closeCreateAccountModal.onclick = () => addAccountModal.style.display = "none";
+closeCreateAccountModal.onclick = () => addAccountModal.style.display = "none"; 
+closeTransactionModal.onclick = () => opentransaction.style.display = "none";
 
 window.onclick = (event) => {
   if (event.target === registerModal) registerModal.style.display = "none";
@@ -284,6 +288,11 @@ document.getElementById("exportData").addEventListener("click", function() {
 
 document.getElementById("create-account-button").addEventListener("click", function() {
   addAccountModal.style.display = "block"
+})
+
+document.getElementById("transaction-button").addEventListener("click", function() {
+  populateTransaction()
+  opentransaction.style.display = "block"
 })
 
 document.getElementById("logout-button").addEventListener("click", async function() {

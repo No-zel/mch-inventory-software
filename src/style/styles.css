@@ -717,3 +717,15 @@ html, body {
 #addAccount {
   display: none;
 }
+
+#transaction {
+  display: none;
+}
+
+.transaction-container {
+  width: 100%;
+}
+
+.transaction-container tbody {
+  text-align: center;
+}
