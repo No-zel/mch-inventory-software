@@ -1,18 +1,21 @@
-import { populateTransaction, createAccount } from '../index.js';
+import { populateTransaction, createAccount, getAccounts } from '../index.js';
 
-export function bindSuperadminModalEvents() {
+export async function bindSuperadminModalEvents() {
     const addAccountModal = document.getElementById("addAccount");
     const opentransaction = document.getElementById("transaction");
     const registerUserForm = document.getElementById("registerUserForm");
+    const openManageUser = document.getElementById("manage-users-button");
+    const manageUsers = document.getElementById("manage-users-modal");
     const closeCreateAccountModal = document.getElementById("closeAddAccountModal");
     const closeTransactionModal = document.getElementById("closeTransactionModal");
+    const closeManageUser = document.getElementById("closeManageUsersModal");
 
     const openCreateBtn = document.getElementById("create-account-button");
     const openTransactionBtn = document.getElementById("transaction-button");
 
     closeCreateAccountModal.onclick = () => addAccountModal.style.display = "none";
     closeTransactionModal.onclick = () => opentransaction.style.display = "none";
-
+    closeManageUser.onclick = () => openManageUser.style.display = "none";
     openCreateBtn.addEventListener("click", () => {
       addAccountModal.style.display = "block";
     });
@@ -20,6 +23,11 @@ export function bindSuperadminModalEvents() {
     openTransactionBtn.addEventListener("click", () => {
       populateTransaction(); 
       opentransaction.style.display = "block";
+    });
+
+    openManageUser.addEventListener("click", () => {
+      getAccounts();
+      manageUsers.style.display = "block";
     });
 
     const phoneInput = document.getElementById("phoneNumber");

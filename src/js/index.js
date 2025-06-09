@@ -5,6 +5,7 @@ export { dateFormat } from './Components/dateFormat.js'
 
 //CRUD (Database)
 export { getProducts } from './functions/getProducts.js'
+export { getAccounts } from './functions/getAccounts.js'
 export { createItem } from './functions/createItem.js';
 export { deleteItem } from './functions/deleteItem.js';
 export { editItem } from './functions/editItem.js'
@@ -21,6 +22,7 @@ export { populateDepartmentModal } from './functions/populateDepartmentModal.js'
 export { populateDataCounter } from './functions/populateDataCounter.js'
 export { populateOverviewModal } from './functions/populateOverviewModal.js'
 export { populateTransaction } from './functions/populateTransactionModal.js'
+export { populateManageUsers } from './functions/populateManageUser.js'
 
 //Clear
 export { clearReportModal } from './functions/clearReportModal.js'
