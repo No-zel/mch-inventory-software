@@ -27,3 +27,6 @@ export { clearReportModal } from './functions/clearReportModal.js'
 export { clearFilterModal } from './functions/clearFilterModal.js'
 export { clearoverviewModal } from './functions/clearoverviewModal.js'
 export { applyFilter } from './functions/applyFilter.js'
+
+//Bind
+export { bindSuperadminModalEvents } from './functions/bindSuperadminModalEvents.js'

@@ -2,7 +2,6 @@ import {
   createItem, 
   deleteItem, 
   editItem, 
-  createAccount,
   generateAndPrintQR, 
   generateAndPrintReport, 
   getProducts, populateTable, 
@@ -15,7 +14,7 @@ import {
   clearoverviewModal,
   exportData,
   applyFilter,
-  populateTransaction
+  bindSuperadminModalEvents
 } from './index.js';
 
 if (!localStorage.getItem("token")) {
@@ -25,11 +24,21 @@ if (!localStorage.getItem("token")) {
 document.addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const isSuperAdmin = user && user.role === "superadmin";
+
+  function loadSuperadminModals() {
+    const tmpl = document.getElementById('super-admin-buttons');
+    const clone = tmpl.content.cloneNode(true);
+    document.body.appendChild(clone); 
+
+    bindSuperadminModalEvents();
+  }
+
   const menuButton = document.getElementById("menu");
   const menuBox = document.getElementById("menu-box");
 
   if (isSuperAdmin) {
     menuButton.style.display = "block";
+    loadSuperadminModals()
 
     menuButton.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -65,17 +74,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const confirmChoice = document.getElementById("confirmChoice");
   const registerForm = document.getElementById("registerForm");
-  const registerUserForm = document.getElementById("registerUserForm");
-
-  if (registerUserForm) {
-    registerUserForm.addEventListener("submit", async (event) => {
-      event.preventDefault(); 
-      await createAccount(event);
-      addAccount.style.display = "none"
-      });
-    } else {
-      console.error("Create Account not found.");
-    }
 
   if (confirmChoice) {
     confirmChoice.onclick = async () => {
@@ -135,8 +133,8 @@ const notificationModal = document.getElementById("notificationModal");
 const confirmationModal = document.getElementById("confirmationModal");
 const filterModal = document.getElementById("filterModal")
 const reportSelectionModal = document.getElementById("reportSelectionModal")
-const addAccountModal = document.getElementById("addAccount")
-const opentransaction = document.getElementById("transaction")
+// const addAccountModal = document.getElementById("addAccount")
+// const opentransaction = document.getElementById("transaction")
 const overviewModal = document.getElementById("overviewModal")
 
 const openRegisterModal = document.getElementById("openRegisterModal");
@@ -147,8 +145,8 @@ const closeReportModal = document.getElementById("closeReportModal");
 const closeConfirmationModal = document.getElementById("closeConfirmationModal");
 const closeFilterModal = document.getElementById("closeFilterModal");
 const closeOverviewModal = document.getElementById("closeOverviewModal");
-const closeCreateAccountModal = document.getElementById("closeAddAccountModal"); 
-const closeTransactionModal = document.getElementById("closeTransactionModal");
+// const closeCreateAccountModal = document.getElementById("closeAddAccountModal"); 
+// const closeTransactionModal = document.getElementById("closeTransactionModal");
 
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") {
@@ -176,8 +174,8 @@ closeReportModal.onclick = () => reportSelectionModal.style.display = "none";
 closeConfirmationModal.onclick = () => confirmationModal.style.display = "none";
 closeFilterModal.onclick = () => filterModal.style.display = "none";
 closeOverviewModal.onclick = () => overviewModal.style.display = "none";
-closeCreateAccountModal.onclick = () => addAccountModal.style.display = "none"; 
-closeTransactionModal.onclick = () => opentransaction.style.display = "none";
+// closeCreateAccountModal.onclick = () => addAccountModal.style.display = "none"; 
+// closeTransactionModal.onclick = () => opentransaction.style.display = "none";
 
 window.onclick = (event) => {
   if (event.target === registerModal) registerModal.style.display = "none";
@@ -286,14 +284,14 @@ document.getElementById("exportData").addEventListener("click", function() {
   }
 })
 
-document.getElementById("create-account-button").addEventListener("click", function() {
-  addAccountModal.style.display = "block"
-})
+// document.getElementById("create-account-button").addEventListener("click", function() {
+//   addAccountModal.style.display = "block"
+// })
 
-document.getElementById("transaction-button").addEventListener("click", function() {
-  populateTransaction()
-  opentransaction.style.display = "block"
-})
+// document.getElementById("transaction-button").addEventListener("click", function() {
+//   populateTransaction()
+//   opentransaction.style.display = "block"
+// })
 
 document.getElementById("logout-button").addEventListener("click", async function() {
 
@@ -310,15 +308,6 @@ document.getElementById("logout-button").addEventListener("click", async functio
     loadingIndicator.style.display = "none";
   }
 })
-
-const phoneInput = document.getElementById("phoneNumber");
-phoneInput.addEventListener("input", function () {
-  this.value = this.value.replace(/\D/g, "");
-
-  if (this.value.length > 11) {
-    this.value = this.value.slice(0, 11);
-  }
-});
 
 // document.getElementById("contact-button").addEventListener("click", function() {
 //   window.location.href = "http://m.me/SaphyreLight";

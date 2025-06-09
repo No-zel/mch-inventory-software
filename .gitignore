@@ -4,3 +4,5 @@ dist/
 
 # Ignore environment and configuration files
 .env*.local
+
+src/utils/request.js
