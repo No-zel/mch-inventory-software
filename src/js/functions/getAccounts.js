@@ -7,9 +7,9 @@ export async function getAccounts() {
       try {
         const {data, status} = await window.api.request({
           method: "get",
-          url: "/accounts/find/",
+          url: "/account/find/",
         });
-
+        console.log(data)
         if (data.data) {
           usercatch = data.data
           populateManageUsers(usercatch)

@@ -15,7 +15,8 @@ export async function bindSuperadminModalEvents() {
 
     closeCreateAccountModal.onclick = () => addAccountModal.style.display = "none";
     closeTransactionModal.onclick = () => opentransaction.style.display = "none";
-    closeManageUser.onclick = () => openManageUser.style.display = "none";
+    closeManageUser.onclick = () => manageUsers.style.display = "none";
+
     openCreateBtn.addEventListener("click", () => {
       addAccountModal.style.display = "block";
     });
