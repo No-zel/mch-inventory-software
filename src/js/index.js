@@ -8,7 +8,9 @@ export { getProducts } from './functions/getProducts.js'
 export { getAccounts } from './functions/getAccounts.js'
 export { createItem } from './functions/createItem.js';
 export { deleteItem } from './functions/deleteItem.js';
+export { deleteAccount } from './functions/deleteAccount.js'
 export { editItem } from './functions/editItem.js'
+export { editAccount } from './functions/editAccount.js'
 export { exportData } from './functions/exportData.js'
 export { createAccount } from './functions/createAccount.js'
 

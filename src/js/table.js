@@ -14,7 +14,10 @@ import {
   clearoverviewModal,
   exportData,
   applyFilter,
-  bindSuperadminModalEvents
+  bindSuperadminModalEvents,
+  editAccount,
+  deleteAccount,
+  createAccount
 } from './index.js';
 
 if (!localStorage.getItem("token")) {
@@ -76,20 +79,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   const confirmChoice = document.getElementById("confirmChoice");
   const registerForm = document.getElementById("registerForm");
 
-  if (confirmChoice) {
-
-    if (window.itemToDelete) {
+    if (confirmChoice) {
       confirmChoice.onclick = async () => {
-      await deleteItem([window.itemToDelete]); 
-      window.itemToDelete = null;
-      confirmationModal.style.display = "none"; 
-      };
-    } else if (window.accountToDelete) {
-        confirmChoice.onclick = async () => {
-        await deleteAccount([window.accountToDelete]); 
-        window.accountToDelete = null;
-        confirmationModal.style.display = "none"; 
+        if (window.itemToDelete) {
+          await deleteItem([window.itemToDelete]);
+          window.itemToDelete = null;
+        } else if (window.accountToDelete) {
+          console.log("logged");
+          await deleteAccount(window.accountToDelete);
+          window.accountToDelete = null;
         }
+
+        confirmationModal.style.display = "none";
+      };
     }
 
     if (registerForm) {
@@ -106,21 +108,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         registerModal.style.display = "none"
       });
     } else if (registerUserForm) {
-      registerUserForm.addEventListener("submit", async (event) => {
-      event.preventDefault(); 
+        registerUserForm.addEventListener("submit", async (event) => {
+        event.preventDefault(); 
 
         if (window.accoutIdToEdit) {
           await editAccount(event, window.accoutIdToEdit);
           window.itemToEdit = null;
         } else {
-          await createItem(event);
+          await createAccount(event);
         }
         addAccount.style.display = "none"
       });
     } else {
       console.error("Register form not found.");
     }
-  }
+
 });
 
 document.addEventListener("delete-item", (e) => {
@@ -194,8 +196,6 @@ const closeReportModal = document.getElementById("closeReportModal");
 const closeConfirmationModal = document.getElementById("closeConfirmationModal");
 const closeFilterModal = document.getElementById("closeFilterModal");
 const closeOverviewModal = document.getElementById("closeOverviewModal");
-// const closeCreateAccountModal = document.getElementById("closeAddAccountModal"); 
-// const closeTransactionModal = document.getElementById("closeTransactionModal");
 
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") {
@@ -223,8 +223,6 @@ closeReportModal.onclick = () => reportSelectionModal.style.display = "none";
 closeConfirmationModal.onclick = () => confirmationModal.style.display = "none";
 closeFilterModal.onclick = () => filterModal.style.display = "none";
 closeOverviewModal.onclick = () => overviewModal.style.display = "none";
-// closeCreateAccountModal.onclick = () => addAccountModal.style.display = "none"; 
-// closeTransactionModal.onclick = () => opentransaction.style.display = "none";
 
 window.onclick = (event) => {
   if (event.target === registerModal) registerModal.style.display = "none";

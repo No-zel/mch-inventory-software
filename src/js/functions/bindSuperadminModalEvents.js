@@ -40,13 +40,13 @@ export async function bindSuperadminModalEvents() {
     }
   });
 
-  if (registerUserForm) {
-    registerUserForm.addEventListener("submit", async (event) => {
-      event.preventDefault(); 
-      await createAccount(event);
-      addAccount.style.display = "none"
-      });
-    } else {
-      console.error("Create Account not found.");
-    }
+  // if (registerUserForm) {
+  //   registerUserForm.addEventListener("submit", async (event) => {
+  //     event.preventDefault(); 
+  //     await createAccount(event);
+  //     addAccount.style.display = "none"
+  //     });
+  //   } else {
+  //     console.error("Create Account not found.");
+  //   }
 }
