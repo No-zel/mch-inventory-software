@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   }
+
   if (!window.api || !window.api.request) {
     console.error("Error: window.api.request is undefined. Check preload.js.");
     return;
@@ -76,15 +77,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   const registerForm = document.getElementById("registerForm");
 
   if (confirmChoice) {
-    confirmChoice.onclick = async () => {
-        await deleteItem([window.itemToDelete]); 
-        window.itemToDelete = null;
+
+    if (window.itemToDelete) {
+      confirmChoice.onclick = async () => {
+      await deleteItem([window.itemToDelete]); 
+      window.itemToDelete = null;
+      confirmationModal.style.display = "none"; 
+      };
+    } else if (window.accountToDelete) {
+        confirmChoice.onclick = async () => {
+        await deleteAccount([window.accountToDelete]); 
+        window.accountToDelete = null;
         confirmationModal.style.display = "none"; 
-    };
+        }
+    }
 
     if (registerForm) {
       registerForm.addEventListener("submit", async (event) => {
-        event.preventDefault(); 
+      event.preventDefault(); 
 
         if (window.itemToEdit) {
           await editItem(event, window.itemToEdit);
@@ -95,10 +105,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         
         registerModal.style.display = "none"
       });
+    } else if (registerUserForm) {
+      registerUserForm.addEventListener("submit", async (event) => {
+      event.preventDefault(); 
+
+        if (window.accoutIdToEdit) {
+          await editAccount(event, window.accoutIdToEdit);
+          window.itemToEdit = null;
+        } else {
+          await createItem(event);
+        }
+        addAccount.style.display = "none"
+      });
     } else {
       console.error("Register form not found.");
     }
-}
+  }
 });
 
 document.addEventListener("delete-item", (e) => {
@@ -127,6 +149,33 @@ document.addEventListener("edit-item", (e) => {
   }
   registerModal.style.display = "block";
 });
+
+document.addEventListener("delete-account", (e) => {
+  const accountIdToDelete = e.detail.id;
+  window.accountToDelete = accountIdToDelete;
+  confirmationModal.style.display = "block";
+});
+
+document.addEventListener("edit-account", (e) => {
+  const accoutIdToEdit = e.detail.id?.[0];
+  window.accountToEdit = accoutIdToEdit.id;
+  if (accoutIdToEdit) {
+    document.getElementById("username").value = accoutIdToEdit.username;
+    document.getElementById("password").value = accoutIdToEdit.password;
+    document.getElementById("repassword").value = accoutIdToEdit.password;
+    document.getElementById("firstName").value = accoutIdToEdit.first_name;
+    document.getElementById("lastName").value = accoutIdToEdit.last_name;
+    document.getElementById("accdepartment").value = accoutIdToEdit.department;
+    document.getElementById("role").value = accoutIdToEdit.role;
+    document.getElementById("phoneNumber").value = accoutIdToEdit.phone_num;
+    document.getElementById("email").value = accoutIdToEdit.email;
+
+    document.getElementById("add-account").style.display = "none";
+    document.getElementById("update-account").style.display = "block";
+  }
+  addAccountModal.style.display = "block";
+});
+
 
 const registerModal = document.getElementById("registerModal");
 const notificationModal = document.getElementById("notificationModal");
