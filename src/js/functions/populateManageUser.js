@@ -30,7 +30,7 @@ export async function populateManageUsers(users) {
             try {
               const {data, error} = await window.api.request({
                 method: "get",
-                url: `/account/update/${accountID}`, 
+                url: `/account/find/${accountID}`, 
               });
           
               if (error) {

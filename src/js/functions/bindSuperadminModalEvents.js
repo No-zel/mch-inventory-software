@@ -9,7 +9,6 @@ export async function bindSuperadminModalEvents() {
     const closeCreateAccountModal = document.getElementById("closeAddAccountModal");
     const closeTransactionModal = document.getElementById("closeTransactionModal");
     const closeManageUser = document.getElementById("closeManageUsersModal");
-
     const openCreateBtn = document.getElementById("create-account-button");
     const openTransactionBtn = document.getElementById("transaction-button");
 
@@ -18,6 +17,9 @@ export async function bindSuperadminModalEvents() {
     closeManageUser.onclick = () => manageUsers.style.display = "none";
 
     openCreateBtn.addEventListener("click", () => {
+      document.getElementById("add-account").style.display = "block";
+      document.getElementById("update-account").style.display = "none";
+      registerUserForm.reset();
       addAccountModal.style.display = "block";
     });
 

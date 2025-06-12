@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
-    document.addEventListener("click", function (e) {
+  document.addEventListener("click", function (e) {
       if (!menuButton.contains(e.target) && !menuBox.contains(e.target)) {
         menuBox.style.display = "none";
       }
@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const confirmChoice = document.getElementById("confirmChoice");
   const registerForm = document.getElementById("registerForm");
+  const registerUserForm = document.getElementById("registerUserForm")
 
     if (confirmChoice) {
       confirmChoice.onclick = async () => {
@@ -85,7 +86,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           await deleteItem([window.itemToDelete]);
           window.itemToDelete = null;
         } else if (window.accountToDelete) {
-          console.log("logged");
           await deleteAccount(window.accountToDelete);
           window.accountToDelete = null;
         }
@@ -107,16 +107,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         
         registerModal.style.display = "none"
       });
-    } else if (registerUserForm) {
-        registerUserForm.addEventListener("submit", async (event) => {
-        event.preventDefault(); 
+    } 
+    if (registerUserForm) {
+      registerUserForm.addEventListener("submit", async (event) => {
+      event.preventDefault(); 
 
-        if (window.accoutIdToEdit) {
-          await editAccount(event, window.accoutIdToEdit);
-          window.itemToEdit = null;
+        if (window.accountToEdit) {
+          console.log(window.accountToEdit)
+          await editAccount(event, window.accountToEdit);
+          window.accountToEdit = null;
         } else {
           await createAccount(event);
         }
+        registerUserForm.reset();
         addAccount.style.display = "none"
       });
     } else {
@@ -159,22 +162,23 @@ document.addEventListener("delete-account", (e) => {
 });
 
 document.addEventListener("edit-account", (e) => {
-  const accoutIdToEdit = e.detail.id?.[0];
-  window.accountToEdit = accoutIdToEdit.id;
-  if (accoutIdToEdit) {
-    document.getElementById("username").value = accoutIdToEdit.username;
-    document.getElementById("password").value = accoutIdToEdit.password;
-    document.getElementById("repassword").value = accoutIdToEdit.password;
-    document.getElementById("firstName").value = accoutIdToEdit.first_name;
-    document.getElementById("lastName").value = accoutIdToEdit.last_name;
-    document.getElementById("accdepartment").value = accoutIdToEdit.department;
-    document.getElementById("role").value = accoutIdToEdit.role;
-    document.getElementById("phoneNumber").value = accoutIdToEdit.phone_num;
-    document.getElementById("email").value = accoutIdToEdit.email;
+  const accountIdToEdit = e.detail.id?.[0];
+  window.accountToEdit = accountIdToEdit.id;
+  if (accountIdToEdit) {
+    document.getElementById("username").value = accountIdToEdit.username;
+    document.getElementById("password").value = "";
+    document.getElementById("repassword").value = "";
+    document.getElementById("firstName").value = accountIdToEdit.first_name;
+    document.getElementById("lastName").value = accountIdToEdit.last_name;
+    document.getElementById("accdepartment").value = accountIdToEdit.department;
+    document.getElementById("role").value = accountIdToEdit.role;
+    document.getElementById("phoneNumber").value = accountIdToEdit.phone_num;
+    document.getElementById("email").value = accountIdToEdit.email;
 
     document.getElementById("add-account").style.display = "none";
     document.getElementById("update-account").style.display = "block";
   }
+  const addAccountModal = document.getElementById("addAccount");
   addAccountModal.style.display = "block";
 });
 

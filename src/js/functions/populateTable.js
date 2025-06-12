@@ -6,7 +6,7 @@ export function populateTable(items) {
     const tableBody = document.getElementById("table-body");
   
     tableBody.innerHTML = "";
-  
+    // items = items.filter(item => item.status !== "Pullout" && item.status !== "Archived");
     items.forEach((item) => {
       const formattedDate_0 = dateFormat(item.scanned_at)
       const formattedDate_1 = dateFormat(item.created_at)

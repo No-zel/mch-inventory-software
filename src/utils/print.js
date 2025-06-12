@@ -66,7 +66,7 @@ function setupPrintHandler() {
         {
           silent: false,
           printBackground: true,
-          pageSize: selectedPaperSize,
+          pageSize: 'A4',
         },
         (success, error) => {
           if (!success) console.error("Print failed:", error);
@@ -83,14 +83,14 @@ function generatePrintHTML(qrCodes) {
     <div class="qr-item">
       <div class="info-container">
         <p class="warning-paragraph">MCH property do not destory</p>
-        <p><strong>ID:</strong> MCH - ${qr.id}</p>
+        <p><strong>ID:</strong> MCH-${qr.id}</p>
         <p><strong>Item Name:</strong> ${qr.rowData[3]} ${qr.rowData[4]}</p>
         <p><strong>Category:</strong> ${qr.rowData[5]}</p>
         <p><strong>Department:</strong> ${qr.rowData[7]}</p>
         <p><strong>Custodian:</strong> ${qr.rowData[8]}</p>
         <p><strong>Date Created:</strong> ${qr.rowData[9]}</p>
       </div>
-      <div "qr-image-container"> 
+      <div class="qr-image-container"> 
         <img src="${qr.qrImage}" />
       </div>
 
@@ -101,6 +101,10 @@ function generatePrintHTML(qrCodes) {
     <html>
       <head>
         <style>
+          @page {
+            size: A4 portrait; 
+            margin: 0.5in;
+          }
           h1 {
             text-align: center;
           }
@@ -109,6 +113,7 @@ function generatePrintHTML(qrCodes) {
           }
           body {
             font-family: Arial, sans-serif;
+            
           }
 
           .qr-container {
@@ -214,14 +219,6 @@ function generatePrintHTML(qrCodes) {
             <div class="spinner"></div>
             <p>Printing... Do not close</p>
           </div>
-          <div class="section-container">
-            <label for="paperSelect">Paper Size: </label>
-            <select id="paperSelect">
-              <option value="A4">A4</option>
-              <option value="Letter">Letter</option>
-              <option value="Legal">Legal</option>
-            </select>
-          </div>
           <button class="print-button" onclick="triggerPrint()">Print</button>
           <h1>QR Codes</h1>
         </div>
@@ -237,8 +234,7 @@ function generatePrintHTML(qrCodes) {
           });
 
           function triggerPrint() {
-            const selectedPaperSize = document.getElementById("paperSelect").value;
-            window.printer.printNow(selectedPaperSize);
+            window.printer.printNow('A4');
           }
           console.log("✅ Print window loaded and ready.");
         </script>

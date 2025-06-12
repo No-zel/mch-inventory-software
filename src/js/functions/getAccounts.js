@@ -9,7 +9,6 @@ export async function getAccounts() {
           method: "get",
           url: "/account/find/",
         });
-        console.log(data)
         if (data.data) {
           usercatch = data.data
           populateManageUsers(usercatch)

@@ -1,4 +1,4 @@
-import {  showNotification  } from '../index.js';
+import {  showNotification, getAccounts  } from '../index.js';
 
 export async function editAccount(event, accId) {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -37,6 +37,7 @@ export async function editAccount(event, accId) {
         }
         if (response) {
             showNotification("Account Updated successfully!");
+            getAccounts();
         } else {
             console.error("Unexpected response:", response?.status);
         }

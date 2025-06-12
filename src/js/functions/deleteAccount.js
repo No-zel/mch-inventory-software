@@ -1,4 +1,4 @@
-import {  showNotification  } from '../index.js';
+import {  showNotification, getAccounts  } from '../index.js';
 
 export async function deleteAccount(accId) {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -10,7 +10,7 @@ export async function deleteAccount(accId) {
 
     try {
     console.log(accId)
-      const {error, status} = await window.api.request({
+      const {error, status, response} = await window.api.request({
         method: "delete",
         url: "/account/profile/delete", 
         bodyObj: {
@@ -23,14 +23,14 @@ export async function deleteAccount(accId) {
         console.error("Request Error:", error);
         showNotification("Failed to delete Account!", "error");
         return;
-        }
-  
-        if (status === 200) {
-            showNotification("Account deleted successfully.");
-        } else {
-            console.error("Unexpected response:", error);
-            showNotification(`Failed to delete item!`, error);
-        }
+      }
+      if (status === 200) {
+        getAccounts();
+        showNotification("Account deleted successfully.");
+      } else {
+        console.error("Unexpected response:", error);
+        showNotification(`Failed to delete item!`, error);
+      }
     
     } catch (err) {
       console.error("Fetch error:", err);
