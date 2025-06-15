@@ -59,14 +59,25 @@ function setupPrintHandler() {
     printWindow.on("closed", () => (printWindow = null));
   });
 
+    function getPaperSize(paper) {
+      const sizes = {
+        A4: { width: 210000, height: 297000 },
+        Letter: { width: 215900, height: 279400 },
+        Folio: { width: 215900, height: 330200 },
+        Legal: { width: 215900, height: 355600 }, 
+      };
+      return sizes[paper] || sizes.A4;
+    }
+    
   ipcMain.on("print-now", (event, selectedPaperSize) => {
+
     if (printWindow) {
       printWindow.webContents.send('show-loading'); 
       printWindow.webContents.print(
         {
-          silent: false,
+          silent: true,
           printBackground: true,
-          pageSize: 'A4',
+          pageSize: getPaperSize(selectedPaperSize),
         },
         (success, error) => {
           if (!success) console.error("Print failed:", error);
@@ -219,6 +230,14 @@ function generatePrintHTML(qrCodes) {
             <div class="spinner"></div>
             <p>Printing... Do not close</p>
           </div>
+          <div class="section-container"> 
+            <label for="paperSelect">Paper Size:</label>
+            <select id="paperSelect">
+              <option value="A4">A4</option>
+              <option value="Letter">Letter</option>
+              <option value="Legal">Legal</option>
+            </select>
+          </div>
           <button class="print-button" onclick="triggerPrint()">Print</button>
           <h1>QR Codes</h1>
         </div>
@@ -234,7 +253,8 @@ function generatePrintHTML(qrCodes) {
           });
 
           function triggerPrint() {
-            window.printer.printNow('A4');
+            const selectedPaperSize = document.getElementById("paperSelect").value;
+            window.printer.printNow(selectedPaperSize);
           }
           console.log("✅ Print window loaded and ready.");
         </script>
@@ -355,7 +375,8 @@ function generateReportHTML(reportItems) {
           }
           th, td { 
             border: 1px solid #000; 
-            padding: 8px; 
+            padding: 5px; 
+            font-size: 10px;
             text-align: left; 
           }
           th { 
@@ -453,9 +474,9 @@ function generateReportHTML(reportItems) {
           <div class="section-container"> 
             <label for="paperSelect">Paper Size:</label>
             <select id="paperSelect">
+              <option value="Folio">Legal (8.5 x 13)</option>
               <option value="A4">A4</option>
               <option value="Letter">Letter</option>
-              <option value="Legal">Legal</option>
             </select>
           </div>
           <button class="print-button" onclick="triggerPrint()">Print</button>
