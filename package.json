@@ -1,11 +1,10 @@
 {
   "name": "inventory-software",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "nodemon --exec electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "electron-builder"
   },
@@ -24,7 +23,6 @@
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "nodemon": "^3.1.9",
     "qrcode": "^1.5.4",
     "xlsx": "^0.18.5"
   },
@@ -41,9 +39,9 @@
       "icon": "src/assets/mch_logo.ico",
       "target": "nsis"
     },
-      "nsis": {
-    "oneClick": false,
-    "allowToChangeInstallationDirectory": true
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     }
   }
 }

@@ -1,6 +1,7 @@
 import { getProducts, showNotification,  } from '../index.js';
 
 export async function deleteItem(id) {
+  console.log(id)
   const user = JSON.parse(localStorage.getItem("user"));
   const loadingIndicator = document.getElementById("loading");
   if (!id) return console.error("No ID provided for deletion");
@@ -19,7 +20,7 @@ export async function deleteItem(id) {
   
       if (error) {
         console.error("Request Error:", error);
-        showNotification("Failed to delete item!", "error");
+        showNotification("Failed to delete item!", error);
         return;
     }
   

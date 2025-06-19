@@ -11,7 +11,6 @@ export function clearFilterModal() {
       <label><input type="checkbox" name="status" value="Condemned">Condemned</label>
       <label><input type="checkbox" name="status" value="Missing">Missing</label>
       <label><input type="checkbox" name="status" value="Pullout">Pullout</label>
-      <label><input type="checkbox" name="status" value="Archived">Archived</label>
     </div>
     <p class="report-label" id="reportMessage">Year Added:</p>
     <div class="year-items" id="filterYearContainer"></div>

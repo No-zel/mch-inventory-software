@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const { data, error } = await window.api.request({
         method: "post",
-        url: "/account/login",
+        url: "/account/login/",
         bodyObj: { 
           username: username, 
           password: password 

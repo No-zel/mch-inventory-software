@@ -21,7 +21,7 @@ export async function deleteAccount(accId) {
   
       if (error) {
         console.error("Request Error:", error);
-        showNotification("Failed to delete Account!", "error");
+        showNotification("Failed to delete Account!", error);
         return;
       }
       if (status === 200) {
@@ -29,7 +29,7 @@ export async function deleteAccount(accId) {
         showNotification("Account deleted successfully.");
       } else {
         console.error("Unexpected response:", error);
-        showNotification(`Failed to delete item!`, error);
+        showNotification(`Failed to delete Account!`, error);
       }
     
     } catch (err) {

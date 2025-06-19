@@ -75,7 +75,7 @@ function setupPrintHandler() {
       printWindow.webContents.send('show-loading'); 
       printWindow.webContents.print(
         {
-          silent: true,
+          silent: false,
           printBackground: true,
           pageSize: getPaperSize(selectedPaperSize),
         },
