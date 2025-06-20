@@ -368,8 +368,8 @@ td {
   border: 1px solid #888;
   width: 188%;
   max-width: 100px;
-  height: 15vh;
-  max-height: 90vh;
+  height: 20vh;
+  max-height: 95vh;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 9999;
@@ -410,6 +410,24 @@ td {
   border: 1px solid #888;
   width: 30%;
   max-width: 300px;
+  height: 60vh;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-archieved-content {
+  position: absolute;
+  font-family: 'Tahoma', sans-serif; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 2rem;
+  border: 1px solid #888;
+  width: 50%;
+  max-width: 500px;
   height: 60vh;
   max-height: 90vh;
   overflow-y: auto;

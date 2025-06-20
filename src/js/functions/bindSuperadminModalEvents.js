@@ -1,20 +1,26 @@
-import { populateTransaction, createAccount, getAccounts } from '../index.js';
+import { populateTransaction, createAccount, getAccounts, populateArchiveModal } from '../index.js';
 
 export async function bindSuperadminModalEvents() {
     const addAccountModal = document.getElementById("addAccount");
     const opentransaction = document.getElementById("transaction");
     const registerUserForm = document.getElementById("registerUserForm");
+    const retrieveItems = document.getElementById("retrieve-item-modal");
+    const manageUsers = document.getElementById("manage-users-modal"); 
+
     const openManageUser = document.getElementById("manage-users-button");
-    const manageUsers = document.getElementById("manage-users-modal");
+    const openArchievedItems = document.getElementById("archived-items-button");
+    const openCreateBtn = document.getElementById("create-account-button");
+    const openTransactionBtn = document.getElementById("transaction-button");
+
     const closeCreateAccountModal = document.getElementById("closeAddAccountModal");
     const closeTransactionModal = document.getElementById("closeTransactionModal");
     const closeManageUser = document.getElementById("closeManageUsersModal");
-    const openCreateBtn = document.getElementById("create-account-button");
-    const openTransactionBtn = document.getElementById("transaction-button");
+    const closeArchivedItemsModal = document.getElementById("closeArchivedItemsModal");
 
     closeCreateAccountModal.onclick = () => addAccountModal.style.display = "none";
     closeTransactionModal.onclick = () => opentransaction.style.display = "none";
     closeManageUser.onclick = () => manageUsers.style.display = "none";
+    closeArchivedItemsModal.onclick = () =>  retrieveItems.style.display = "none";
 
     openCreateBtn.addEventListener("click", () => {
       document.getElementById("add-account").style.display = "block";
@@ -33,6 +39,10 @@ export async function bindSuperadminModalEvents() {
       manageUsers.style.display = "block";
     });
 
+    openArchievedItems.addEventListener("click", () => {
+      populateArchiveModal();
+      retrieveItems.style.display = "block";
+    });
     const phoneInput = document.getElementById("phoneNumber");
     phoneInput.addEventListener("input", function () {
     this.value = this.value.replace(/\D/g, "");

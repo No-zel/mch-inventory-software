@@ -23,6 +23,7 @@ export { populateTable } from './functions/populateTable.js'
 export { populateDepartmentModal } from './functions/populateDepartmentModal.js'
 export { populateDataCounter } from './functions/populateDataCounter.js'
 export { populateOverviewModal } from './functions/populateOverviewModal.js'
+export { populateArchiveModal } from './functions/populateArchiveModal.js'
 export { populateTransaction } from './functions/populateTransactionModal.js'
 export { populateManageUsers } from './functions/populateManageUser.js'
 
