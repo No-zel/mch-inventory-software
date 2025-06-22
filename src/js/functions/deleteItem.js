@@ -27,9 +27,9 @@ export async function deleteItem(id) {
     if (status === 200) {
         showNotification("Item deleted successfully.");
         getProducts()
-      } else {
-          console.error("Unexpected response:", error);
-          showNotification(`Failed to delete item!`, error);
+    } else {
+        console.error("Unexpected response:", error);
+        showNotification(`Failed to delete item!`, error);
       }
   
     } catch (err) {

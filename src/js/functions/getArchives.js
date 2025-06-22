@@ -1,17 +1,16 @@
 import { populateArchiveModal } from '../index.js';
 
 export async function getArchives() {
-    let archive = null;
 
-    if (!usercatch) {
+    if (!window.archiveItems) {
       try {
         const {data, status} = await window.api.request({
           method: "get",
           url: "/item/find/archives",
         });
         if (data.data) {
-          archive = data.data
-          populateArchiveModal(archive)
+          window.archiveItems = data.data
+          populateArchiveModal(window.archiveItems)
         } else {
           console.error("Unexpected response:", status);
           return;
@@ -21,6 +20,6 @@ export async function getArchives() {
         return;
       }
     } else {
-      populateArchiveModal(archive)
+      populateArchiveModal(window.archiveItems)
     }
   }

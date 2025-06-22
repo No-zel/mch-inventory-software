@@ -1,4 +1,7 @@
+import { showNotification, getArchives } from '../index.js'
+
 export async function populateArchiveModal(items) {
+    const user = JSON.parse(localStorage.getItem("user"));
     const tableBody = document.getElementById("manage-archived-items-table-body");
     tableBody.innerHTML = "";
 
@@ -21,23 +24,27 @@ export async function populateArchiveModal(items) {
         const itemID = event.currentTarget.dataset.id;
 
         try {
-            const {data, status} = await window.api.request({
-                method: "get",
-                url: `/item/delete/retrieve/${itemId}`,
+            const {status, error} = await window.api.request({
+                method: "patch",
+                url: `/item/delete/retrieve`,
+                bodyObj: {
+                    id: itemID,
+                    username: user.username,
+                }
             });
             if (status === 200) {
-                archive = data.data
-                populateArchiveModal(archive)
+                showNotification("Item Retrieve");
+                getArchives();
             } else {
-                console.error("Unexpected response:", status);
+                showNotification(error);
                 return;
             }
         } catch (err) {
             console.error("Fetch error:", err);
             return;
         }
-        const retrieveEvent = new CustomEvent("retrieve-item", { detail: { id: itemID } });
-        document.dispatchEvent(retrieveEvent);
+        // const retrieveEvent = new CustomEvent("retrieve-item", { detail: { id: itemID } });
+        // document.dispatchEvent(retrieveEvent);
       });
     });
 }

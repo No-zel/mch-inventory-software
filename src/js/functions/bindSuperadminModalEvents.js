@@ -1,4 +1,4 @@
-import { populateTransaction, createAccount, getAccounts, populateArchiveModal } from '../index.js';
+import { populateTransaction, createAccount, getAccounts, getArchives } from '../index.js';
 
 export async function bindSuperadminModalEvents() {
     const addAccountModal = document.getElementById("addAccount");
@@ -40,7 +40,7 @@ export async function bindSuperadminModalEvents() {
     });
 
     openArchievedItems.addEventListener("click", () => {
-      populateArchiveModal();
+      getArchives();
       retrieveItems.style.display = "block";
     });
     const phoneInput = document.getElementById("phoneNumber");

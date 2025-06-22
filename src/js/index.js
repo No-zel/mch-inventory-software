@@ -6,6 +6,7 @@ export { dateFormat } from './Components/dateFormat.js'
 //CRUD (Database)
 export { getProducts } from './functions/getProducts.js'
 export { getAccounts } from './functions/getAccounts.js'
+export { getArchives } from './functions/getArchives.js'
 export { createItem } from './functions/createItem.js';
 export { deleteItem } from './functions/deleteItem.js';
 export { deleteAccount } from './functions/deleteAccount.js'
