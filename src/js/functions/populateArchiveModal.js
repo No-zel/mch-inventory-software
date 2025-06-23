@@ -1,4 +1,4 @@
-import { showNotification, getArchives } from '../index.js'
+import { showNotification, getProducts } from '../index.js'
 
 export async function populateArchiveModal(items) {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -24,7 +24,7 @@ export async function populateArchiveModal(items) {
         const itemID = event.currentTarget.dataset.id;
 
         try {
-            const {status, error} = await window.api.request({
+            const {status, error, data} = await window.api.request({
                 method: "patch",
                 url: `/item/delete/retrieve`,
                 bodyObj: {
@@ -32,9 +32,12 @@ export async function populateArchiveModal(items) {
                     username: user.username,
                 }
             });
+
             if (status === 200) {
                 showNotification("Item Retrieve");
-                getArchives();
+                window.archiveItems = window.archiveItems.filter(item => item.id !== data.data[0].id);
+                populateArchiveModal(window.archiveItems)
+                getProducts()
             } else {
                 showNotification(error);
                 return;

@@ -1,8 +1,6 @@
 import { populateArchiveModal } from '../index.js';
 
 export async function getArchives() {
-
-    if (!window.archiveItems) {
       try {
         const {data, status} = await window.api.request({
           method: "get",
@@ -19,7 +17,4 @@ export async function getArchives() {
         console.error("Fetch error:", err);
         return;
       }
-    } else {
-      populateArchiveModal(window.archiveItems)
-    }
   }

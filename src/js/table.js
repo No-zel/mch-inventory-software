@@ -136,6 +136,7 @@ document.addEventListener("delete-item", (e) => {
 
 document.addEventListener("edit-item", (e) => {
   const itemIdToEdit = e.detail.id?.[0];
+  const dateOnly = itemIdToEdit.created_at.slice(0, 10)
   window.itemToEdit = itemIdToEdit.id;
   if (itemIdToEdit) {
     document.getElementById("productName").value = itemIdToEdit.productName;
@@ -144,6 +145,7 @@ document.addEventListener("edit-item", (e) => {
     document.getElementById("category").value = itemIdToEdit.category;
     document.getElementById("subcategory").value = itemIdToEdit.subCategory;
     document.getElementById("status").value = itemIdToEdit.status || "available";
+    document.getElementById("date").value = dateOnly;
     document.getElementById("assigned_to").value = itemIdToEdit.assignedTo;
 
     document.getElementById("statusContainer").style.display = "block";
