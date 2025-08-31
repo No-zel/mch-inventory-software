@@ -9,6 +9,7 @@ export function clearReportModal() {
       <label><input type="checkbox" name="status" value="Active">Active</label>
       <label><input type="checkbox" name="status" value="Condemned">Condemned</label>
       <label><input type="checkbox" name="status" value="Missing">Missing</label>
+      <label><input type="checkbox" name="status" value="Pullout">Pullout</label>
     </div>
 
     <div class="audit-report-container"> 

@@ -11,6 +11,7 @@ const updatedItem = {
   serial_number: formData.get("serialNumber"), 
   category: toSentenceCase(formData.get("category")),
   subCategory: toSentenceCase(formData.get("subcategory")),
+  created_at: formData.get("date"),
   status: formData.get("status"), 
   assignedTo: toSentenceCase(formData.get("assigned_to")),
   username: user.username,

@@ -59,14 +59,25 @@ function setupPrintHandler() {
     printWindow.on("closed", () => (printWindow = null));
   });
 
+    function getPaperSize(paper) {
+      const sizes = {
+        A4: { width: 210000, height: 297000 },
+        Letter: { width: 215900, height: 279400 },
+        Folio: { width: 215900, height: 330200 },
+        Legal: { width: 215900, height: 355600 }, 
+      };
+      return sizes[paper] || sizes.A4;
+    }
+    
   ipcMain.on("print-now", (event, selectedPaperSize) => {
+
     if (printWindow) {
       printWindow.webContents.send('show-loading'); 
       printWindow.webContents.print(
         {
           silent: false,
           printBackground: true,
-          pageSize: selectedPaperSize,
+          pageSize: getPaperSize(selectedPaperSize),
         },
         (success, error) => {
           if (!success) console.error("Print failed:", error);
@@ -83,14 +94,14 @@ function generatePrintHTML(qrCodes) {
     <div class="qr-item">
       <div class="info-container">
         <p class="warning-paragraph">MCH property do not destory</p>
-        <p><strong>ID:</strong> MCH - ${qr.id}</p>
+        <p><strong>ID:</strong> MCH-${qr.id}</p>
         <p><strong>Item Name:</strong> ${qr.rowData[3]} ${qr.rowData[4]}</p>
         <p><strong>Category:</strong> ${qr.rowData[5]}</p>
         <p><strong>Department:</strong> ${qr.rowData[7]}</p>
         <p><strong>Custodian:</strong> ${qr.rowData[8]}</p>
         <p><strong>Date Created:</strong> ${qr.rowData[9]}</p>
       </div>
-      <div "qr-image-container"> 
+      <div class="qr-image-container"> 
         <img src="${qr.qrImage}" />
       </div>
 
@@ -101,6 +112,10 @@ function generatePrintHTML(qrCodes) {
     <html>
       <head>
         <style>
+          @page {
+            size: A4 portrait; 
+            margin: 0.5in;
+          }
           h1 {
             text-align: center;
           }
@@ -109,6 +124,7 @@ function generatePrintHTML(qrCodes) {
           }
           body {
             font-family: Arial, sans-serif;
+            
           }
 
           .qr-container {
@@ -214,8 +230,8 @@ function generatePrintHTML(qrCodes) {
             <div class="spinner"></div>
             <p>Printing... Do not close</p>
           </div>
-          <div class="section-container">
-            <label for="paperSelect">Paper Size: </label>
+          <div class="section-container"> 
+            <label for="paperSelect">Paper Size:</label>
             <select id="paperSelect">
               <option value="A4">A4</option>
               <option value="Letter">Letter</option>
@@ -359,7 +375,8 @@ function generateReportHTML(reportItems) {
           }
           th, td { 
             border: 1px solid #000; 
-            padding: 8px; 
+            padding: 5px; 
+            font-size: 10px;
             text-align: left; 
           }
           th { 
@@ -457,9 +474,9 @@ function generateReportHTML(reportItems) {
           <div class="section-container"> 
             <label for="paperSelect">Paper Size:</label>
             <select id="paperSelect">
+              <option value="Folio">Legal (8.5 x 13)</option>
               <option value="A4">A4</option>
               <option value="Letter">Letter</option>
-              <option value="Legal">Legal</option>
             </select>
           </div>
           <button class="print-button" onclick="triggerPrint()">Print</button>

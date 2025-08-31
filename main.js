@@ -29,7 +29,7 @@ const createWindow = () => {
       preload: path.join(__dirname, "src/auth/preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
-      devTools: false,
+      devTools: true,
     },
   });
   //  win.setMenu(null);

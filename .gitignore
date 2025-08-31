@@ -1,5 +1,8 @@
 # Ignore dependency files
 node_modules/
+dist/
 
 # Ignore environment and configuration files
 .env*.local
+
+src/utils/request.js

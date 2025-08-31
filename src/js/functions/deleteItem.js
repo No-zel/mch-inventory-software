@@ -1,6 +1,7 @@
-import { populateTable, showNotification, populateDataCounter } from '../index.js';
+import { getProducts, showNotification,  } from '../index.js';
 
 export async function deleteItem(id) {
+  console.log(id)
   const user = JSON.parse(localStorage.getItem("user"));
   const loadingIndicator = document.getElementById("loading");
   if (!id) return console.error("No ID provided for deletion");
@@ -9,7 +10,7 @@ export async function deleteItem(id) {
     loadingIndicator.style.display = "flex";
     try {
       const {data, error, status} = await window.api.request({
-        method: "delete",
+        method: "patch",
         url: "/item/delete/", 
         bodyObj: {
           id: id,
@@ -19,18 +20,16 @@ export async function deleteItem(id) {
   
       if (error) {
         console.error("Request Error:", error);
-        showNotification("Failed to delete item!", "error");
+        showNotification("Failed to delete item!", error);
         return;
     }
   
     if (status === 200) {
         showNotification("Item deleted successfully.");
-        window.allItems = window.allItems.filter(product => !id.includes(product.id));
-        populateTable(window.allItems);
-        populateDataCounter();
-      } else {
-          console.error("Unexpected response:", error);
-          showNotification(`Failed to delete item!`, error);
+        getProducts()
+    } else {
+        console.error("Unexpected response:", error);
+        showNotification(`Failed to delete item!`, error);
       }
   
     } catch (err) {
